@@ -9,7 +9,6 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D rb;
     private Vector2 moveInput;
     //private bool isJumping = false;
-    private bool isPaused = false;
 
     [Header("Movement Settings")]
     public float moveSpeed = 5f;
@@ -29,7 +28,6 @@ public class PlayerMovement : MonoBehaviour
         
         controls.Player.Jump.performed += ctx => Jump();
 
-        controls.UI.Pause.performed += ctx => Pause();
     }
 
     private void OnEnable()
@@ -82,29 +80,4 @@ public class PlayerMovement : MonoBehaviour
         return hit.collider != null;
     }
 
-    private void Pause()
-    {
-        if(!isPaused)
-        {
-            PauseGame();
-        }
-        else
-        {
-            UnpauseGame();
-        }
-    }
-
-    private void PauseGame()
-    {
-        isPaused = true;
-        Time.timeScale = 0f;
-        Debug.Log("Paused");
-    }
-    
-    private void UnpauseGame()
-    {
-        isPaused = false;
-        Time.timeScale = 1f;
-        Debug.Log("Unpaused");
-    }
 }
