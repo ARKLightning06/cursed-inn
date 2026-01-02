@@ -19,7 +19,12 @@ public class InventoryManager : MonoBehaviour
 {
     private InputSystem_Actions controls;
     public UIManager uiManager;
+    
+    // For setting up the inventory
     public List<InventoryItem> InventoryGrid = new List<InventoryItem>();
+    public Sprite defaultInventorySprite; // background sprite for an empty slot in the inventory
+    public Vector2 defaultWidthHeight; //width height vector for an empty inventory slot
+    public Vector2 itemWidthHeight; //width height vector for an item in the inventory when it exists
 
     // The below list is a list of game objects to be transformed into inventory items at start, just a way to populate the inventory with example items for now
     public List<GameObject> starterItems = new List<GameObject>();
@@ -99,12 +104,16 @@ public class InventoryManager : MonoBehaviour
             Button backgroundSlot = slots[i];
             backgroundSlot.gameObject.SetActive(isOn);
             backgroundSlot.onClick.RemoveAllListeners();
-            backgroundSlot.transition = Selectable.Transition.ColorTint;
+            backgroundSlot.GetComponent<Image>().sprite = defaultInventorySprite;
+            backgroundSlot.GetComponent<RectTransform>().sizeDelta = defaultWidthHeight;
+            // backgroundSlot.transition = Selectable.Transition.ColorTint;
             if (i < InventoryGrid.Count)
             {
+                InventoryItem currentItem = InventoryGrid[i];
                 backgroundSlot.GetComponent<Image>().sprite = InventoryGrid[i].visualization; // assigns visualization of associated InventoryItem
-                backgroundSlot.onClick.AddListener(InventoryFunction); // assigns function onClick... need to map it to associated InventoryItem
-                backgroundSlot.transition = Selectable.Transition.None; // changes transition to none so the sprite coloring isn't messed up
+                backgroundSlot.onClick.AddListener(() => InventoryFunction(currentItem)); // assigns function onClick... need to map it to associated InventoryItem
+                // backgroundSlot.transition = Selectable.Transition.None; // changes transition to none so the sprite coloring isn't messed up
+                backgroundSlot.GetComponent<RectTransform>().sizeDelta = itemWidthHeight;
                 // TO DO: Make this ^^^ actually work so sprites retain normal coloring when applying visualization, for some reason doesn't work rn...
             }
         }
@@ -199,9 +208,12 @@ public class InventoryManager : MonoBehaviour
         return newItem;
     }
 
-    public void InventoryFunction()
+    public void InventoryFunction(InventoryItem calledItem)
     {
-        Debug.Log("A button was clicked!");
+        Debug.Log("A button was clicked! That button was " + calledItem.itemName + ".");
+        // need some way to call a function depending on the item... couple ideas, one could make a list of possible item actions (use, draw (weapon), wear (clothes), etc) and have each itemStats script have a string paramter
+        // specifying which one to call, two we could make an intermediate step where clicking on the item asks Do you want to use this item? Or something, then clicking the button does one of the list of actions, three somehow have
+        // each item have its own function specified by itemStats? not sure how that would work tho
     }
     
 

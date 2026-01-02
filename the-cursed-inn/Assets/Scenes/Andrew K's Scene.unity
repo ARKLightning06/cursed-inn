@@ -1494,6 +1494,11 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &564451643 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8784436414836656991, guid: 7d5700386377b764fbca6b38c0e7c9a2, type: 3}
+  m_PrefabInstance: {fileID: 3088722912445677907}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &586381055
 GameObject:
   m_ObjectHideFlags: 0
@@ -2929,6 +2934,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   uiManager: {fileID: 448924732}
   InventoryGrid: []
+  defaultInventorySprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  defaultWidthHeight: {x: 25, y: 25}
+  itemWidthHeight: {x: 50, y: 50}
   starterItems:
   - {fileID: 2106974114}
   - {fileID: 2106974114}
@@ -2937,6 +2945,7 @@ MonoBehaviour:
   - {fileID: 1092098771}
   - {fileID: 1787705483}
   - {fileID: 128853695}
+  - {fileID: 564451643}
   slots:
   - {fileID: 390401730}
   - {fileID: 605472601}
@@ -6401,6 +6410,63 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &3088722912445677907
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6525131653874441073, guid: 7d5700386377b764fbca6b38c0e7c9a2, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -3.98
+      objectReference: {fileID: 0}
+    - target: {fileID: 6525131653874441073, guid: 7d5700386377b764fbca6b38c0e7c9a2, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.31
+      objectReference: {fileID: 0}
+    - target: {fileID: 6525131653874441073, guid: 7d5700386377b764fbca6b38c0e7c9a2, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6525131653874441073, guid: 7d5700386377b764fbca6b38c0e7c9a2, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6525131653874441073, guid: 7d5700386377b764fbca6b38c0e7c9a2, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6525131653874441073, guid: 7d5700386377b764fbca6b38c0e7c9a2, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6525131653874441073, guid: 7d5700386377b764fbca6b38c0e7c9a2, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6525131653874441073, guid: 7d5700386377b764fbca6b38c0e7c9a2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6525131653874441073, guid: 7d5700386377b764fbca6b38c0e7c9a2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6525131653874441073, guid: 7d5700386377b764fbca6b38c0e7c9a2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8784436414836656991, guid: 7d5700386377b764fbca6b38c0e7c9a2, type: 3}
+      propertyPath: m_Name
+      value: Christmas Sword
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 7d5700386377b764fbca6b38c0e7c9a2, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -6413,3 +6479,4 @@ SceneRoots:
   - {fileID: 2106974117}
   - {fileID: 1787705486}
   - {fileID: 128853698}
+  - {fileID: 3088722912445677907}
