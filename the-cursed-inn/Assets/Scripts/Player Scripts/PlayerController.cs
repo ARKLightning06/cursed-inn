@@ -19,14 +19,17 @@ public class PlayerMovement : MonoBehaviour
     {
         // Initialize the InputSystem_Actions() instance
         controls = new InputSystem_Actions();
-        
+
         // Subscribe to the movement and jump actions
-        controls.Player.Move.performed += ctx => moveInput = 
+        controls.Player.Move.performed += ctx => moveInput =
           ctx.ReadValue<Vector2>();
-        controls.Player.Move.canceled += ctx => moveInput = 
+        controls.Player.Move.canceled += ctx => moveInput =
           Vector2.zero;
-        
+
         controls.Player.Jump.performed += ctx => Jump();
+
+        // New sword swing action
+        controls.Player.SwingSword.performed += ctx => SwingSword();
 
     }
 
@@ -59,14 +62,19 @@ public class PlayerMovement : MonoBehaviour
         rb.linearVelocity = new Vector2(moveInput.x * moveSpeed, moveInput.y * moveSpeed);
     }
 
+    private void SwingSword()
+    {
+
+    }
+
     private void Jump()
     {
         //ORIGINAL CODE:
         //(Useless because we don't jump in topdown, just included for testing purposes for now, should be cleaned up later)
         // Check if the player is grounded before jumping
         // if (IsGrounded())
-          //{
-            // rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+        //{
+        // rb.velocity = new Vector2(rb.velocity.x, jumpForce);
         //}
         Debug.Log("Space Pressed!");
     }
