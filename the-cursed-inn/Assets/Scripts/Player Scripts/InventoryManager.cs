@@ -19,6 +19,10 @@ public class InventoryManager : MonoBehaviour
 {
     private InputSystem_Actions controls;
     public UIManager uiManager;
+
+    // Current Item Equipped by the Player
+    public GameObject equippedItem;
+    public ItemStats equippedItemStats;
     
     // For setting up the inventory
     public List<InventoryItem> InventoryGrid = new List<InventoryItem>();
@@ -203,7 +207,7 @@ public class InventoryManager : MonoBehaviour
 //Manage Inventory
     public InventoryItem ObjectToItem(GameObject gameObject)
     {
-        var stats = gameObject.GetComponent<ItemStats>();
+        ItemStats stats = gameObject.GetComponent<ItemStats>();
         InventoryItem newItem = new InventoryItem(gameObject, stats.image, stats.itemName, stats.description, stats.cost, stats.quantity, stats.itemCat);
         return newItem;
     }
@@ -214,6 +218,8 @@ public class InventoryManager : MonoBehaviour
         // need some way to call a function depending on the item... couple ideas, one could make a list of possible item actions (use, draw (weapon), wear (clothes), etc) and have each itemStats script have a string paramter
         // specifying which one to call, two we could make an intermediate step where clicking on the item asks Do you want to use this item? Or something, then clicking the button does one of the list of actions, three somehow have
         // each item have its own function specified by itemStats? not sure how that would work tho
+        equippedItem = calledItem.item;
+        equippedItemStats = calledItem.item.GetComponent<ItemStats>();
     }
     
 
