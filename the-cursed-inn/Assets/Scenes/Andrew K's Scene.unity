@@ -4349,14 +4349,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1313356558}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d80384e233d5de44d8c2fda367a94ee9, type: 3}
+  m_Script: {fileID: 11500000, guid: cc8f0c5454c7f4e988f1cbaed8dd43fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
   moveSpeed: 5
   jumpForce: 7
   groundLayer:
     serializedVersion: 2
-    m_Bits: 33
+    m_Bits: 0
 --- !u!50 &1313356560
 Rigidbody2D:
   serializedVersion: 5

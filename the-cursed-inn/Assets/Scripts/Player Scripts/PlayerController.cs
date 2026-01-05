@@ -28,9 +28,6 @@ public class PlayerMovement : MonoBehaviour
 
         controls.Player.Jump.performed += ctx => Jump();
 
-        // New sword swing action
-        controls.Player.SwingSword.performed += ctx => SwingSword();
-
     }
 
     private void OnEnable()
@@ -60,11 +57,6 @@ public class PlayerMovement : MonoBehaviour
         // Apply horizontal movement based on input
         // (Original code): rb.velocity = new Vector2(moveInput.x * moveSpeed, rb.velocity.y);
         rb.linearVelocity = new Vector2(moveInput.x * moveSpeed, moveInput.y * moveSpeed);
-    }
-
-    private void SwingSword()
-    {
-
     }
 
     private void Jump()
