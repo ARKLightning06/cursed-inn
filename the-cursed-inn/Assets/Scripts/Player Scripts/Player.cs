@@ -5,14 +5,13 @@ using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
+    public InventoryManager inventoryManager;
     private InputSystem_Actions controls;
     private Rigidbody2D rb;
     private Vector2 moveInput;
     //private bool isJumping = false;
 
-    //animators
-    private Animator _WeaponAnimationController;
-
+    public WeaponAnimationController _weaponAnimationController;
 
     [Header("Movement Settings")]
     public float moveSpeed = 5f;
@@ -87,7 +86,10 @@ public class Player : MonoBehaviour
 
     public void Attack()
     {
-
+        if (inventoryManager.equippedItemStats.itemName == "Sword")
+        {
+            _weaponAnimationController.SwingSword();
+        }
     }
 
 }
