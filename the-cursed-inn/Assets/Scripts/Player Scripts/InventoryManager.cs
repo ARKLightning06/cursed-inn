@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using TMPro;
 
 // Types for InventoryItems
 public enum Category {Accessory, Clothing, Consumable, Miscellaneous, Weapon}
@@ -18,27 +19,41 @@ public enum Category {Accessory, Clothing, Consumable, Miscellaneous, Weapon}
 public class InventoryManager : MonoBehaviour
 {
     private InputSystem_Actions controls;
+
+    [Header("Setup")]
     public UIManager uiManager;
+    // The below list is a list of game objects to be transformed into inventory items at start, just a way to populate the inventory with example items for now
+    public List<GameObject> starterItems = new List<GameObject>();
+    // Empty Inventory Slots, ensure they are connected to the buttons
+    public List<Button> slots = new List<Button>();
+    // Panels for Inventory, Descriptor, and Hotbar
+    public GameObject inventoryPanel;
+    public GameObject descriptorPanel;
+    public GameObject hotbarPanel;
+    // Text and Image for Descriptor
+    public TMP_Text descriptorName;
+    public TMP_Text descriptorDescription;
+    // For setting up the inventory
+    public List<InventoryItem> InventoryGrid = new List<InventoryItem>();
+
+
+    [Header("Info for other Scripts")]
 
     // Current Item Equipped by the Player
     public GameObject equippedItem;
     public ItemStats equippedItemStats;
+
+    [Header("Info for Inventory Aesthetics")]
     
-    // For setting up the inventory
-    public List<InventoryItem> InventoryGrid = new List<InventoryItem>();
     public Sprite defaultInventorySprite; // background sprite for an empty slot in the inventory
     public Vector2 defaultWidthHeight; //width height vector for an empty inventory slot
     public Vector2 itemWidthHeight; //width height vector for an item in the inventory when it exists
+    public Color emptySlotColor; // Color for empty slots
+    public Color fullSlotColor; // Color for full slots (should almost definitely be white)
+    public Color panelsColor; // Color for background panels
+    private int sortCategory = 0; // Sort category for sorting InventoryItems, where 0 is name, 1 is cost, 2 is quantity, and 3 is category
 
-    // The below list is a list of game objects to be transformed into inventory items at start, just a way to populate the inventory with example items for now
-    public List<GameObject> starterItems = new List<GameObject>();
 
-    // Temporary measure for inventory slots (will generate them later, maybe)
-    public List<Button> slots = new List<Button>();
-
-    // Sort category for sorting InventoryItems, where 0 is name, 1 is cost, 2 is quantity, and 3 is category
-    public int sortCategory = 0;
-// Set up controls
     private void Awake()
     {
         // Initialize the InputSystem_Actions() instance
@@ -56,6 +71,12 @@ public class InventoryManager : MonoBehaviour
 
         // Toggle Slots off to start
         ToggleSlots(false);
+
+        // Set the color of the panels to desired color
+        inventoryPanel.GetComponent<Image>().color = panelsColor;
+        descriptorPanel.GetComponent<Image>().color = panelsColor;
+        hotbarPanel.GetComponent<Image>().color = panelsColor;
+
     }
 
     private void OnEnable()
@@ -110,6 +131,8 @@ public class InventoryManager : MonoBehaviour
             backgroundSlot.onClick.RemoveAllListeners();
             backgroundSlot.GetComponent<Image>().sprite = defaultInventorySprite;
             backgroundSlot.GetComponent<RectTransform>().sizeDelta = defaultWidthHeight;
+            ColorBlock cb = backgroundSlot.colors;
+            cb.normalColor = emptySlotColor;
             // backgroundSlot.transition = Selectable.Transition.ColorTint;
             if (i < InventoryGrid.Count)
             {
@@ -119,7 +142,9 @@ public class InventoryManager : MonoBehaviour
                 // backgroundSlot.transition = Selectable.Transition.None; // changes transition to none so the sprite coloring isn't messed up
                 backgroundSlot.GetComponent<RectTransform>().sizeDelta = itemWidthHeight;
                 // TO DO: Make this ^^^ actually work so sprites retain normal coloring when applying visualization, for some reason doesn't work rn...
+                cb.normalColor = fullSlotColor;
             }
+            backgroundSlot.colors = cb;
         }
     }
 
@@ -221,6 +246,17 @@ public class InventoryManager : MonoBehaviour
         equippedItem = calledItem.item;
         equippedItemStats = calledItem.item.GetComponent<ItemStats>();
     }
+
+    public void OnHoverEnter()
+    {
+        Debug.Log("Hover enter");
+    }
+
+    public void OnHoverExit()
+    {
+        Debug.Log("Hover exit");
+    }
+
     
 
 // InventoryItem class to contain items in the inventory
