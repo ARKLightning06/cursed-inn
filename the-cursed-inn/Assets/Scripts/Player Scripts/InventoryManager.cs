@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using TMPro;
 
 // Types for InventoryItems
@@ -33,6 +34,10 @@ public class InventoryManager : MonoBehaviour
     // Text and Image for Descriptor
     public TMP_Text descriptorName;
     public TMP_Text descriptorDescription;
+    public Image descriptorImage;
+    public Sprite defaultDescriptorImage;
+    public string defaultDescriptorHeader;
+    public string defaultDescriptorDescription;
     // For setting up the inventory
     public List<InventoryItem> InventoryGrid = new List<InventoryItem>();
 
@@ -247,15 +252,37 @@ public class InventoryManager : MonoBehaviour
         equippedItemStats = calledItem.item.GetComponent<ItemStats>();
     }
 
-    public void OnHoverEnter()
+    public void OnHoverEnter(BaseEventData data)
     {
-        Debug.Log("Hover enter");
+        PointerEventData pointer = (PointerEventData)data;
+        GameObject hovered = pointer.pointerEnter;
+        int index = slots.IndexOf(hovered.GetComponent<Button>());
+        if (index >= InventoryGrid.Count)
+        {
+            SetDescriptorToDefault();
+        }
+        else
+        {
+            InventoryItem hoveredItem = InventoryGrid[index];
+            SetDescriptorStats(hoveredItem);
+
+        }
     }
 
-    public void OnHoverExit()
+    public void SetDescriptorStats(InventoryItem describedItem)
     {
-        Debug.Log("Hover exit");
+        descriptorName.text = describedItem.itemName;
+        descriptorDescription.text = describedItem.description;
+        descriptorImage.sprite = describedItem.visualization;
     }
+
+    public void SetDescriptorToDefault()
+    {
+        descriptorName.text = defaultDescriptorHeader;
+        descriptorDescription.text = defaultDescriptorDescription;
+        descriptorImage.sprite = defaultDescriptorImage;
+    }
+
 
     
 
