@@ -1497,7 +1497,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         public UIActions(@InputSystem_Actions wrapper) { m_Wrapper = wrapper; }
         /// <summary>
         /// Provides access to the underlying input action "UI/Navigate".
-        /// </summary>  
+        /// </summary>
         public InputAction @Navigate => m_Wrapper.m_UI_Navigate;
         /// <summary>
         /// Provides access to the underlying input action "UI/Submit".
