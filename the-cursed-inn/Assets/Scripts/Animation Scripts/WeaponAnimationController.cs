@@ -18,4 +18,5 @@ public class WeaponAnimationController : MonoBehaviour
         await Task.Delay(200); //waits for 0.2 seconds
         _WeaponAnimationController.SetBool("Swing", false);
     }
+
 }
