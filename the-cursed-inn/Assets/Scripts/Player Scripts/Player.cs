@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Threading.Tasks;
 
 public class Player : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class Player : MonoBehaviour
     //private bool isJumping = false;
 
     public WeaponAnimationController _weaponAnimationController;
+    private Animator weaponAnimator;
 
     [Header("Movement Settings")]
     public float moveSpeed = 5f;
@@ -86,10 +88,23 @@ public class Player : MonoBehaviour
 
     public void Attack()
     {
+        weaponAnimator = inventoryManager.equippedItem.GetComponent<Animator>();
         if (inventoryManager.equippedItemStats.itemName == "Sword")
         {
-            _weaponAnimationController.SwingSword();
+            DoAnimation();
         }
+        else if (inventoryManager.equippedItemStats.itemName == "Axe")
+        {
+            weaponAnimator = inventoryManager.equippedItem.GetComponent<Animator>();
+            DoAnimation();
+        }
+    }
+
+    public async Task DoAnimation()
+    {
+        weaponAnimator.SetBool("Swing", true);
+        await Task.Delay(200); //waits for 0.2 seconds
+        weaponAnimator.SetBool("Swing", false);
     }
 
 }

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
+using TMPro;
 
 // Types for InventoryItems
 public enum Category {Accessory, Clothing, Consumable, Miscellaneous, Weapon}
@@ -18,18 +20,45 @@ public enum Category {Accessory, Clothing, Consumable, Miscellaneous, Weapon}
 public class InventoryManager : MonoBehaviour
 {
     private InputSystem_Actions controls;
-    public UIManager uiManager;
-    public List<InventoryItem> InventoryGrid = new List<InventoryItem>();
 
+    [Header("Setup")]
+    public UIManager uiManager;
     // The below list is a list of game objects to be transformed into inventory items at start, just a way to populate the inventory with example items for now
     public List<GameObject> starterItems = new List<GameObject>();
-
-    // Temporary measure for inventory slots (will generate them later, maybe)
+    // Empty Inventory Slots, ensure they are connected to the buttons
     public List<Button> slots = new List<Button>();
+    // Panels for Inventory, Descriptor, and Hotbar
+    public GameObject inventoryPanel;
+    public GameObject descriptorPanel;
+    public GameObject hotbarPanel;
+    // Text and Image for Descriptor
+    public TMP_Text descriptorName;
+    public TMP_Text descriptorDescription;
+    public Image descriptorImage;
+    public Sprite defaultDescriptorImage;
+    public string defaultDescriptorHeader;
+    public string defaultDescriptorDescription;
+    // For setting up the inventory
+    public List<InventoryItem> InventoryGrid = new List<InventoryItem>();
 
-    // Sort category for sorting InventoryItems, where 0 is name, 1 is cost, 2 is quantity, and 3 is category
-    public int sortCategory = 0;
-// Set up controls
+
+    [Header("Info for other Scripts")]
+
+    // Current Item Equipped by the Player
+    public GameObject equippedItem;
+    public ItemStats equippedItemStats;
+
+    [Header("Info for Inventory Aesthetics")]
+    
+    public Sprite defaultInventorySprite; // background sprite for an empty slot in the inventory
+    public Vector2 defaultWidthHeight; //width height vector for an empty inventory slot
+    public Vector2 itemWidthHeight; //width height vector for an item in the inventory when it exists
+    public Color emptySlotColor; // Color for empty slots
+    public Color fullSlotColor; // Color for full slots (should almost definitely be white)
+    public Color panelsColor; // Color for background panels
+    private int sortCategory = 0; // Sort category for sorting InventoryItems, where 0 is name, 1 is cost, 2 is quantity, and 3 is category
+
+
     private void Awake()
     {
         // Initialize the InputSystem_Actions() instance
@@ -47,6 +76,12 @@ public class InventoryManager : MonoBehaviour
 
         // Toggle Slots off to start
         ToggleSlots(false);
+
+        // Set the color of the panels to desired color
+        inventoryPanel.GetComponent<Image>().color = panelsColor;
+        descriptorPanel.GetComponent<Image>().color = panelsColor;
+        hotbarPanel.GetComponent<Image>().color = panelsColor;
+
     }
 
     private void OnEnable()
@@ -99,14 +134,22 @@ public class InventoryManager : MonoBehaviour
             Button backgroundSlot = slots[i];
             backgroundSlot.gameObject.SetActive(isOn);
             backgroundSlot.onClick.RemoveAllListeners();
-            backgroundSlot.transition = Selectable.Transition.ColorTint;
+            backgroundSlot.GetComponent<Image>().sprite = defaultInventorySprite;
+            backgroundSlot.GetComponent<RectTransform>().sizeDelta = defaultWidthHeight;
+            ColorBlock cb = backgroundSlot.colors;
+            cb.normalColor = emptySlotColor;
+            // backgroundSlot.transition = Selectable.Transition.ColorTint;
             if (i < InventoryGrid.Count)
             {
+                InventoryItem currentItem = InventoryGrid[i];
                 backgroundSlot.GetComponent<Image>().sprite = InventoryGrid[i].visualization; // assigns visualization of associated InventoryItem
-                backgroundSlot.onClick.AddListener(InventoryFunction); // assigns function onClick... need to map it to associated InventoryItem
-                backgroundSlot.transition = Selectable.Transition.None; // changes transition to none so the sprite coloring isn't messed up
+                backgroundSlot.onClick.AddListener(() => InventoryFunction(currentItem)); // assigns function onClick... need to map it to associated InventoryItem
+                // backgroundSlot.transition = Selectable.Transition.None; // changes transition to none so the sprite coloring isn't messed up
+                backgroundSlot.GetComponent<RectTransform>().sizeDelta = itemWidthHeight;
                 // TO DO: Make this ^^^ actually work so sprites retain normal coloring when applying visualization, for some reason doesn't work rn...
+                cb.normalColor = fullSlotColor;
             }
+            backgroundSlot.colors = cb;
         }
     }
 
@@ -194,15 +237,53 @@ public class InventoryManager : MonoBehaviour
 //Manage Inventory
     public InventoryItem ObjectToItem(GameObject gameObject)
     {
-        var stats = gameObject.GetComponent<ItemStats>();
+        ItemStats stats = gameObject.GetComponent<ItemStats>();
         InventoryItem newItem = new InventoryItem(gameObject, stats.image, stats.itemName, stats.description, stats.cost, stats.quantity, stats.itemCat);
         return newItem;
     }
 
-    public void InventoryFunction()
+    public void InventoryFunction(InventoryItem calledItem)
     {
-        Debug.Log("A button was clicked!");
+        Debug.Log("A button was clicked! That button was " + calledItem.itemName + ".");
+        // need some way to call a function depending on the item... couple ideas, one could make a list of possible item actions (use, draw (weapon), wear (clothes), etc) and have each itemStats script have a string paramter
+        // specifying which one to call, two we could make an intermediate step where clicking on the item asks Do you want to use this item? Or something, then clicking the button does one of the list of actions, three somehow have
+        // each item have its own function specified by itemStats? not sure how that would work tho
+        equippedItem = calledItem.item;
+        equippedItemStats = calledItem.item.GetComponent<ItemStats>();
     }
+
+    public void OnHoverEnter(BaseEventData data)
+    {
+        PointerEventData pointer = (PointerEventData)data;
+        GameObject hovered = pointer.pointerEnter;
+        int index = slots.IndexOf(hovered.GetComponent<Button>());
+        if (index >= InventoryGrid.Count)
+        {
+            SetDescriptorToDefault();
+        }
+        else
+        {
+            InventoryItem hoveredItem = InventoryGrid[index];
+            SetDescriptorStats(hoveredItem);
+
+        }
+    }
+
+    public void SetDescriptorStats(InventoryItem describedItem)
+    {
+        descriptorName.text = describedItem.itemName;
+        descriptorDescription.text = describedItem.description;
+        descriptorImage.sprite = describedItem.visualization;
+    }
+
+    public void SetDescriptorToDefault()
+    {
+        descriptorName.text = defaultDescriptorHeader;
+        descriptorDescription.text = defaultDescriptorDescription;
+        descriptorImage.sprite = defaultDescriptorImage;
+    }
+
+
     
 
 // InventoryItem class to contain items in the inventory
