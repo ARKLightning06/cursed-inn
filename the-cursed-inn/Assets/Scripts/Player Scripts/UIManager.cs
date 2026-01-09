@@ -28,6 +28,7 @@ public class UIManager : MonoBehaviour
     public GameObject inventoryUI;
     public GameObject menuUI;
     public GameObject settingsUI;
+    public GameObject hotbarUI;
     // and any others...
 
 // Setting up Input
@@ -46,6 +47,7 @@ public class UIManager : MonoBehaviour
         parentUIs.Add(inventoryUI);
         parentUIs.Add(menuUI);
         parentUIs.Add(settingsUI);
+        parentUIs.Add(hotbarUI);
         TurnOnPlayingUI();
     }
 
@@ -123,6 +125,7 @@ public class UIManager : MonoBehaviour
     {
         TurnEverythingOff();
         inventoryUI.SetActive(true);
+        hotbarUI.SetActive(true);
         inventoryManager.ToggleSlots(true);
     }
 
@@ -136,6 +139,7 @@ public class UIManager : MonoBehaviour
     public void TurnOnPlayingUI()
     {
         TurnEverythingOff();
+        hotbarUI.SetActive(true);
         playUI.SetActive(true);
         //...
     }

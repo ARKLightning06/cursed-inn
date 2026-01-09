@@ -40,6 +40,10 @@ public class InventoryManager : MonoBehaviour
     public string defaultDescriptorDescription;
     // For setting up the inventory
     public List<InventoryItem> InventoryGrid = new List<InventoryItem>();
+    // for hotbar
+    public List<Image> hotbarIcons = new List<Image>();
+    public List<InventoryItem> hotbarItems = new List<InventoryItem>();
+    public Sprite emptyHotbarSlotSprite;
 
 
     [Header("Info for other Scripts")]
@@ -55,8 +59,11 @@ public class InventoryManager : MonoBehaviour
     public Vector2 itemWidthHeight; //width height vector for an item in the inventory when it exists
     public Color emptySlotColor; // Color for empty slots
     public Color fullSlotColor; // Color for full slots (should almost definitely be white)
+    public Color selectedSlotColor; // Color for selected slots
     public Color panelsColor; // Color for background panels
+    public Color emptyHotbarSlotColor;
     private int sortCategory = 0; // Sort category for sorting InventoryItems, where 0 is name, 1 is cost, 2 is quantity, and 3 is category
+    public InventoryItem selectedItem;
 
 
     private void Awake()
@@ -138,6 +145,8 @@ public class InventoryManager : MonoBehaviour
             backgroundSlot.GetComponent<RectTransform>().sizeDelta = defaultWidthHeight;
             ColorBlock cb = backgroundSlot.colors;
             cb.normalColor = emptySlotColor;
+            cb.selectedColor = emptySlotColor;
+            selectedItem = null;
             // backgroundSlot.transition = Selectable.Transition.ColorTint;
             if (i < InventoryGrid.Count)
             {
@@ -148,6 +157,7 @@ public class InventoryManager : MonoBehaviour
                 backgroundSlot.GetComponent<RectTransform>().sizeDelta = itemWidthHeight;
                 // TO DO: Make this ^^^ actually work so sprites retain normal coloring when applying visualization, for some reason doesn't work rn...
                 cb.normalColor = fullSlotColor;
+                cb.selectedColor = selectedSlotColor;
             }
             backgroundSlot.colors = cb;
         }
@@ -250,6 +260,7 @@ public class InventoryManager : MonoBehaviour
         // each item have its own function specified by itemStats? not sure how that would work tho
         equippedItem = calledItem.item;
         equippedItemStats = calledItem.item.GetComponent<ItemStats>();
+        selectedItem = calledItem;
     }
 
     public void OnHoverEnter(BaseEventData data)
@@ -283,6 +294,40 @@ public class InventoryManager : MonoBehaviour
         descriptorImage.sprite = defaultDescriptorImage;
     }
 
+// Manage Hotbar
+
+    public void AdjustHotbarVisuals()
+    {
+        // assumes hotbar is set up correctly in inspector, i.e. hotbarIcons is equal in length to hotbarItems
+        for (int i = 0; i < hotbarIcons.Count; i++)
+        {
+            if (hotbarItems[i] != null)
+            {
+                hotbarIcons[i].sprite = hotbarItems[i].visualization;
+            }
+            else
+            {
+                hotbarIcons[i].sprite = emptyHotbarSlotSprite;
+            }
+        }
+    }
+
+    public void SetHotbarSlot(int numSlot)
+    {
+        if (selectedItem != null)
+        {
+            hotbarItems[numSlot] = selectedItem;
+            hotbarIcons[numSlot].sprite = selectedItem.visualization;
+            hotbarIcons[numSlot].color = fullSlotColor;
+        }
+        else
+        {
+            hotbarItems[numSlot] = null;
+            hotbarIcons[numSlot].sprite = emptyHotbarSlotSprite;
+            hotbarIcons[numSlot].color = emptyHotbarSlotColor;
+
+        }
+    }
 
     
 

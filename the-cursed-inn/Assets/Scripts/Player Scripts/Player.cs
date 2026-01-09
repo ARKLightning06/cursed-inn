@@ -18,7 +18,6 @@ public class Player : MonoBehaviour
     [Header("Movement Settings")]
     public float moveSpeed = 5f;
     public float jumpForce = 7f;
-    public LayerMask groundLayer;
 
     private void Awake()
     {
@@ -75,15 +74,6 @@ public class Player : MonoBehaviour
         // rb.velocity = new Vector2(rb.velocity.x, jumpForce);
         //}
         Debug.Log("Space Pressed!");
-    }
-
-    private bool IsGrounded()
-    {
-        // Use a simple ground check to see if the player is touching 
-        // the ground
-        RaycastHit2D hit = Physics2D.Raycast
-          (transform.position, Vector2.down, 0.1f, groundLayer);
-        return hit.collider != null;
     }
 
     public void Attack()
