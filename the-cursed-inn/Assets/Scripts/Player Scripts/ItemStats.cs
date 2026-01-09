@@ -8,4 +8,11 @@ public class ItemStats : MonoBehaviour
     public int cost;
     public int quantity;
     public Category itemCat;
+
+    [System.Serializable]
+    public class Weapon
+    {
+
+    }
 }
+

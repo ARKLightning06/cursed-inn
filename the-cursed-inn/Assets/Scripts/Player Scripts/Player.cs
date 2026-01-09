@@ -79,26 +79,32 @@ public class Player : MonoBehaviour
         else if (uiManager.currentState == GameState.Inventory)
         {
             Debug.Log("playerScript");
-            
+
         }
     }
 
     public void Attack()
     {
-        weaponAnimator = inventoryManager.equippedItem.GetComponent<Animator>();
-        if (inventoryManager.equippedItemStats.itemName == "Sword")
+
+        if (inventoryManager.equippedItem == null)
         {
+            Debug.Log("Nothin Equipped");
+            //fill in later
+        }
+        else if (inventoryManager.equippedItemStats.itemName == "Sword")
+        {
+
             DoAnimation();
         }
         else if (inventoryManager.equippedItemStats.itemName == "Axe")
         {
-            weaponAnimator = inventoryManager.equippedItem.GetComponent<Animator>();
             DoAnimation();
         }
     }
 
     public async Task DoAnimation()
     {
+        weaponAnimator = inventoryManager.equippedItem.GetComponent<Animator>();
         weaponAnimator.SetBool("Swing", true);
         await Task.Delay(200); //waits for 0.2 seconds
         weaponAnimator.SetBool("Swing", false);
