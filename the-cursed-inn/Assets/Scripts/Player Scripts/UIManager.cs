@@ -29,6 +29,13 @@ public class UIManager : MonoBehaviour
     public GameObject menuUI;
     public GameObject settingsUI;
     public GameObject hotbarUI;
+    public Sprite fullHeartImage;
+    public Sprite emptyHeartImage;
+    public List<Image> heartList = new List<Image>();
+    public Image maliceBar;
+    public Image honorBar;
+    public Image kindnessBar;
+    
     // and any others...
 
 // Setting up Input
@@ -63,6 +70,44 @@ public class UIManager : MonoBehaviour
         controls.Disable();
     }
 
+//Playing
+
+    public void SetHearts(int numHeartsTotal, int numHeartsAlive)
+    {
+        //numHeartsAlive <= numHeartsTotal <= heartList.Count - 1
+        for (int i = 0; i < heartList.Count; i++)
+        {
+            if (i < numHeartsAlive)
+            {
+                heartList[i].gameObject.SetActive(true);
+                heartList[i].sprite = fullHeartImage;
+            }
+            else if (i < numHeartsTotal)
+            {
+                heartList[i].gameObject.SetActive(true);
+                heartList[i].sprite = emptyHeartImage;
+            }
+            else
+            {
+                heartList[i].gameObject.SetActive(false);
+            }
+        }
+    }
+
+    public void SetMaliceBar(float percent)
+    {
+        maliceBar.fillAmount = percent;
+    }
+
+    public void SetHonorBar(float percent)
+    {
+        honorBar.fillAmount = percent;
+    }
+
+    public void SetKindnessBar(float percent)
+    {
+        kindnessBar.fillAmount = percent;
+    }
 
 //Pausing
     public void Pause()
@@ -141,6 +186,7 @@ public class UIManager : MonoBehaviour
         TurnEverythingOff();
         hotbarUI.SetActive(true);
         playUI.SetActive(true);
+        SetHearts(3, 3); // change this to access player stats later
         //...
     }
 
