@@ -6,32 +6,38 @@ using System.Threading.Tasks;
 
 public class Player : MonoBehaviour
 {
+    public UIManager uiManager;
     public InventoryManager inventoryManager;
     private InputSystem_Actions controls;
     private Rigidbody2D rb;
     private Vector2 moveInput;
-    //private bool isJumping = false;
 
     public WeaponAnimationController _weaponAnimationController;
     private Animator weaponAnimator;
 
     [Header("Movement Settings")]
     public float moveSpeed = 5f;
-    public float jumpForce = 7f;
 
     private void Awake()
     {
         // Initialize the InputSystem_Actions() instance
         controls = new InputSystem_Actions();
 
-        // Subscribe to the movement and jump actions
         controls.Player.Move.performed += ctx => moveInput =
           ctx.ReadValue<Vector2>();
         controls.Player.Move.canceled += ctx => moveInput =
           Vector2.zero;
 
-        controls.Player.Jump.performed += ctx => Jump();
-        controls.Player.Attack.performed += ctx => Attack();
+        controls.Player.Attack.performed += ctx => ClickPressed();
+        controls.Player.One.performed += ctx => inventoryManager.SetEquippedItemFromHotbar(1);
+        controls.Player.Two.performed += ctx => inventoryManager.SetEquippedItemFromHotbar(2);
+        controls.Player.Three.performed += ctx => inventoryManager.SetEquippedItemFromHotbar(3);
+        controls.Player.Four.performed += ctx => inventoryManager.SetEquippedItemFromHotbar(4);
+        controls.Player.Five.performed += ctx => inventoryManager.SetEquippedItemFromHotbar(5);
+        controls.Player.Six.performed += ctx => inventoryManager.SetEquippedItemFromHotbar(6);
+        controls.Player.Seven.performed += ctx => inventoryManager.SetEquippedItemFromHotbar(7);
+        controls.Player.Eight.performed += ctx => inventoryManager.SetEquippedItemFromHotbar(8);
+
 
     }
 
@@ -64,16 +70,17 @@ public class Player : MonoBehaviour
         rb.linearVelocity = new Vector2(moveInput.x * moveSpeed, moveInput.y * moveSpeed);
     }
 
-    private void Jump()
+    public void ClickPressed()
     {
-        //ORIGINAL CODE:
-        //(Useless because we don't jump in topdown, just included for testing purposes for now, should be cleaned up later)
-        // Check if the player is grounded before jumping
-        // if (IsGrounded())
-        //{
-        // rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-        //}
-        Debug.Log("Space Pressed!");
+        if (uiManager.currentState == GameState.Playing)
+        {
+            Attack();
+        }
+        else if (uiManager.currentState == GameState.Inventory)
+        {
+            Debug.Log("playerScript");
+            
+        }
     }
 
     public void Attack()

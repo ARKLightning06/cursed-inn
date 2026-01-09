@@ -5420,13 +5420,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 956d63f187c044241bf01168fc6f3ea6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  uiManager: {fileID: 448924732}
   inventoryManager: {fileID: 1077064133}
   _weaponAnimationController: {fileID: 0}
   moveSpeed: 5
   jumpForce: 7
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!50 &1313356560
 Rigidbody2D:
   serializedVersion: 5

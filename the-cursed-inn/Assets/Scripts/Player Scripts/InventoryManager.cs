@@ -327,6 +327,24 @@ public class InventoryManager : MonoBehaviour
             hotbarIcons[numSlot].color = emptyHotbarSlotColor;
 
         }
+        selectedItem = null;
+    }
+
+    public void SetEquippedItemFromHotbar(int numSlot)
+    {
+        if (uiManager.currentState == GameState.Playing)
+        {
+            if (hotbarItems[numSlot - 1] != null)
+            {
+                equippedItem = hotbarItems[numSlot - 1].item;
+                equippedItemStats = hotbarItems[numSlot - 1].item.GetComponent<ItemStats>();
+            }
+            else
+            {
+                equippedItem = null;
+                equippedItemStats = null;
+            }
+        }
     }
 
     
