@@ -91,7 +91,7 @@ public class Player : MonoBehaviour
             Debug.Log("Nothin Equipped");
             //fill in later
         }
-        else if (inventoryManager.equippedItemStats.itemName == "Sword")
+        else if (inventoryManager.equippedItemStats.itemName == "Silver Sword")
         {
 
             DoAnimation();
