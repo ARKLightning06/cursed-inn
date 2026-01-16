@@ -7560,8 +7560,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   uiManager: {fileID: 7322494612284428720}
   starterItems:
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 3710451688379690338, guid: a8eab0164abdd53479be1091c68aa83e, type: 3}
+  - {fileID: 8784436414836656991, guid: 7d5700386377b764fbca6b38c0e7c9a2, type: 3}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -7593,7 +7593,6 @@ MonoBehaviour:
   defaultDescriptorImage: {fileID: 1302217227714304097, guid: 1c27d1233e39a754ab441279a26f8510, type: 3}
   defaultDescriptorHeader: ???
   defaultDescriptorDescription: What could it be???
-  InventoryGrid: []
   hotbarIcons:
   - {fileID: 3191628831378624799}
   - {fileID: 8269385389857365552}
@@ -7603,63 +7602,6 @@ MonoBehaviour:
   - {fileID: 8009224527424636523}
   - {fileID: 4944230299713875286}
   - {fileID: 7947532759640561291}
-  hotbarItems:
-  - item: {fileID: 0}
-    visualization: {fileID: 0}
-    itemName: 
-    description: 
-    cost: 0
-    quantity: 0
-    itemCat: 0
-  - item: {fileID: 0}
-    visualization: {fileID: 0}
-    itemName: 
-    description: 
-    cost: 0
-    quantity: 0
-    itemCat: 0
-  - item: {fileID: 0}
-    visualization: {fileID: 0}
-    itemName: 
-    description: 
-    cost: 0
-    quantity: 0
-    itemCat: 0
-  - item: {fileID: 0}
-    visualization: {fileID: 0}
-    itemName: 
-    description: 
-    cost: 0
-    quantity: 0
-    itemCat: 0
-  - item: {fileID: 0}
-    visualization: {fileID: 0}
-    itemName: 
-    description: 
-    cost: 0
-    quantity: 0
-    itemCat: 0
-  - item: {fileID: 0}
-    visualization: {fileID: 0}
-    itemName: 
-    description: 
-    cost: 0
-    quantity: 0
-    itemCat: 0
-  - item: {fileID: 0}
-    visualization: {fileID: 0}
-    itemName: 
-    description: 
-    cost: 0
-    quantity: 0
-    itemCat: 0
-  - item: {fileID: 0}
-    visualization: {fileID: 0}
-    itemName: 
-    description: 
-    cost: 0
-    quantity: 0
-    itemCat: 0
   emptyHotbarSlotSprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
   equippedItem: {fileID: 0}
   equippedItemStats: {fileID: 0}
@@ -7671,14 +7613,6 @@ MonoBehaviour:
   selectedSlotColor: {r: 0.92948204, g: 1, b: 0.13333333, a: 1}
   panelsColor: {r: 1, g: 1, b: 1, a: 0.39215687}
   emptyHotbarSlotColor: {r: 0.4, g: 0.4, b: 0.4, a: 1}
-  selectedItem:
-    item: {fileID: 0}
-    visualization: {fileID: 0}
-    itemName: 
-    description: 
-    cost: 0
-    quantity: 0
-    itemCat: 0
 --- !u!1 &7965247577745715031
 GameObject:
   m_ObjectHideFlags: 0

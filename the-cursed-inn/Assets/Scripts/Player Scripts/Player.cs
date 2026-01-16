@@ -95,6 +95,7 @@ public class Player : MonoBehaviour
         {
 
             DoAnimation();
+            Debug.Log("Silver Sword swung");
         }
         else if (inventoryManager.equippedItemStats.itemName == "Axe")
         {
@@ -112,7 +113,7 @@ public class Player : MonoBehaviour
         //inventoryManager.equippedItem.SetActive(false);
     }
 
-    public void changeDirection(float x, float y)
+    public void ChangeDirection(float x, float y)
     {
         if (x > 0)
         {
@@ -122,47 +123,44 @@ public class Player : MonoBehaviour
                 //add animator
                 //add weapon direction
             }
-            else if (y = 0)
+            else if (y == 0)
             {
+                //right
 
             }
             else
             {
-
+                //down and to the right
             }
         }
-        else if (x = 0)
+        else if (x == 0)
         {
             if (y > 0)
             {
-                //up and to right
-                //add animator
-                //add weapon direction    
+                //up    
             }
-            else if (y = 0)
+            else if (y == 0)
             {
-
+                //Nothing
             }
             else
             {
-
+                //down
             }
         }
         else
         {
             if (y > 0)
             {
-                //up and to right
-                //add animator
-                //add weapon direction    
+                //up and to left   
             }
-            else if (y = 0)
+            else if (y == 0)
             {
-
+                //left
             }
             else
             {
-
+                //down and to the left
             }
         }
     }

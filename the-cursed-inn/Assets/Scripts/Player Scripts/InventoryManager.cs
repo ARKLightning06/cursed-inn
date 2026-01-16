@@ -88,7 +88,12 @@ public class InventoryManager : MonoBehaviour
         inventoryPanel.GetComponent<Image>().color = panelsColor;
         descriptorPanel.GetComponent<Image>().color = panelsColor;
         hotbarPanel.GetComponent<Image>().color = panelsColor;
-
+        
+        Debug.Log("HotbarListTest");
+        foreach (InventoryItem x in hotbarItems)
+        {
+            Debug.Log("yay");
+        }
     }
 
     private void OnEnable()
@@ -258,9 +263,11 @@ public class InventoryManager : MonoBehaviour
         // need some way to call a function depending on the item... couple ideas, one could make a list of possible item actions (use, draw (weapon), wear (clothes), etc) and have each itemStats script have a string paramter
         // specifying which one to call, two we could make an intermediate step where clicking on the item asks Do you want to use this item? Or something, then clicking the button does one of the list of actions, three somehow have
         // each item have its own function specified by itemStats? not sure how that would work tho
+        equippedItem.SetActive(false);
         equippedItem = calledItem.item;
         equippedItemStats = calledItem.item.GetComponent<ItemStats>();
         selectedItem = calledItem;
+        equippedItem.SetActive(true);
     }
 
     public void OnHoverEnter(BaseEventData data)
@@ -351,6 +358,7 @@ public class InventoryManager : MonoBehaviour
 
     // InventoryItem class to contain items in the inventory
 
+    [System.Serializable]
     public class InventoryItem
     {
         public GameObject item;
