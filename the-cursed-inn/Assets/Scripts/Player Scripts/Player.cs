@@ -104,10 +104,67 @@ public class Player : MonoBehaviour
 
     public async Task DoAnimation()
     {
+        //inventoryManager.equippedItem.SetActive(true);
         weaponAnimator = inventoryManager.equippedItem.GetComponent<Animator>();
         weaponAnimator.SetBool("Swing", true);
         await Task.Delay(200); //waits for 0.2 seconds
         weaponAnimator.SetBool("Swing", false);
+        //inventoryManager.equippedItem.SetActive(false);
+    }
+
+    public void changeDirection(float x, float y)
+    {
+        if (x > 0)
+        {
+            if (y > 0)
+            {
+                //up and to right
+                //add animator
+                //add weapon direction
+            }
+            else if (y = 0)
+            {
+
+            }
+            else
+            {
+
+            }
+        }
+        else if (x = 0)
+        {
+            if (y > 0)
+            {
+                //up and to right
+                //add animator
+                //add weapon direction    
+            }
+            else if (y = 0)
+            {
+
+            }
+            else
+            {
+
+            }
+        }
+        else
+        {
+            if (y > 0)
+            {
+                //up and to right
+                //add animator
+                //add weapon direction    
+            }
+            else if (y = 0)
+            {
+
+            }
+            else
+            {
+
+            }
+        }
     }
 
 }

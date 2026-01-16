@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 using TMPro;
 
 // Types for InventoryItems
-public enum Category {Accessory, Clothing, Consumable, Miscellaneous, Weapon}
+public enum Category { Accessory, Clothing, Consumable, Miscellaneous, Weapon }
 
 
 
@@ -53,7 +53,7 @@ public class InventoryManager : MonoBehaviour
     public ItemStats equippedItemStats;
 
     [Header("Info for Inventory Aesthetics")]
-    
+
     public Sprite defaultInventorySprite; // background sprite for an empty slot in the inventory
     public Vector2 defaultWidthHeight; //width height vector for an empty inventory slot
     public Vector2 itemWidthHeight; //width height vector for an item in the inventory when it exists
@@ -70,16 +70,16 @@ public class InventoryManager : MonoBehaviour
     {
         // Initialize the InputSystem_Actions() instance
         controls = new InputSystem_Actions();
-        
+
         // Subscribe to the Inventory action
         controls.UI.Inventory.performed += ctx => Inventory();
 
         // Initialize starterItems into InventoryItems list
-        for(int i = 0; i < starterItems.Count; i++)
+        for (int i = 0; i < starterItems.Count; i++)
         {
             InventoryGrid.Add(ObjectToItem(starterItems[i]));
             // TO DO: work out quantity so if it already exists it adds to quantity instead of adding new item, same with add item function
-        }        
+        }
 
         // Toggle Slots off to start
         ToggleSlots(false);
@@ -103,10 +103,10 @@ public class InventoryManager : MonoBehaviour
         controls.Disable();
     }
 
-// Open and Close inventory
+    // Open and Close inventory
     private void Inventory()
     {
-        if(uiManager.currentState != GameState.Inventory)
+        if (uiManager.currentState != GameState.Inventory)
         {
             uiManager.PauseGame();
             OpenInventory();
@@ -122,7 +122,7 @@ public class InventoryManager : MonoBehaviour
         uiManager.currentState = GameState.Inventory;
         uiManager.TurnOnInventoryUI();
     }
-    
+
     private void CloseInventory()
     {
         uiManager.currentState = GameState.Playing;
@@ -135,7 +135,7 @@ public class InventoryManager : MonoBehaviour
         {
             ArrangeSlots();
         }
-        for(int i = 0; i < slots.Count; i++)
+        for (int i = 0; i < slots.Count; i++)
         {
             //TO DO: add a function to be associated with items (maybe based on their category? Like weapons and accessories would be equiped in various ways, while consumables are consumed?)
             Button backgroundSlot = slots[i];
@@ -244,7 +244,7 @@ public class InventoryManager : MonoBehaviour
         sortCategory = cat;
     }
 
-//Manage Inventory
+    //Manage Inventory
     public InventoryItem ObjectToItem(GameObject gameObject)
     {
         ItemStats stats = gameObject.GetComponent<ItemStats>();
@@ -294,7 +294,7 @@ public class InventoryManager : MonoBehaviour
         descriptorImage.sprite = defaultDescriptorImage;
     }
 
-// Manage Hotbar
+    // Manage Hotbar
 
     public void AdjustHotbarVisuals()
     {
@@ -347,10 +347,10 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    
 
-// InventoryItem class to contain items in the inventory
-    [System.Serializable]
+
+    // InventoryItem class to contain items in the inventory
+
     public class InventoryItem
     {
         public GameObject item;
@@ -371,7 +371,7 @@ public class InventoryManager : MonoBehaviour
             quantity = theQuantity;
             itemCat = cat;
         }
-        
+
     }
 
 }
