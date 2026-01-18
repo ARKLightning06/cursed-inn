@@ -6,17 +6,22 @@ using System.Threading.Tasks;
 
 public class Player : MonoBehaviour
 {
+    public Player player;
     public UIManager uiManager;
     public InventoryManager inventoryManager;
     private InputSystem_Actions controls;
     private Rigidbody2D rb;
     private Vector2 moveInput;
 
+    public bool isAttacking;
+
+
     public WeaponAnimationController _weaponAnimationController;
     private Animator weaponAnimator;
 
     [Header("Movement Settings")]
     public float moveSpeed = 5f;
+
 
     private void Awake()
     {
@@ -61,6 +66,7 @@ public class Player : MonoBehaviour
     private void Update()
     {
         Move();
+        ChangeDirection(rb.linearVelocityX, rb.linearVelocityY);
     }
 
     private void Move()
@@ -85,7 +91,6 @@ public class Player : MonoBehaviour
 
     public void Attack()
     {
-
         if (inventoryManager.equippedItem == null)
         {
             Debug.Log("Nothin Equipped");
@@ -93,8 +98,9 @@ public class Player : MonoBehaviour
         }
         else if (inventoryManager.equippedItemStats.itemName == "Silver Sword")
         {
-
+            isAttacking = true;
             DoAnimation();
+
             Debug.Log("Silver Sword swung");
         }
         else if (inventoryManager.equippedItemStats.itemName == "Axe")
@@ -106,9 +112,11 @@ public class Player : MonoBehaviour
     public async Task DoAnimation()
     {
         //inventoryManager.equippedItem.SetActive(true);
+
         weaponAnimator = inventoryManager.equippedItem.GetComponent<Animator>();
         weaponAnimator.SetBool("Swing", true);
         await Task.Delay(200); //waits for 0.2 seconds
+        isAttacking = false;
         weaponAnimator.SetBool("Swing", false);
         //inventoryManager.equippedItem.SetActive(false);
     }
@@ -122,22 +130,30 @@ public class Player : MonoBehaviour
                 //up and to right
                 //add animator
                 //add weapon direction
+                Debug.Log("Up and right");
+                player.transform.eulerAngles = new Vector3(0f, 0f, 45f);
+
             }
             else if (y == 0)
             {
-                //right
-
+                //right(default)
+                Debug.Log("right");
+                player.transform.eulerAngles = new Vector3(0f, 0f, 0f);
             }
             else
             {
                 //down and to the right
+                Debug.Log("down and right");
+                player.transform.eulerAngles = new Vector3(0f, 0f, -45f);
             }
         }
         else if (x == 0)
         {
             if (y > 0)
             {
-                //up    
+                //up
+                Debug.Log("up");
+                player.transform.eulerAngles = new Vector3(0f, 0f, 90f);
             }
             else if (y == 0)
             {
@@ -146,21 +162,29 @@ public class Player : MonoBehaviour
             else
             {
                 //down
+                Debug.Log("Down");
+                player.transform.eulerAngles = new Vector3(0f, 0f, -90f);
             }
         }
         else
         {
             if (y > 0)
             {
-                //up and to left   
+                //up and to left
+                Debug.Log("Up and Left");
+                player.transform.eulerAngles = new Vector3(0f, 0f, 135f);
             }
             else if (y == 0)
             {
                 //left
+                Debug.Log("Left");
+                player.transform.eulerAngles = new Vector3(0f, 0f, 180f);
             }
             else
             {
                 //down and to the left
+                Debug.Log("Down and Left");
+                player.transform.eulerAngles = new Vector3(0f, 0f, 225f);
             }
         }
     }

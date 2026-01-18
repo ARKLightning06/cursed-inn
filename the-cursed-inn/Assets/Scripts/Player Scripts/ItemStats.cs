@@ -15,6 +15,7 @@ public class ItemStats : MonoBehaviour
         public int damage;
         public float activetimer;
         public float knockbackSpeed;
+
     }
 
     public class Melee : Weapon

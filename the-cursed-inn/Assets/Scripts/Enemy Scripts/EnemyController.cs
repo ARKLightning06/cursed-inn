@@ -11,6 +11,8 @@ public class EnemyController : MonoBehaviour
 
     public float knockbackSpeed;
 
+    public Player player;
+
     private void Start()
     {
         enemy = GetComponent<Rigidbody2D>();
@@ -19,15 +21,19 @@ public class EnemyController : MonoBehaviour
     //when the collision between a weapon and the enemy is detected
     private void OnTriggerEnter2D(Collider2D WeaponCollider)
     {
-        //set weapon to game object that collided with the enemy 
-        GameObject weapon = WeaponCollider.gameObject;
 
-        //stand in to check
-        Debug.Log(enemyName + " Hit by " + weapon.name);
+        if (player.isAttacking == true)
+        {
+            //set weapon to game object that collided with the enemy 
+            GameObject weapon = WeaponCollider.gameObject;
 
-        //apply knockback
-        ApplyKnockback(weapon.transform);
+            //stand in to check
+            Debug.Log(enemyName + " Hit by " + weapon.name);
 
+            //apply knockback
+            ApplyKnockback(weapon.transform);
+
+        }
     }
 
     //boolean to determine whether the enemy is in the middle of being knocked back so it can't be knocked back again
