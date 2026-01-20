@@ -183,7 +183,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2643026377574757056}
   - component: {fileID: 7893020211691086206}
-  - component: {fileID: 713430568698575900}
   - component: {fileID: 2569129097836248278}
   m_Layer: 0
   m_Name: Silver Sword Parent
@@ -231,18 +230,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &713430568698575900
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3710451688379690338}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a15354231c184557a0cc7f715a9b362, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::WeaponAnimationController
 --- !u!114 &2569129097836248278
 MonoBehaviour:
   m_ObjectHideFlags: 0

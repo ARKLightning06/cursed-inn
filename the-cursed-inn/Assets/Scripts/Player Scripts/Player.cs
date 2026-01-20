@@ -6,17 +6,18 @@ using System.Threading.Tasks;
 
 public class Player : MonoBehaviour
 {
-    public Player player;
+    public GameObject playerVis;
     public UIManager uiManager;
     public InventoryManager inventoryManager;
     private InputSystem_Actions controls;
     private Rigidbody2D rb;
     private Vector2 moveInput;
-
+    public int weaponSwingTime;
     public bool isAttacking;
+    public List<GameObject> accessibleInventory = new List<GameObject>();
 
 
-    public WeaponAnimationController _weaponAnimationController;
+    //public WeaponAnimationController _weaponAnimationController;
     private Animator weaponAnimator;
 
     [Header("Movement Settings")]
@@ -32,6 +33,7 @@ public class Player : MonoBehaviour
           ctx.ReadValue<Vector2>();
         controls.Player.Move.canceled += ctx => moveInput =
           Vector2.zero;
+        //controls.Player.Move.performed += ctx => Move();
 
         controls.Player.Attack.performed += ctx => ClickPressed();
         controls.Player.One.performed += ctx => inventoryManager.SetEquippedItemFromHotbar(1);
@@ -66,7 +68,10 @@ public class Player : MonoBehaviour
     private void Update()
     {
         Move();
-        ChangeDirection(rb.linearVelocityX, rb.linearVelocityY);
+        if (!isAttacking)
+        {
+            ChangeDirection(rb.linearVelocityX, rb.linearVelocityY);
+        }
     }
 
     private void Move()
@@ -84,27 +89,23 @@ public class Player : MonoBehaviour
         }
         else if (uiManager.currentState == GameState.Inventory)
         {
-            Debug.Log("playerScript");
-
+            //Player Script
         }
     }
 
     public void Attack()
     {
+        Debug.Log("Hi");
+        Debug.Log(inventoryManager.equippedItemStats.itemCat);
         if (inventoryManager.equippedItem == null)
         {
             Debug.Log("Nothin Equipped");
             //fill in later
         }
-        else if (inventoryManager.equippedItemStats.itemName == "Silver Sword")
+        else if (inventoryManager.equippedItemStats.itemCat == Category.Weapon)
         {
+            Debug.Log("Hello!");
             isAttacking = true;
-            DoAnimation();
-
-            Debug.Log("Silver Sword swung");
-        }
-        else if (inventoryManager.equippedItemStats.itemName == "Axe")
-        {
             DoAnimation();
         }
     }
@@ -115,7 +116,7 @@ public class Player : MonoBehaviour
 
         weaponAnimator = inventoryManager.equippedItem.GetComponent<Animator>();
         weaponAnimator.SetBool("Swing", true);
-        await Task.Delay(200); //waits for 0.2 seconds
+        await Task.Delay(weaponSwingTime); //waits for 0.2 seconds
         isAttacking = false;
         weaponAnimator.SetBool("Swing", false);
         //inventoryManager.equippedItem.SetActive(false);
@@ -130,21 +131,18 @@ public class Player : MonoBehaviour
                 //up and to right
                 //add animator
                 //add weapon direction
-                Debug.Log("Up and right");
-                player.transform.eulerAngles = new Vector3(0f, 0f, 45f);
+                playerVis.transform.eulerAngles = new Vector3(0f, 0f, 45f);
 
             }
             else if (y == 0)
             {
                 //right(default)
-                Debug.Log("right");
-                player.transform.eulerAngles = new Vector3(0f, 0f, 0f);
+                playerVis.transform.eulerAngles = new Vector3(0f, 0f, 0f);
             }
             else
             {
                 //down and to the right
-                Debug.Log("down and right");
-                player.transform.eulerAngles = new Vector3(0f, 0f, -45f);
+                playerVis.transform.eulerAngles = new Vector3(0f, 0f, -45f);
             }
         }
         else if (x == 0)
@@ -152,8 +150,7 @@ public class Player : MonoBehaviour
             if (y > 0)
             {
                 //up
-                Debug.Log("up");
-                player.transform.eulerAngles = new Vector3(0f, 0f, 90f);
+                playerVis.transform.eulerAngles = new Vector3(0f, 0f, 90f);
             }
             else if (y == 0)
             {
@@ -162,8 +159,7 @@ public class Player : MonoBehaviour
             else
             {
                 //down
-                Debug.Log("Down");
-                player.transform.eulerAngles = new Vector3(0f, 0f, -90f);
+                playerVis.transform.eulerAngles = new Vector3(0f, 0f, -90f);
             }
         }
         else
@@ -171,21 +167,35 @@ public class Player : MonoBehaviour
             if (y > 0)
             {
                 //up and to left
-                Debug.Log("Up and Left");
-                player.transform.eulerAngles = new Vector3(0f, 0f, 135f);
+                playerVis.transform.eulerAngles = new Vector3(0f, 0f, 135f);
             }
             else if (y == 0)
             {
                 //left
-                Debug.Log("Left");
-                player.transform.eulerAngles = new Vector3(0f, 0f, 180f);
+                playerVis.transform.eulerAngles = new Vector3(0f, 0f, 180f);
             }
             else
             {
                 //down and to the left
-                Debug.Log("Down and Left");
-                player.transform.eulerAngles = new Vector3(0f, 0f, 225f);
+                playerVis.transform.eulerAngles = new Vector3(0f, 0f, 225f);
             }
+        }
+    }
+
+    public void UpdateAccessibleInventory(GameObject equipped)
+    {
+        foreach(GameObject x in accessibleInventory)
+        {
+            x.SetActive(false);
+        }
+        if (accessibleInventory.Contains(equipped) && equipped != inventoryManager.equippedItem)
+        {
+            Debug.Log("is in it");
+            equipped.SetActive(true);
+        }
+        else
+        {
+            Debug.Log("Not in it");
         }
     }
 

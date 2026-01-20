@@ -23,6 +23,7 @@ public class InventoryManager : MonoBehaviour
 
     [Header("Setup")]
     public UIManager uiManager;
+    public Player player;
     // The below list is a list of game objects to be transformed into inventory items at start, just a way to populate the inventory with example items for now
     public List<GameObject> starterItems = new List<GameObject>();
     // Empty Inventory Slots, ensure they are connected to the buttons
@@ -31,6 +32,7 @@ public class InventoryManager : MonoBehaviour
     public GameObject inventoryPanel;
     public GameObject descriptorPanel;
     public GameObject hotbarPanel;
+    public InventoryItem emptyItem;
     // Text and Image for Descriptor
     public TMP_Text descriptorName;
     public TMP_Text descriptorDescription;
@@ -88,6 +90,12 @@ public class InventoryManager : MonoBehaviour
         inventoryPanel.GetComponent<Image>().color = panelsColor;
         descriptorPanel.GetComponent<Image>().color = panelsColor;
         hotbarPanel.GetComponent<Image>().color = panelsColor;
+
+        // initialize hotbar items to empty
+        for(int i = 0; i < 8; i ++)
+        {
+            hotbarItems.Add(emptyItem);
+        }
 
     }
 
@@ -261,6 +269,8 @@ public class InventoryManager : MonoBehaviour
         equippedItem = calledItem.item;
         equippedItemStats = calledItem.item.GetComponent<ItemStats>();
         selectedItem = calledItem;
+        player.UpdateAccessibleInventory(calledItem.item);
+        
     }
 
     public void OnHoverEnter(BaseEventData data)
@@ -322,7 +332,7 @@ public class InventoryManager : MonoBehaviour
         }
         else
         {
-            hotbarItems[numSlot] = null;
+            hotbarItems[numSlot] = emptyItem;
             hotbarIcons[numSlot].sprite = emptyHotbarSlotSprite;
             hotbarIcons[numSlot].color = emptyHotbarSlotColor;
 
@@ -336,13 +346,22 @@ public class InventoryManager : MonoBehaviour
         {
             if (hotbarItems[numSlot - 1] != null)
             {
+                if(equippedItem == hotbarItems[numSlot - 1].item)
+                {
+                    equippedItem = emptyItem.item;
+                    equippedItemStats = null;
+                    player.UpdateAccessibleInventory(emptyItem.item);
+                    return;
+                }
+                player.UpdateAccessibleInventory(hotbarItems[numSlot - 1].item);
                 equippedItem = hotbarItems[numSlot - 1].item;
                 equippedItemStats = hotbarItems[numSlot - 1].item.GetComponent<ItemStats>();
             }
             else
             {
-                equippedItem = null;
-                equippedItemStats = null;
+                equippedItem = emptyItem.item;
+                equippedItemStats = null; // should probably be emptyItem stats with getComponent
+                player.UpdateAccessibleInventory(emptyItem.item);
             }
         }
     }
