@@ -34,13 +34,6 @@ public class QuestManager : MonoBehaviour
     }
 
 
-    // Dialogue Option class to contain dialogue options
-    [System.Serializable]
-    public class Dialogue
-    {
-        public string message;
-        
-    }
 
 
 }

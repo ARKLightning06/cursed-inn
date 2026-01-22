@@ -6,9 +6,12 @@ using System.Threading.Tasks;
 
 public class Player : MonoBehaviour
 {
-    public GameObject playerVis;
+    [Header("Object Assignments")]
+    public GameObject playerVis; 
     public UIManager uiManager;
     public InventoryManager inventoryManager;
+    public List<NPCStats> npcsInRange = new List<NPCStats>();
+    public NPCStats currentNPC;
     private InputSystem_Actions controls;
     private Rigidbody2D rb;
     private Vector2 moveInput;
@@ -34,6 +37,7 @@ public class Player : MonoBehaviour
         controls.Player.Move.canceled += ctx => moveInput =
           Vector2.zero;
         //controls.Player.Move.performed += ctx => Move();
+        controls.Player.Interact.performed += ctx => InteractPressed();
 
         controls.Player.Attack.performed += ctx => ClickPressed();
         controls.Player.One.performed += ctx => inventoryManager.SetEquippedItemFromHotbar(1);
@@ -196,6 +200,83 @@ public class Player : MonoBehaviour
         else
         {
             Debug.Log("Not in it");
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        GameObject otherGO = other.gameObject;
+        if(otherGO.layer == 6)
+        {
+            AdjustNPCRange(other.GetComponent<NPCStats>(), true);
+        }
+    }
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        GameObject otherGO = other.gameObject;
+        if(otherGO.layer == 6)
+        {
+            AdjustNPCRange(other.GetComponent<NPCStats>(), false);
+        }
+    }
+
+    public void AdjustNPCRange(NPCStats npc, bool isBeingAdded)
+    {
+        if (isBeingAdded)
+        {
+            npcsInRange.Add(npc);
+        }
+        else
+        {
+            npcsInRange.Remove(npc);
+        }
+    }
+
+    public float DistanceFromNPC(GameObject npc)
+    {
+        return Vector3.Distance(transform.position, npc.transform.position);
+    }
+
+    public void InteractPressed()
+    {
+        if(FindClosestNPCInRange() == null)
+        {
+            Debug.Log("No one to talk to");
+            currentNPC = null;
+        }
+        else
+        {
+            Debug.Log("Closest NPC is " + FindClosestNPCInRange().npcName);
+            currentNPC = FindClosestNPCInRange();
+            DoDialogue();
+        }
+    }
+
+//sry for this abysmal organization I'll clean it up later it's kinda late rn... bad excuse but yeah sry 
+    public void DoDialogue()
+    {
+        currentNPC.DoNextDialogue();
+    }
+
+    public NPCStats FindClosestNPCInRange()
+    {
+        if(npcsInRange.Count > 0)
+        {
+            NPCStats talker = npcsInRange[0];
+            float curr_distance = DistanceFromNPC(talker.gameObject);
+            foreach(NPCStats npc in npcsInRange)
+            {
+                if(DistanceFromNPC(npc.gameObject) < curr_distance)
+                {
+                    talker = npc;
+                    curr_distance = DistanceFromNPC(npc.gameObject);
+                }
+            }
+            return talker;
+        }
+        else
+        {
+            return null;
         }
     }
 

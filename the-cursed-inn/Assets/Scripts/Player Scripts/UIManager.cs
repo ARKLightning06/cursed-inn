@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using TMPro;
 
 // GameState enum to track GameState
 public enum GameState {Menu, Paused, Inventory, Playing, Cutscene}
@@ -29,6 +30,10 @@ public class UIManager : MonoBehaviour
     public GameObject menuUI;
     public GameObject settingsUI;
     public GameObject hotbarUI;
+    public GameObject dialogueUI;
+    public TMP_Text dialogueName;
+    public TMP_Text dialogueText;
+    public Image dialogueImage;
     public Sprite fullHeartImage;
     public Sprite emptyHeartImage;
     public List<Image> heartList = new List<Image>();
@@ -185,6 +190,7 @@ public class UIManager : MonoBehaviour
     {
         TurnEverythingOff();
         hotbarUI.SetActive(true);
+        dialogueUI.SetActive(false);
         playUI.SetActive(true);
         SetHearts(3, 3); // change this to access player stats later
         //...
@@ -201,6 +207,34 @@ public class UIManager : MonoBehaviour
         TurnEverythingOff();
         settingsUI.SetActive(true);
     }
+    public void UpdateDialogue(Sprite sprite, string name, string dialogue)
+    {
+        TurnOnDialogue();
+        dialogueImage.sprite = sprite;
+        TypeOutDialogue(name, dialogue);
+    }
+
+    private void TypeOutDialogue(string header, string bodyText)
+    {
+        // TO DO: IMPLEMENT THIS FUNCTION TO TYPE OUT THE LETTERS ONE BY ONE SO IT LOOKS COOL :)
+        // Google a tutorial on it probably easiest, smth to do with making an array of all the characters I think idk
+        // use dialogueName.text to edit the header text and dialogueText.text to edit the body text
+        dialogueName.text = header;
+        dialogueText.text = bodyText;
+    }
+
+    public void TurnOnDialogue()
+    {
+        hotbarUI.SetActive(false);
+        dialogueUI.SetActive(true);
+    }
+    
+    public void TurnOffDialogue()
+    {
+        hotbarUI.SetActive(true);
+        dialogueUI.SetActive(false);
+    }
+
 
 // Button Functions
     // PAUSE BUTTONS:
