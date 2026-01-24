@@ -40,6 +40,7 @@ public class UIManager : MonoBehaviour
     public Image maliceBar;
     public Image honorBar;
     public Image kindnessBar;
+    public float textSpeed;
     
     // and any others...
 
@@ -214,13 +215,21 @@ public class UIManager : MonoBehaviour
         TypeOutDialogue(name, dialogue);
     }
 
-    private void TypeOutDialogue(string header, string bodyText)
+    public void Testing()
+    {
+        TurnOnDialogue();
+        TypeOutDialogue("Testing 1", "Testing 2 Testing 2 Testing 2 Testing 2 Testing 2 Testing 2 Testing 2 Testing 2 ");
+        Debug.Log("Testing 3");
+    }
+
+    public void TypeOutDialogue(string header, string bodyText)
     {
         // TO DO: IMPLEMENT THIS FUNCTION TO TYPE OUT THE LETTERS ONE BY ONE SO IT LOOKS COOL :)
         // Google a tutorial on it probably easiest, smth to do with making an array of all the characters I think idk
         // use dialogueName.text to edit the header text and dialogueText.text to edit the body text
         dialogueName.text = header;
-        dialogueText.text = bodyText;
+        dialogueText.text = "";
+        StartCoroutine(TypeLine(bodyText));
     }
 
     public void TurnOnDialogue()
@@ -233,6 +242,16 @@ public class UIManager : MonoBehaviour
     {
         hotbarUI.SetActive(true);
         dialogueUI.SetActive(false);
+    }
+
+    private IEnumerator TypeLine(string message)
+    {
+        foreach(char c in message.ToCharArray())
+        {
+            dialogueText.text += c;
+            //Update this to adjust speed (right now the text simply gets faster AS IT PRINTS)
+            yield return new WaitForSeconds(textSpeed/dialogueText.text.Length);
+        }
     }
 
 
