@@ -229,6 +229,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &701562605 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6943391052971371204, guid: 68a3b03ed0382c54883feacb9c7c8e6e, type: 3}
+  m_PrefabInstance: {fileID: 2597372563391179959}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &943956202
 GameObject:
   m_ObjectHideFlags: 0
@@ -440,7 +445,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7322494612284428720, guid: 68a3b03ed0382c54883feacb9c7c8e6e, type: 3}
   m_PrefabInstance: {fileID: 2597372563391179959}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 701562605}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4da7725322713e43ab87fc5ba1bb498, type: 3}
@@ -993,66 +998,10 @@ MonoBehaviour:
   isFighter: 0
   damage: 0
   charVisualization: {fileID: 1302217227714304097, guid: 1c27d1233e39a754ab441279a26f8510, type: 3}
-  defaultDialogue:
-    isPlayerDialogue: 0
-    isLast: 0
-    messageName: 
-    message: 
-    originalIsAvailableMessage: 0
-    isAvailableMessage: 0
-    selectedMalice: 0
-    selectedHonor: 0
-    selectedKindness: 0
-  dialogueLists:
-  - listName: Starter Convo
-    dialogueOptions:
-    - isPlayerDialogue: 0
-      isLast: 0
-      messageName: Greeting
-      message: Hello there!
-      originalIsAvailableMessage: 1
-      isAvailableMessage: 1
-      selectedMalice: 0
-      selectedHonor: 0
-      selectedKindness: 0
-    - isPlayerDialogue: 1
-      isLast: 0
-      messageName: Reply
-      message: General Kenobi...
-      originalIsAvailableMessage: 1
-      isAvailableMessage: 1
-      selectedMalice: 0
-      selectedHonor: 0
-      selectedKindness: 0
-    - isPlayerDialogue: 1
-      isLast: 1
-      messageName: Frustration
-      message: Uuuuurgh why is it 2:30
-      originalIsAvailableMessage: 1
-      isAvailableMessage: 1
-      selectedMalice: 0
-      selectedHonor: 0
-      selectedKindness: 0
-    isAvailableList: 1
   handler:
-    currDialogue:
-      isPlayerDialogue: 0
-      isLast: 0
-      messageName: 
-      message: 
-      originalIsAvailableMessage: 0
-      isAvailableMessage: 0
-      selectedMalice: 0
-      selectedHonor: 0
-      selectedKindness: 0
-    allDialogueLists: []
-    currDialogueList:
-      listName: 
-      dialogueOptions: []
-      isAvailableList: 0
     uiManager: {fileID: 0}
-    charVis: {fileID: 0}
     charName: 
+    charVis: {fileID: 0}
 --- !u!70 &1879702728
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -1295,6 +1244,26 @@ PrefabInstance:
     - target: {fileID: 1178538510148670187, guid: 68a3b03ed0382c54883feacb9c7c8e6e, type: 3}
       propertyPath: m_ConnectedAnchor.y
       value: 5.8900003
+      objectReference: {fileID: 0}
+    - target: {fileID: 3119209069653092582, guid: 68a3b03ed0382c54883feacb9c7c8e6e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3119209069653092582, guid: 68a3b03ed0382c54883feacb9c7c8e6e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3119209069653092582, guid: 68a3b03ed0382c54883feacb9c7c8e6e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 701562605}
+    - target: {fileID: 3119209069653092582, guid: 68a3b03ed0382c54883feacb9c7c8e6e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3119209069653092582, guid: 68a3b03ed0382c54883feacb9c7c8e6e, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: InventoryManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 4236723582596911109, guid: 68a3b03ed0382c54883feacb9c7c8e6e, type: 3}
       propertyPath: m_ConnectedAnchor.x
