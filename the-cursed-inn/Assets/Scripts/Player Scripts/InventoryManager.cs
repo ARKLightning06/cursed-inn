@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 using TMPro;
 
 // Types for InventoryItems
-public enum Category { Accessory, Clothing, Consumable, Miscellaneous, Weapon }
+public enum Category { Accessory, Clothing, Consumable, Miscellaneous, Melee, Projectile }
 
 
 
@@ -92,7 +92,7 @@ public class InventoryManager : MonoBehaviour
         hotbarPanel.GetComponent<Image>().color = panelsColor;
 
         // initialize hotbar items to empty
-        for(int i = 0; i < 8; i ++)
+        for (int i = 0; i < 8; i++)
         {
             hotbarItems.Add(emptyItem);
         }
@@ -270,7 +270,7 @@ public class InventoryManager : MonoBehaviour
         equippedItemStats = calledItem.item.GetComponent<ItemStats>();
         selectedItem = calledItem;
         player.UpdateAccessibleInventory(calledItem.item);
-        
+
     }
 
     public void OnHoverEnter(BaseEventData data)
@@ -346,7 +346,7 @@ public class InventoryManager : MonoBehaviour
         {
             if (hotbarItems[numSlot - 1] != null)
             {
-                if(equippedItem == hotbarItems[numSlot - 1].item)
+                if (equippedItem == hotbarItems[numSlot - 1].item)
                 {
                     equippedItem = emptyItem.item;
                     equippedItemStats = null;

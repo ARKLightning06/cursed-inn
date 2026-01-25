@@ -8,23 +8,21 @@ public class ItemStats : MonoBehaviour
     public int cost;
     public int quantity;
     public Category itemCat;
+    public int weaponActiveTime;
 
     [System.Serializable]
-    public class Weapon
+    public class Melee
     {
         public int damage;
         public float activetimer;
         public float knockbackSpeed;
-
     }
 
-    public class Melee : Weapon
+    public class Projectile
     {
-
-    }
-
-    public class Projectile : Weapon
-    {
+        public int damage;
+        public float activetimer;
+        public float knockbackSpeed;
         public float speed;
         public GameObject Ammo;
         public bool hasAmmo;

@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Threading.Tasks;
+using System.Linq;
 
 public class Player : MonoBehaviour
 {
     [Header("Object Assignments")]
-    public GameObject playerVis; 
+    public GameObject playerVis;
     public UIManager uiManager;
     public InventoryManager inventoryManager;
     public List<NPCStats> npcsInRange = new List<NPCStats>();
@@ -15,9 +16,9 @@ public class Player : MonoBehaviour
     private InputSystem_Actions controls;
     private Rigidbody2D rb;
     private Vector2 moveInput;
-    public int weaponSwingTime;
     public bool isAttacking;
     public List<GameObject> accessibleInventory = new List<GameObject>();
+
 
 
     //public WeaponAnimationController _weaponAnimationController;
@@ -48,7 +49,6 @@ public class Player : MonoBehaviour
         controls.Player.Six.performed += ctx => inventoryManager.SetEquippedItemFromHotbar(6);
         controls.Player.Seven.performed += ctx => inventoryManager.SetEquippedItemFromHotbar(7);
         controls.Player.Eight.performed += ctx => inventoryManager.SetEquippedItemFromHotbar(8);
-
 
     }
 
@@ -106,25 +106,44 @@ public class Player : MonoBehaviour
             Debug.Log("Nothin Equipped");
             //fill in later
         }
-        else if (inventoryManager.equippedItemStats.itemCat == Category.Weapon)
+        else if (inventoryManager.equippedItemStats.itemCat == Category.Melee)
         {
-            Debug.Log("Hello!");
+
+            Debug.Log("Melee!");
             isAttacking = true;
-            DoAnimation();
+            SwingSword();
         }
+
+        else if (inventoryManager.equippedItemStats.itemCat == Category.Projectile)
+        {
+            Debug.Log("Ranged!");
+            isAttacking = true;
+            DrawBow();
+        }
+
     }
 
-    public async Task DoAnimation()
+    public async Task SwingSword()
     {
-        //inventoryManager.equippedItem.SetActive(true);
-
         weaponAnimator = inventoryManager.equippedItem.GetComponent<Animator>();
         weaponAnimator.SetBool("Swing", true);
-        await Task.Delay(weaponSwingTime); //waits for 0.2 seconds
+        await Task.Delay(inventoryManager.equippedItemStats.weaponActiveTime); //waits for 0.2 seconds
         isAttacking = false;
         weaponAnimator.SetBool("Swing", false);
-        //inventoryManager.equippedItem.SetActive(false);
     }
+
+    public async Task DrawBow()
+    {
+
+        Debug.Log("Drew Bow");
+        weaponAnimator = inventoryManager.equippedItem.GetComponent<Animator>();
+        weaponAnimator.SetBool("Draw Bow", true);
+        await Task.Delay(inventoryManager.equippedItemStats.weaponActiveTime); //waits for 0.2 seconds
+        isAttacking = false;
+        weaponAnimator.SetBool("Draw Bow", false);
+
+    }
+
 
     public void ChangeDirection(float x, float y)
     {
@@ -188,7 +207,7 @@ public class Player : MonoBehaviour
 
     public void UpdateAccessibleInventory(GameObject equipped)
     {
-        foreach(GameObject x in accessibleInventory)
+        foreach (GameObject x in accessibleInventory)
         {
             x.SetActive(false);
         }
@@ -206,7 +225,7 @@ public class Player : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         GameObject otherGO = other.gameObject;
-        if(otherGO.layer == 6)
+        if (otherGO.layer == 6)
         {
             AdjustNPCRange(other.GetComponent<NPCStats>(), true);
         }
@@ -214,7 +233,7 @@ public class Player : MonoBehaviour
     private void OnTriggerExit2D(Collider2D other)
     {
         GameObject otherGO = other.gameObject;
-        if(otherGO.layer == 6)
+        if (otherGO.layer == 6)
         {
             AdjustNPCRange(other.GetComponent<NPCStats>(), false);
         }
@@ -239,7 +258,7 @@ public class Player : MonoBehaviour
 
     public void InteractPressed()
     {
-        if(FindClosestNPCInRange() == null)
+        if (FindClosestNPCInRange() == null)
         {
             Debug.Log("No one to talk to");
             currentNPC = null;
@@ -252,7 +271,7 @@ public class Player : MonoBehaviour
         }
     }
 
-//sry for this abysmal organization I'll clean it up later it's kinda late rn... bad excuse but yeah sry 
+    //sry for this abysmal organization I'll clean it up later it's kinda late rn... bad excuse but yeah sry 
     public void DoDialogue()
     {
         currentNPC.DoNextDialogue();
@@ -260,13 +279,13 @@ public class Player : MonoBehaviour
 
     public NPCStats FindClosestNPCInRange()
     {
-        if(npcsInRange.Count > 0)
+        if (npcsInRange.Count > 0)
         {
             NPCStats talker = npcsInRange[0];
             float curr_distance = DistanceFromNPC(talker.gameObject);
-            foreach(NPCStats npc in npcsInRange)
+            foreach (NPCStats npc in npcsInRange)
             {
-                if(DistanceFromNPC(npc.gameObject) < curr_distance)
+                if (DistanceFromNPC(npc.gameObject) < curr_distance)
                 {
                     talker = npc;
                     curr_distance = DistanceFromNPC(npc.gameObject);
