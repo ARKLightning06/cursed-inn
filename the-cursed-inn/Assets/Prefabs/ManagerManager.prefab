@@ -6867,7 +6867,7 @@ MonoBehaviour:
   hotbarUI: {fileID: 3676449340801600913}
   dialogueUI: {fileID: 4353746128933510440}
   dialogueName: {fileID: 6530200050496971857}
-  dialogueText: {fileID: 6530200050496971857}
+  dialogueText: {fileID: 6209729340819835179}
   dialogueImage: {fileID: 4420267391241830026}
   fullHeartImage: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
   emptyHeartImage: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
@@ -6878,6 +6878,7 @@ MonoBehaviour:
   maliceBar: {fileID: 1995651429375434974}
   honorBar: {fileID: 6846901856031924150}
   kindnessBar: {fileID: 7187401361081847453}
+  textSpeed: 0
 --- !u!1 &6975701103683695967
 GameObject:
   m_ObjectHideFlags: 0
