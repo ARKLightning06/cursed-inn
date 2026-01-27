@@ -34,6 +34,8 @@ public class UIManager : MonoBehaviour
     public TMP_Text dialogueName;
     public TMP_Text dialogueText;
     public Image dialogueImage;
+    public List<GameObject> dialogueButtons = new List<GameObject>();
+    public GameObject nextButton;
     public Sprite fullHeartImage;
     public Sprite emptyHeartImage;
     public List<Image> heartList = new List<Image>();
@@ -208,11 +210,36 @@ public class UIManager : MonoBehaviour
         TurnEverythingOff();
         settingsUI.SetActive(true);
     }
-    public void UpdateDialogue(Sprite sprite, string name, string dialogue)
+    public void UpdateDialogue(Sprite sprite, string name, string dialogue, int numOptions, bool isPlayerDialogue)
     {
         TurnOnDialogue();
         dialogueImage.sprite = sprite;
         TypeOutDialogue(name, dialogue);
+        if(isPlayerDialogue)
+        {
+            nextButton.SetActive(false);
+            int soFar = 0;
+            foreach(GameObject b in dialogueButtons)
+            {
+                soFar += 1;
+                if(soFar <= numOptions)
+                {
+                    b.SetActive(true);
+                }
+                else
+                {
+                    b.SetActive(false);
+                }
+            }
+        }
+        else
+        {
+            nextButton.SetActive(true);
+            foreach(GameObject b in dialogueButtons)
+            {
+                b.SetActive(false);
+            }
+        }
     }
 
     public void Testing()

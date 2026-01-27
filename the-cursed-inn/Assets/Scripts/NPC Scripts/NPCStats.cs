@@ -4,6 +4,10 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+
+
+public enum NPCName {TestNPC, PohnJork, SirBorro, Gastou, OctaviousTheFifth, MayorThadworn, Wyl, Lupal}
+
 public class NPCStats : MonoBehaviour
 {
     [Header("Interactions")]
@@ -11,6 +15,7 @@ public class NPCStats : MonoBehaviour
     public UIManager uiManager;
 
     [Header("Stats")]
+    public NPCName character; // this is the character corresponding to this script, used for initializing dialogue stuff
     public string npcName;
     public int health;
     public bool isFighter;
@@ -19,6 +24,8 @@ public class NPCStats : MonoBehaviour
 
     [Header("Dialogue")]
     public Sprite charVisualization;
+    public Sprite playerVisualization;
+    public string playerName;
     public Dialogue defaultDialogue;
     //public List<DialogueList> dialogueLists = new List<DialogueList>();
     public DialogueHandler handler;
@@ -32,6 +39,35 @@ public class NPCStats : MonoBehaviour
         // DialogueList tempStarter = new DialogueList();
         // tempStarter.dialogueOptions.Add(defaultDialogue);
         // handler = new DialogueHandler(defaultDialogue, dialogueLists, uiManager, charVisualization, "Nobody");
+        if(character == NPCName.TestNPC)
+        {
+            //outline: first node is NPC saying Hello There! second node is Player saying General Kenobi, third node is NPC saying what's 9 + 10, fourth node is Player saying 19 or 21, 21 goes to NPC node saying wrong you uncultured swine try again, then back to fourth node, 21 is NPC saying good job, bye, then ending
+            DialogueNode n1 = new DialogueNode(new List<Dialogue>(), false); // (NPC) hello there
+            DialogueNode n2 = new DialogueNode(new List<Dialogue>(), true); // (Player) General Kenobi
+            DialogueNode n3 = new DialogueNode(new List<Dialogue>(), false); // (NPC) What's 9 + 10? (options: 19, 21, in NEXT NODE)
+            DialogueNode n4 = new DialogueNode(new List<Dialogue>(), true); // (Player) options: 19 or 21, 19 to n5, 21 to n6
+            DialogueNode n5 = new DialogueNode(new List<Dialogue>(), false); // (NPC) 19 clicked, no you uncultured swine, try again, back to n3
+            DialogueNode n6 = new DialogueNode(new List<Dialogue>(), false); // (NPC) 21 clicked, Good boyyyy. Good bye!
+            DialogueNode end = new DialogueNode(new List<Dialogue>(), false); // empty node, end node to end dialogue 
+
+            Dialogue d1 = new Dialogue(n2, "Hello There!", true); // stored in n1
+            Dialogue d2 = new Dialogue(n3, "General Kenobi", true); // stored in n2
+            Dialogue d3 = new Dialogue(n4, "What's 9 + 10?", true); // stored in n3
+            Dialogue d4 = new Dialogue(n5, "19", true); // stored in n4
+            Dialogue d5 = new Dialogue(n6, "21", true); // also stored in n4
+            Dialogue d6 = new Dialogue(n3, "No you uncultured swine! Try again.", true); // stored in n5
+            Dialogue d7 = new Dialogue(end, "Good boyyyy. Good bye!", true); // stored in n6
+
+            n1.AppendDialogue(d1);
+            n2.AppendDialogue(d2);
+            n3.AppendDialogue(d3);
+            n4.AppendDialogue(d4);
+            n4.AppendDialogue(d5);
+            n5.AppendDialogue(d6);
+            n6.AppendDialogue(d7);
+
+            handler = new DialogueHandler(n1, uiManager, npcName, charVisualization, playerName, playerVisualization);
+        }
     }
 
     // Update is called once per frame
@@ -40,9 +76,15 @@ public class NPCStats : MonoBehaviour
         
     }
     
-    public void DoNextDialogue()
+    public void DisplayDialogue()
     {
-        handler.GoToNextNode();
+        handler.DisplayOptions();
+    }
+    
+    public void DoNextDialogue(int option)
+    {
+        //option must be in range of Dialogue options, or else returns and turns off dialouge and resets currNode
+        handler.GoToNextNode(option);
     }
 
     // Dialogue Option class to contain dialogue options
@@ -225,40 +267,167 @@ public class DialogueHandler
     public UIManager uiManager;
     public string charName;
     public Sprite charVis;
+    public string playerName;
+    public Sprite playerVis;
     
-    public DialogueHandler(DialogueNode ogNode, UIManager ui, string cName, Sprite cVis)
+    public DialogueHandler(DialogueNode ogNode, UIManager ui, string cName, Sprite cVis, string pName, Sprite pVis)
     {
         originalNode = ogNode;
         currNode = ogNode;
         uiManager = ui;
         charName = cName;
         charVis = cVis;
+        playerName = pName;
+        playerVis = pVis;
     }
 
     public void DisplayOptions()
     {
         //uimanager shenanigans...?
+        if(!currNode.IsCurrentlyEmpty())
+        {
+            if(currNode.IsPlayerNode())
+            {
+                uiManager.UpdateDialogue(playerVis, playerName, currNode.GetDialogueOptions(), currNode.GetNumOptions(), true);
+            }
+            else
+            {
+                uiManager.UpdateDialogue(charVis, charName, currNode.GetDialogueOptions(), currNode.GetNumOptions(), false);   
+            }
+        }
+        else
+        {
+            uiManager.TurnOffDialogue();
+            currNode = originalNode;
+            Debug.Log("Empty Node, Dialogue finished");
+        }
     }
 
-    public void GoToNextNode()
+    public void GoToNextNode(int chosen)
     {
-        Debug.Log("Under construction lmao, gotta lock in for frisbee but smth with caling currNode.GetNext and setting cur to that or smth");
+        //chosen must be in range of Dialogue options, or else returns and turns off dialouge and resets currNode
+        if(!currNode.IsCurrentlyEmpty() && currNode.GetNumOptions() >= chosen)
+        {
+            currNode = currNode.GetNextDialogue(chosen).GetNextNode();
+            DisplayOptions();
+        }
+        else
+        {
+            uiManager.TurnOffDialogue();
+            currNode = originalNode;
+            Debug.Log("Empty Node, Dialogue finished");
+
+        }        
+        
     }
     
 }
 
+[System.Serializable]
 public class DialogueNode
 {
     // Node of the DialogueHandler LinkedList containing a list of at least one dialogue option(s)
     // Attributes:
     // - DialogueList: list of Dialogue options to choose from which will also correspond to next node essentially
-    // - nextDefault: the default next DialogueOption used for searching through a Handler or something
+    // - isPlayerDialogue: boolean true if this node contains player dialogue or false if contains NPC dialogue
+    // - DISREGARD: nextDefault: the default next DialogueOption used for searching through a Handler or something
     // Functions:
-    // - GetNextNode(int): returns the nextNode based off of chosen DialogueOption
-    // - GetDialogueOptions: returns list of dialogue messages
+    // - GetNextDialogue(int): returns the chosen Dialogue option
+    // - GetDialogueOptions(): returns list of dialogue messages
+    // - GetNumOptions(): returns integer number of options, should be 0-4 (0 is empty, 1 is a list with only index 0)
     // - UpdateAvailability: updates Availability of all Dialogue children under this node
+    // - IsCurrentlyEmpty(): returns true if current dialogueList attribute is empty or has no currently available options, false if there exists at least one Available Dialogue in dialogueList
+    // - IsPlayerNode(): returns isPlayerDialogue bool
+    // - AppendDialogue(Dialogue): appends dialogue to the end of dialogueList
+    public List<Dialogue> dialogueList = new List<Dialogue>();
+    // public Dialogue nextDefault;
+    public bool isPlayerDialogue;
+
+    public DialogueNode(List<Dialogue> dList, bool isPlay)
+    {
+        dialogueList = dList;
+        // nextDefault = nextD; DISREGARD but if change mind don't forget to edit constructor parameters 
+        isPlayerDialogue = isPlay;
+    }
+
+    public Dialogue GetNextDialogue(int chosen)
+    {
+        //chosen must be less than or equal to number of options (which should be at most four)
+        int index = 1;
+        foreach(Dialogue d in dialogueList)
+        {
+            if(d.GetAvailability())
+            {
+                if(index == chosen)
+                {
+                    return d;
+                }
+                index += 1;
+            }
+        }
+        Debug.Log("SOMETHING WENT WRONG NPCSTATS DIALOGUENODE GETNEXTDIALOGUE() SHOULD NOT REACH THIS POINT, ERROR WITH DIALOUGE SETUP MAYBE? OR THIS IS IMPLEMENTED WRONG AND FIX IT");
+        return dialogueList[0];
+
+    }
+
+    public string GetDialogueOptions()
+    {
+        string options = "";
+        // only called if dialogueList is not empty
+        foreach(Dialogue d in dialogueList)
+        {
+            if(d.GetAvailability())
+            {
+                options += d.GetMessage();
+                options += "\n";
+            }
+        }
+        return options;
+    }
+
+    public int GetNumOptions()
+    {
+        int numOptions = 0;
+        foreach(Dialogue d in dialogueList)
+        {
+            if(d.GetAvailability())
+            {
+                numOptions += 1;
+            }
+        }
+        return numOptions;
+    }
+
+    public void UpdateAvailability()
+    {
+        
+    }
+
+    public bool IsCurrentlyEmpty()
+    {
+        foreach(Dialogue d in dialogueList)
+        {
+            if(d.GetAvailability())
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public bool IsPlayerNode()
+    {
+        return isPlayerDialogue;
+    }
+
+    public void AppendDialogue(Dialogue d)
+    {
+        // this probably doesn't work...
+        dialogueList.Add(d);
+    }
 }
 
+[System.Serializable]
 public class Dialogue
 {
     // A class representing a single dialogue option, which may be either an NPC dialogue option or a character dialogue option
@@ -272,4 +441,73 @@ public class Dialogue
     // - kindnessResult: integer by default 0 representing any added kindness for choosing this option 
     // Functions
     // - UpdateAvailability: updates currentlyAvailable and/or startAvailable based off of various parameters 
+    // - GetAvailability: returns true if currentlyAvailable and false otherwise
+    // - GetMessage(): returns string of the message of this Dialogue option
+    // - SelectedResults(): updates malice, honor, and kindness in QuestManager, as well as any other consequences that arise
+    // - GetNextNode(): returns nextNode object
+
+    // Attributes
+    public DialogueNode nextNode;
+    public string message;
+    public bool startAvailable;
+    public bool currentlyAvailable;
+    public int maliceResult;
+    public int honorResult;
+    public int kindnessResult;
+
+    // Constructors 
+    public Dialogue(DialogueNode dNode, string m, bool startA, int malice, int honor, int kindness)
+    {
+        nextNode = dNode;
+        message = m;
+        startAvailable = startA;
+        currentlyAvailable = startA;
+        maliceResult = malice;
+        honorResult = honor;
+        kindnessResult = kindness;
+    }
+    
+    public Dialogue(DialogueNode dNode, string m, bool startA)
+    {
+        nextNode = dNode;
+        message = m;
+        startAvailable = startA;
+        currentlyAvailable = startA;
+        maliceResult = 0;
+        honorResult = 0;
+        kindnessResult = 0;
+    }
+
+    // Methods
+    public void UpdateAvailability(bool toggleStart, bool toggleCurr)
+    {
+        if(toggleStart)
+        {
+            startAvailable = !startAvailable;
+        }
+        if(toggleCurr)
+        {
+            currentlyAvailable = !currentlyAvailable;
+        }
+    }
+
+    public bool GetAvailability()
+    {
+        return currentlyAvailable;
+    }
+
+    public string GetMessage()
+    {
+        return message;
+    }
+
+    public void SelectedResults()
+    {
+        // idk smth with questManager that doesn't exist yet and malice honor kindness
+    }
+
+    public DialogueNode GetNextNode()
+    {
+        return nextNode;
+    }
 }

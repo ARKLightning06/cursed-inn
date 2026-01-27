@@ -267,14 +267,19 @@ public class Player : MonoBehaviour
         {
             Debug.Log("Closest NPC is " + FindClosestNPCInRange().npcName);
             currentNPC = FindClosestNPCInRange();
-            DoDialogue();
+            CallDisplayDialogue();
         }
     }
 
     //sry for this abysmal organization I'll clean it up later it's kinda late rn... bad excuse but yeah sry 
-    public void DoDialogue()
+    public void CallDisplayDialogue()
     {
-        currentNPC.DoNextDialogue();
+        currentNPC.DisplayDialogue();
+    }
+
+    public void CallDoNextDialogue(int option)
+    {
+        currentNPC.DoNextDialogue(option);
     }
 
     public NPCStats FindClosestNPCInRange()
