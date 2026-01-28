@@ -239,6 +239,7 @@ public class UIManager : MonoBehaviour
             {
                 b.SetActive(false);
             }
+            dialogueButtons[0].SetActive(true);
         }
     }
 

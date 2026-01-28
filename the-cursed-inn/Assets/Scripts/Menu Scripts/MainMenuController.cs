@@ -6,7 +6,7 @@ public class MainMenuController : MonoBehaviour
     public void StartGameOnClick()
     {
 
-        SceneManager.LoadScene("Replace with the actual start game scene");
+        SceneManager.LoadScene("Inn Interior");
 
     }
     public void ExitGameOnClick()

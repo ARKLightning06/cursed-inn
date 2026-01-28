@@ -6,6 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/StartMenu.unity
+    guid: b395db3c74bdd99499b67119db951601
+  - enabled: 1
+    path: Assets/Scenes/Inn Interior.unity
+    guid: da57b4dc66bbb3046b8fdaf83986664a
+  - enabled: 0
     path: Assets/Scenes/Andrew L's Scene.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
   m_configObjects:

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 
-public enum NPCName {TestNPC, PohnJork, SirBorro, Gastou, OctaviousTheFifth, MayorThadworn, Wyl, Lupal}
+public enum NPCName {TestNPC, PohnJork, SirBorro, Gastou, OctaviousTheFifth, MayorThadworn, Wyl, Harry, Lupal}
 
 public class NPCStats : MonoBehaviour
 {
@@ -39,7 +39,7 @@ public class NPCStats : MonoBehaviour
         // DialogueList tempStarter = new DialogueList();
         // tempStarter.dialogueOptions.Add(defaultDialogue);
         // handler = new DialogueHandler(defaultDialogue, dialogueLists, uiManager, charVisualization, "Nobody");
-        if(character == NPCName.TestNPC)
+        if(character != NPCName.TestNPC) // change back to == later!!!
         {
             //outline: first node is NPC saying Hello There! second node is Player saying General Kenobi, third node is NPC saying what's 9 + 10, fourth node is Player saying 19 or 21, 21 goes to NPC node saying wrong you uncultured swine try again, then back to fourth node, 21 is NPC saying good job, bye, then ending
             DialogueNode n1 = new DialogueNode(new List<Dialogue>(), false); // (NPC) hello there
@@ -67,6 +67,16 @@ public class NPCStats : MonoBehaviour
             n6.AppendDialogue(d7);
 
             handler = new DialogueHandler(n1, uiManager, npcName, charVisualization, playerName, playerVisualization);
+        }
+        else if(character == NPCName.SirBorro)
+        {
+            DialogueNode n1 = new DialogueNode(new List<Dialogue>(), false); // (Borro) Good morrow! It is I, the Honorable Sir Borro, pleasure to make your acquintance fine sir, or lass. And who might I have the honor of speaking to?
+            DialogueNode n2 = new DialogueNode(new List<Dialogue>(), true); // (Player) Options: 1) Your name, >n3 2) Your mom, >n4 3) Sir Borro the II >n5 4) *spit in his food and leave* >n6
+            DialogueNode n3 = new DialogueNode(new List<Dialogue>(), false); // (Borro) 
+            DialogueNode n4 = new DialogueNode(new List<Dialogue>(), false); // (Borro) You scurvy knave! You impudent rapscallion! You villanous wretch! Fie, fie to thee and thine kin, and may the Lord above have mercy on thine own mother who had the misfortune of siring you
+            DialogueNode n5 = new DialogueNode(new List<Dialogue>(), false); // (Borro)
+            DialogueNode n6 = new DialogueNode(new List<Dialogue>(), false); // (Borro)
+            DialogueNode end = new DialogueNode(new List<Dialogue>(), false); // empty node, end node to end dialogue 
         }
     }
 
@@ -288,6 +298,11 @@ public class DialogueHandler
         {
             if(currNode.IsPlayerNode())
             {
+                // if(GameObject.Find("SaveData") != null)
+                // {
+                //     // playerName = GameObject.Find("SaveData").GetComponent<SaveData>().GetName();
+                // }
+                playerName = SaveData.saveData.GetName();
                 uiManager.UpdateDialogue(playerVis, playerName, currNode.GetDialogueOptions(), currNode.GetNumOptions(), true);
             }
             else
