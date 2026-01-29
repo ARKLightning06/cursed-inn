@@ -18,6 +18,8 @@ public class Player : MonoBehaviour
     private Vector2 moveInput;
     public bool isAttacking;
     public List<GameObject> accessibleInventory = new List<GameObject>();
+    public GameObject door;
+    public Animator animator;
 
 
 
@@ -154,18 +156,27 @@ public class Player : MonoBehaviour
                 //up and to right
                 //add animator
                 //add weapon direction
-                playerVis.transform.eulerAngles = new Vector3(0f, 0f, 45f);
+
+                //playerVis.transform.eulerAngles = new Vector3(0f, 0f, 45f);
+                ResetAnimatorBools();
+                animator.SetBool("GoingUp", true); // no diagonals...
 
             }
             else if (y == 0)
             {
                 //right(default)
-                playerVis.transform.eulerAngles = new Vector3(0f, 0f, 0f);
+                
+                //playerVis.transform.eulerAngles = new Vector3(0f, 0f, 0f);
+                ResetAnimatorBools();
+                animator.SetBool("GoingRight", true);
             }
             else
             {
                 //down and to the right
-                playerVis.transform.eulerAngles = new Vector3(0f, 0f, -45f);
+                
+                //playerVis.transform.eulerAngles = new Vector3(0f, 0f, -45f);
+                ResetAnimatorBools();
+                animator.SetBool("GoingDown", true);
             }
         }
         else if (x == 0)
@@ -173,16 +184,23 @@ public class Player : MonoBehaviour
             if (y > 0)
             {
                 //up
-                playerVis.transform.eulerAngles = new Vector3(0f, 0f, 90f);
+                
+                //playerVis.transform.eulerAngles = new Vector3(0f, 0f, 90f);
+                ResetAnimatorBools();
+                animator.SetBool("GoingUp", true);
             }
             else if (y == 0)
             {
                 //Nothing
+                ResetAnimatorBools();
             }
             else
             {
                 //down
-                playerVis.transform.eulerAngles = new Vector3(0f, 0f, -90f);
+                
+                //playerVis.transform.eulerAngles = new Vector3(0f, 0f, -90f);
+                ResetAnimatorBools();
+                animator.SetBool("GoingDown", true);
             }
         }
         else
@@ -190,19 +208,36 @@ public class Player : MonoBehaviour
             if (y > 0)
             {
                 //up and to left
-                playerVis.transform.eulerAngles = new Vector3(0f, 0f, 135f);
+                
+                //playerVis.transform.eulerAngles = new Vector3(0f, 0f, 135f);
+                ResetAnimatorBools();
+                animator.SetBool("GoingUp", true);
             }
             else if (y == 0)
             {
                 //left
-                playerVis.transform.eulerAngles = new Vector3(0f, 0f, 180f);
+                
+                //playerVis.transform.eulerAngles = new Vector3(0f, 0f, 180f);
+                ResetAnimatorBools();
+                animator.SetBool("GoingLeft", true);
             }
             else
             {
                 //down and to the left
-                playerVis.transform.eulerAngles = new Vector3(0f, 0f, 225f);
+                
+                //playerVis.transform.eulerAngles = new Vector3(0f, 0f, 225f);
+                ResetAnimatorBools();
+                animator.SetBool("GoingDown", true);
             }
         }
+    }
+
+    public void ResetAnimatorBools()
+    {
+        animator.SetBool("GoingUp", false);
+        animator.SetBool("GoingDown", false);
+        animator.SetBool("GoingLeft", false);
+        animator.SetBool("GoingRight", false);
     }
 
     public void UpdateAccessibleInventory(GameObject equipped)
@@ -301,6 +336,20 @@ public class Player : MonoBehaviour
         else
         {
             return null;
+        }
+    }
+
+    public void ToggleDoor(bool isOpening)
+    {
+        if(isOpening)
+        {
+            door.GetComponent<PolygonCollider2D>().enabled = false;
+            door.GetComponent<Animator>().SetTrigger("OpenDoor");
+        }
+        else
+        {
+            door.GetComponent<PolygonCollider2D>().enabled = true;
+            door.GetComponent<Animator>().SetTrigger("CloseDoor");
         }
     }
 

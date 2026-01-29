@@ -13,6 +13,7 @@ public class NPCStats : MonoBehaviour
     [Header("Interactions")]
     public Player player;
     public UIManager uiManager;
+    public Animator animator;
 
     [Header("Stats")]
     public NPCName character; // this is the character corresponding to this script, used for initializing dialogue stuff
@@ -20,6 +21,7 @@ public class NPCStats : MonoBehaviour
     public int health;
     public bool isFighter;
     public int damage;
+    public bool hasAnimation;
     // attack type or smth somehow needs to go here...
 
     [Header("Dialogue")]
@@ -39,6 +41,7 @@ public class NPCStats : MonoBehaviour
         // DialogueList tempStarter = new DialogueList();
         // tempStarter.dialogueOptions.Add(defaultDialogue);
         // handler = new DialogueHandler(defaultDialogue, dialogueLists, uiManager, charVisualization, "Nobody");
+        animator = this.gameObject.GetComponent<Animator>();
         if(character != NPCName.TestNPC) // change back to == later!!!
         {
             //outline: first node is NPC saying Hello There! second node is Player saying General Kenobi, third node is NPC saying what's 9 + 10, fourth node is Player saying 19 or 21, 21 goes to NPC node saying wrong you uncultured swine try again, then back to fourth node, 21 is NPC saying good job, bye, then ending
@@ -83,7 +86,19 @@ public class NPCStats : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if(hasAnimation)
+        {
+            if(player.gameObject.transform.position.x < this.gameObject.transform.position.x)
+            {
+                animator.SetBool("PlayerToLeft", true);
+                animator.SetBool("PlayerToRight", false);
+            }
+            else
+            {
+                animator.SetBool("PlayerToLeft", false);
+                animator.SetBool("PlayerToRight", true);
+            }
+        }
     }
     
     public void DisplayDialogue()
