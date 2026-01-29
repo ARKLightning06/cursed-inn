@@ -77,6 +77,7 @@ public class InventoryManager : MonoBehaviour
         controls.UI.Inventory.performed += ctx => Inventory();
 
         // Initialize starterItems into InventoryItems list
+        starterItems = SaveData.saveData.GetStarterItems();
         for (int i = 0; i < starterItems.Count; i++)
         {
             InventoryGrid.Add(ObjectToItem(starterItems[i]));
@@ -349,7 +350,7 @@ public class InventoryManager : MonoBehaviour
                 if (equippedItem == hotbarItems[numSlot - 1].item)
                 {
                     equippedItem = emptyItem.item;
-                    equippedItemStats = null;
+                    equippedItemStats = emptyItem.item.GetComponent<ItemStats>();
                     player.UpdateAccessibleInventory(emptyItem.item);
                     return;
                 }

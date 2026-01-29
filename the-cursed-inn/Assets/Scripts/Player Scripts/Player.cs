@@ -249,11 +249,16 @@ public class Player : MonoBehaviour
         if (accessibleInventory.Contains(equipped) && equipped != inventoryManager.equippedItem)
         {
             Debug.Log("is in it");
+            Debug.Log(equipped.name);
             equipped.SetActive(true);
         }
         else
         {
             Debug.Log("Not in it");
+            Debug.Log(equipped.name);
+            Debug.Log("first: item in accessible, second: item not already equipped");
+            Debug.Log(accessibleInventory.Contains(equipped));
+            Debug.Log(equipped != inventoryManager.equippedItem);
         }
     }
 

@@ -3288,8 +3288,8 @@ MonoBehaviour:
   isFighter: 1
   damage: 21
   hasAnimation: 0
-  charVisualization: {fileID: 21300000, guid: b3d0590952b65a148a91c70107502515, type: 3}
-  playerVisualization: {fileID: 21300000, guid: bfa20e2465a0c9b49aced9e67714a892, type: 3}
+  charVisualization: {fileID: 43363405344867649, guid: 3040c7db03752df44b919b6a10f9e60e, type: 3}
+  playerVisualization: {fileID: -4882394196810686248, guid: 47c4365a889144941879c4e90fef6890, type: 3}
   playerName: You
   defaultDialogue:
     nextNode:
@@ -11414,6 +11414,11 @@ PolygonCollider2D:
       - {x: 0.11, y: -0.03}
       - {x: 0.11, y: 0.16}
   m_UseDelaunayMesh: 1
+--- !u!1 &802778531 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6871374178503320825, guid: 68a3b03ed0382c54883feacb9c7c8e6e, type: 3}
+  m_PrefabInstance: {fileID: 1658831797}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &806678518
 GameObject:
   m_ObjectHideFlags: 0
@@ -12938,8 +12943,8 @@ MonoBehaviour:
   isFighter: 1
   damage: 21
   hasAnimation: 0
-  charVisualization: {fileID: 21300000, guid: acbabecf417b1744abd2cfa72ba9c0db, type: 3}
-  playerVisualization: {fileID: 21300000, guid: bfa20e2465a0c9b49aced9e67714a892, type: 3}
+  charVisualization: {fileID: 5188933713330905097, guid: b613285442c7f9745af41b58461821bc, type: 3}
+  playerVisualization: {fileID: -4882394196810686248, guid: 47c4365a889144941879c4e90fef6890, type: 3}
   playerName: You
   defaultDialogue:
     nextNode:
@@ -24343,8 +24348,8 @@ MonoBehaviour:
   isFighter: 1
   damage: 21
   hasAnimation: 0
-  charVisualization: {fileID: 21300000, guid: 04f7028ebedd2c049afe2b09f2425489, type: 3}
-  playerVisualization: {fileID: 21300000, guid: bfa20e2465a0c9b49aced9e67714a892, type: 3}
+  charVisualization: {fileID: -1635976628041419053, guid: 5a1bbc96d8c48ce4fa154fd0b0cb0c40, type: 3}
+  playerVisualization: {fileID: -4882394196810686248, guid: 47c4365a889144941879c4e90fef6890, type: 3}
   playerName: You
   defaultDialogue:
     nextNode:
@@ -25280,6 +25285,18 @@ PrefabInstance:
       propertyPath: playerName
       value: Alejandro
       objectReference: {fileID: 0}
+    - target: {fileID: 2040414542283219902, guid: 6f3eb4de84b0a254184997dcd7829a25, type: 3}
+      propertyPath: savedStarterItems.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2040414542283219902, guid: 6f3eb4de84b0a254184997dcd7829a25, type: 3}
+      propertyPath: 'savedStarterItems.Array.data[0]'
+      value: 
+      objectReference: {fileID: 9212571545540567840, guid: e2d97bc9f7357644f80b32a0c3689cd7, type: 3}
+    - target: {fileID: 2040414542283219902, guid: 6f3eb4de84b0a254184997dcd7829a25, type: 3}
+      propertyPath: 'savedStarterItems.Array.data[1]'
+      value: 
+      objectReference: {fileID: 3710451688379690338, guid: a8eab0164abdd53479be1091c68aa83e, type: 3}
     - target: {fileID: 4349317882427145004, guid: 6f3eb4de84b0a254184997dcd7829a25, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.22265
@@ -26950,10 +26967,42 @@ PrefabInstance:
       propertyPath: moveSpeed
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 341013398419172021, guid: 68a3b03ed0382c54883feacb9c7c8e6e, type: 3}
+      propertyPath: accessibleInventory.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 341013398419172021, guid: 68a3b03ed0382c54883feacb9c7c8e6e, type: 3}
+      propertyPath: 'accessibleInventory.Array.data[5]'
+      value: 
+      objectReference: {fileID: 1664253146}
     - target: {fileID: 672365227710056296, guid: 68a3b03ed0382c54883feacb9c7c8e6e, type: 3}
       propertyPath: m_Name
       value: ManagerManager
       objectReference: {fileID: 0}
+    - target: {fileID: 3368784537960209690, guid: 68a3b03ed0382c54883feacb9c7c8e6e, type: 3}
+      propertyPath: starterItems.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3368784537960209690, guid: 68a3b03ed0382c54883feacb9c7c8e6e, type: 3}
+      propertyPath: 'starterItems.Array.data[0]'
+      value: 
+      objectReference: {fileID: 9212571545540567840, guid: e2d97bc9f7357644f80b32a0c3689cd7, type: 3}
+    - target: {fileID: 3368784537960209690, guid: 68a3b03ed0382c54883feacb9c7c8e6e, type: 3}
+      propertyPath: 'starterItems.Array.data[1]'
+      value: 
+      objectReference: {fileID: 1768916528}
+    - target: {fileID: 3368784537960209690, guid: 68a3b03ed0382c54883feacb9c7c8e6e, type: 3}
+      propertyPath: 'starterItems.Array.data[2]'
+      value: 
+      objectReference: {fileID: 8784436414836656991, guid: 7d5700386377b764fbca6b38c0e7c9a2, type: 3}
+    - target: {fileID: 3368784537960209690, guid: 68a3b03ed0382c54883feacb9c7c8e6e, type: 3}
+      propertyPath: 'starterItems.Array.data[3]'
+      value: 
+      objectReference: {fileID: 2004353597}
+    - target: {fileID: 3368784537960209690, guid: 68a3b03ed0382c54883feacb9c7c8e6e, type: 3}
+      propertyPath: 'starterItems.Array.data[4]'
+      value: 
+      objectReference: {fileID: 802778531}
     - target: {fileID: 4727148364542392741, guid: 68a3b03ed0382c54883feacb9c7c8e6e, type: 3}
       propertyPath: m_BodyType
       value: 0
@@ -27074,7 +27123,7 @@ MonoBehaviour:
   damage: 21
   hasAnimation: 0
   charVisualization: {fileID: 21300000, guid: 0008f19664034a240afaf58aad3988aa, type: 3}
-  playerVisualization: {fileID: 21300000, guid: bfa20e2465a0c9b49aced9e67714a892, type: 3}
+  playerVisualization: {fileID: -4882394196810686248, guid: 47c4365a889144941879c4e90fef6890, type: 3}
   playerName: You
   defaultDialogue:
     nextNode:
@@ -27268,6 +27317,11 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!1 &1664253146 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3487754489582151374, guid: 68a3b03ed0382c54883feacb9c7c8e6e, type: 3}
+  m_PrefabInstance: {fileID: 1658831797}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1667030144
 GameObject:
   m_ObjectHideFlags: 0
@@ -29015,6 +29069,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 911760229}
   m_SourcePrefab: {fileID: 100100000, guid: 496ae9df53010974499a895027592929, type: 3}
+--- !u!1 &1768916528 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2230440572186068145, guid: 68a3b03ed0382c54883feacb9c7c8e6e, type: 3}
+  m_PrefabInstance: {fileID: 1658831797}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1769164923
 GameObject:
   m_ObjectHideFlags: 0
@@ -30139,8 +30198,8 @@ MonoBehaviour:
   isFighter: 1
   damage: 21
   hasAnimation: 0
-  charVisualization: {fileID: 21300000, guid: 24a5914f40081b64599d448803007a0d, type: 3}
-  playerVisualization: {fileID: 21300000, guid: bfa20e2465a0c9b49aced9e67714a892, type: 3}
+  charVisualization: {fileID: 6867901980214537083, guid: 77b077c165d0b0d43b9b668c4f125a6c, type: 3}
+  playerVisualization: {fileID: -4882394196810686248, guid: 47c4365a889144941879c4e90fef6890, type: 3}
   playerName: You
   defaultDialogue:
     nextNode:
@@ -31534,8 +31593,8 @@ MonoBehaviour:
   isFighter: 1
   damage: 21
   hasAnimation: 0
-  charVisualization: {fileID: 21300000, guid: d93a6c0364519764da4a743aa4bed69d, type: 3}
-  playerVisualization: {fileID: 21300000, guid: bfa20e2465a0c9b49aced9e67714a892, type: 3}
+  charVisualization: {fileID: -2275071983613723935, guid: c4cc68c2f193c1d4ab7d605998379559, type: 3}
+  playerVisualization: {fileID: -4882394196810686248, guid: 47c4365a889144941879c4e90fef6890, type: 3}
   playerName: You
   defaultDialogue:
     nextNode:
@@ -32046,9 +32105,9 @@ MonoBehaviour:
   health: 67
   isFighter: 1
   damage: 21
-  hasAnimation: 0
-  charVisualization: {fileID: 21300000, guid: fe22154fb359d4641b6b87929a51f6fd, type: 3}
-  playerVisualization: {fileID: 21300000, guid: bfa20e2465a0c9b49aced9e67714a892, type: 3}
+  hasAnimation: 1
+  charVisualization: {fileID: -5711848221618334454, guid: 2247027fb2e352547b29a10e990221bd, type: 3}
+  playerVisualization: {fileID: -4882394196810686248, guid: 47c4365a889144941879c4e90fef6890, type: 3}
   playerName: You
   defaultDialogue:
     nextNode:
@@ -33868,6 +33927,11 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &2004353597 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6948967807395485051, guid: 68a3b03ed0382c54883feacb9c7c8e6e, type: 3}
+  m_PrefabInstance: {fileID: 1658831797}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2013739445
 GameObject:
   m_ObjectHideFlags: 0

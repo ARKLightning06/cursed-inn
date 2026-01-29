@@ -9646,6 +9646,14 @@ PrefabInstance:
       propertyPath: inventoryManager
       value: 
       objectReference: {fileID: 3368784537960209690}
+    - target: {fileID: 471720997150449604, guid: 85c5404799a26b545b73d38af7f1e36f, type: 3}
+      propertyPath: accessibleInventory.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 471720997150449604, guid: 85c5404799a26b545b73d38af7f1e36f, type: 3}
+      propertyPath: 'accessibleInventory.Array.data[4]'
+      value: 
+      objectReference: {fileID: 3487754489582151374}
     - target: {fileID: 4136336013532471383, guid: 85c5404799a26b545b73d38af7f1e36f, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -9696,7 +9704,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 9052494224388446983, guid: 85c5404799a26b545b73d38af7f1e36f, type: 3}
+      insertIndex: 1
+      addedObject: {fileID: 7529434548534988655}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 8436485628852396705, guid: 85c5404799a26b545b73d38af7f1e36f, type: 3}
       insertIndex: -1
@@ -9776,3 +9787,87 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!4 &9192002792001138294 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 9052494224388446983, guid: 85c5404799a26b545b73d38af7f1e36f, type: 3}
+  m_PrefabInstance: {fileID: 157738542621177201}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &5746416343947691502
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 9192002792001138294}
+    m_Modifications:
+    - target: {fileID: 2865050140639169153, guid: e2d97bc9f7357644f80b32a0c3689cd7, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2865050140639169153, guid: e2d97bc9f7357644f80b32a0c3689cd7, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2865050140639169153, guid: e2d97bc9f7357644f80b32a0c3689cd7, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.336
+      objectReference: {fileID: 0}
+    - target: {fileID: 2865050140639169153, guid: e2d97bc9f7357644f80b32a0c3689cd7, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.04
+      objectReference: {fileID: 0}
+    - target: {fileID: 2865050140639169153, guid: e2d97bc9f7357644f80b32a0c3689cd7, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2865050140639169153, guid: e2d97bc9f7357644f80b32a0c3689cd7, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2865050140639169153, guid: e2d97bc9f7357644f80b32a0c3689cd7, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2865050140639169153, guid: e2d97bc9f7357644f80b32a0c3689cd7, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2865050140639169153, guid: e2d97bc9f7357644f80b32a0c3689cd7, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2865050140639169153, guid: e2d97bc9f7357644f80b32a0c3689cd7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2865050140639169153, guid: e2d97bc9f7357644f80b32a0c3689cd7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2865050140639169153, guid: e2d97bc9f7357644f80b32a0c3689cd7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9212571545540567840, guid: e2d97bc9f7357644f80b32a0c3689cd7, type: 3}
+      propertyPath: m_Name
+      value: Mysterious Bottle
+      objectReference: {fileID: 0}
+    - target: {fileID: 9212571545540567840, guid: e2d97bc9f7357644f80b32a0c3689cd7, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e2d97bc9f7357644f80b32a0c3689cd7, type: 3}
+--- !u!1 &3487754489582151374 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9212571545540567840, guid: e2d97bc9f7357644f80b32a0c3689cd7, type: 3}
+  m_PrefabInstance: {fileID: 5746416343947691502}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &7529434548534988655 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2865050140639169153, guid: e2d97bc9f7357644f80b32a0c3689cd7, type: 3}
+  m_PrefabInstance: {fileID: 5746416343947691502}
+  m_PrefabAsset: {fileID: 0}

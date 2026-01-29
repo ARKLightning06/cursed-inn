@@ -1,4 +1,10 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
+using TMPro;
 
 public class SaveData : MonoBehaviour
 {
@@ -6,6 +12,7 @@ public class SaveData : MonoBehaviour
     public static SaveData saveData;
     // Script to save any data that needs to exists between scenes etc
     public string playerName;
+    public List<GameObject> savedStarterItems = new List<GameObject>();
 
     void Awake()
     {
@@ -30,6 +37,11 @@ public class SaveData : MonoBehaviour
     public void UpdateName(string newName)
     {
         playerName = newName;
+    }
+
+    public List<GameObject> GetStarterItems()
+    {
+        return savedStarterItems;
     }
 
 }
