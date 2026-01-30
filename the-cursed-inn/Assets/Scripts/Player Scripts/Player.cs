@@ -13,6 +13,8 @@ public class Player : MonoBehaviour
     public InventoryManager inventoryManager;
     public List<NPCStats> npcsInRange = new List<NPCStats>();
     public NPCStats currentNPC;
+    public GameObject itemPosition;
+    public Vector3 itemPositionOffset;
     private InputSystem_Actions controls;
     private Rigidbody2D rb;
     private Vector2 moveInput;
@@ -148,6 +150,8 @@ public class Player : MonoBehaviour
 
     public void ChangeDirection(float x, float y)
     {
+        animator.SetFloat("MoveX", x);
+        animator.SetFloat("MoveY", y);
         if (x > 0)
         {
             if (y > 0)
@@ -159,6 +163,7 @@ public class Player : MonoBehaviour
                 //playerVis.transform.eulerAngles = new Vector3(0f, 0f, 45f);
                 ResetAnimatorBools();
                 animator.SetBool("GoingUp", true); // no diagonals...
+                itemPosition.transform.localPosition = itemPositionOffset;
 
             }
             else if (y == 0)
@@ -168,6 +173,7 @@ public class Player : MonoBehaviour
                 //playerVis.transform.eulerAngles = new Vector3(0f, 0f, 0f);
                 ResetAnimatorBools();
                 animator.SetBool("GoingRight", true);
+                itemPosition.transform.localPosition = itemPositionOffset;
             }
             else
             {
@@ -176,6 +182,7 @@ public class Player : MonoBehaviour
                 //playerVis.transform.eulerAngles = new Vector3(0f, 0f, -45f);
                 ResetAnimatorBools();
                 animator.SetBool("GoingDown", true);
+                itemPosition.transform.localPosition = itemPositionOffset * -1;
             }
         }
         else if (x == 0)
@@ -187,11 +194,13 @@ public class Player : MonoBehaviour
                 //playerVis.transform.eulerAngles = new Vector3(0f, 0f, 90f);
                 ResetAnimatorBools();
                 animator.SetBool("GoingUp", true);
+                itemPosition.transform.localPosition = itemPositionOffset;
             }
             else if (y == 0)
             {
                 //Nothing
                 ResetAnimatorBools();
+                itemPosition.transform.localPosition = itemPositionOffset;
             }
             else
             {
@@ -200,6 +209,7 @@ public class Player : MonoBehaviour
                 //playerVis.transform.eulerAngles = new Vector3(0f, 0f, -90f);
                 ResetAnimatorBools();
                 animator.SetBool("GoingDown", true);
+                itemPosition.transform.localPosition = itemPositionOffset * -1;
             }
         }
         else
@@ -211,6 +221,7 @@ public class Player : MonoBehaviour
                 //playerVis.transform.eulerAngles = new Vector3(0f, 0f, 135f);
                 ResetAnimatorBools();
                 animator.SetBool("GoingUp", true);
+                itemPosition.transform.localPosition = itemPositionOffset;
             }
             else if (y == 0)
             {
@@ -219,6 +230,7 @@ public class Player : MonoBehaviour
                 //playerVis.transform.eulerAngles = new Vector3(0f, 0f, 180f);
                 ResetAnimatorBools();
                 animator.SetBool("GoingLeft", true);
+                itemPosition.transform.localPosition = itemPositionOffset * -1;
             }
             else
             {
@@ -227,6 +239,7 @@ public class Player : MonoBehaviour
                 //playerVis.transform.eulerAngles = new Vector3(0f, 0f, 225f);
                 ResetAnimatorBools();
                 animator.SetBool("GoingDown", true);
+                itemPosition.transform.localPosition = itemPositionOffset * -1;
             }
         }
     }
@@ -239,26 +252,50 @@ public class Player : MonoBehaviour
         animator.SetBool("GoingRight", false);
     }
 
+
+// OUTDATED VERSION, originally worked then stopped working for some reason, most of the code is Debug logs trying to figure out why lol, just use new one for now until figure out the issue
+    // public void UpdateAccessibleInventory(GameObject equipped)
+    // {
+    //     foreach (GameObject x in accessibleInventory)
+    //     {
+    //         x.SetActive(false);
+    //     }
+    //     // this functionality is janky idk what happened tho for somereason the accessible inventory doesn't quite pair with the gameObjects?? I thought it was something to do with prefabs at first but idk
+    //     //if (accessibleInventory.Contains(equipped) && equipped != inventoryManager.equippedItem)
+    //     if (equipped != inventoryManager.equippedItem)
+    //     {
+    //         //equipped.SetActive(true);
+    //         foreach(GameObject g in accessibleInventory)
+    //         {
+    //             if(g.name == equipped.name)
+    //             {
+    //                 g.SetActive(true);
+    //             }
+    //         }
+    //     }
+    //     else
+    //     {
+    //         Debug.Log("True/false: " + equipped.name + " is in accessible inventory:");
+    //         Debug.Log(accessibleInventory.Contains(equipped));
+    //         foreach(GameObject g in accessibleInventory)
+    //         {
+    //             Debug.Log(g.name);
+    //         }
+    //         // Debug.Log("Not in it");
+    //         // Debug.Log(equipped.name);
+    //         // Debug.Log("first: item in accessible, second: item not already equipped");
+    //         // Debug.Log(accessibleInventory.Contains(equipped));
+    //         // Debug.Log(equipped != inventoryManager.equippedItem);
+    //     }
+    // }
+
     public void UpdateAccessibleInventory(GameObject equipped)
     {
         foreach (GameObject x in accessibleInventory)
         {
-            x.SetActive(false);
+            x.SetActive(x.name == equipped.name);
         }
-        if (accessibleInventory.Contains(equipped) && equipped != inventoryManager.equippedItem)
-        {
-            Debug.Log("is in it");
-            Debug.Log(equipped.name);
-            equipped.SetActive(true);
-        }
-        else
-        {
-            Debug.Log("Not in it");
-            Debug.Log(equipped.name);
-            Debug.Log("first: item in accessible, second: item not already equipped");
-            Debug.Log(accessibleInventory.Contains(equipped));
-            Debug.Log(equipped != inventoryManager.equippedItem);
-        }
+
     }
 
     private void OnTriggerEnter2D(Collider2D other)

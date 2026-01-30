@@ -66,6 +66,7 @@ public class UIManager : MonoBehaviour
         TurnOnPlayingUI();
     }
 
+
     private void OnEnable()
     {
         // Enable the input controls
