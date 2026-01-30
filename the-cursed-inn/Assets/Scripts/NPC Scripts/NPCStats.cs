@@ -13,6 +13,7 @@ public class NPCStats : MonoBehaviour
     [Header("Interactions")]
     public Player player;
     public UIManager uiManager;
+    public InventoryManager inventoryManager;
     public Animator animator;
 
     [Header("Stats")]
@@ -22,6 +23,7 @@ public class NPCStats : MonoBehaviour
     public bool isFighter;
     public int damage;
     public bool hasAnimation;
+    public GameObject associatedItem;
     // attack type or smth somehow needs to go here...
 
     [Header("Dialogue")]
@@ -73,12 +75,21 @@ public class NPCStats : MonoBehaviour
         }
         else if(character == NPCName.SirBorro)
         {
-            DialogueNode n1 = new DialogueNode(new List<Dialogue>(), false); // (Borro) Good morrow! It is I, the Honorable Sir Borro, pleasure to make your acquintance fine sir, or lass. And who might I have the honor of speaking to?
-            DialogueNode n2 = new DialogueNode(new List<Dialogue>(), true); // (Player) Options: 1) Your name, >n3 2) Your mom, >n4 3) Sir Borro the II >n5 4) *spit in his food and leave* >n6
-            DialogueNode n3 = new DialogueNode(new List<Dialogue>(), false); // (Borro) 
-            DialogueNode n4 = new DialogueNode(new List<Dialogue>(), false); // (Borro) You scurvy knave! You impudent rapscallion! You villanous wretch! Fie, fie to thee and thine kin, and may the Lord above have mercy on thine own mother who had the misfortune of siring you
-            DialogueNode n5 = new DialogueNode(new List<Dialogue>(), false); // (Borro)
-            DialogueNode n6 = new DialogueNode(new List<Dialogue>(), false); // (Borro)
+            DialogueNode n1 = new DialogueNode(new List<Dialogue>(), false); // (Borro) Good morrow! It is I, the Honorable Sir Borro, pleasure to make your acquintance fine sir, or lass. And who might I have the honor of speaking to? >n2
+            DialogueNode n2 = new DialogueNode(new List<Dialogue>(), true); // (Player) Options: 1) Your name, >n3 2) ur mom, >n4 3) Sir Borro the II >n5 4) *spit in his food and leave* >n6 ***starts unavailable***
+            DialogueNode n3 = new DialogueNode(new List<Dialogue>(), false); // (Borro) Ah, *your name*, well met! Pray thee, share thy tale. Tell me about yourself. >n7
+            DialogueNode n4 = new DialogueNode(new List<Dialogue>(), false); // (Borro) You scurvy knave! You impudent rapscallion! You villanous wretch! Fie, fie to thee and thine kin, and may the Lord above have mercy on thine own mother who had the misfortune of siring you >end ***malice +2****
+            DialogueNode n5 = new DialogueNode(new List<Dialogue>(), false); // (Borro) A noble name! Surely you must be a noble warrior, like myself. Prithee, speak thy tale. Who art thou? >n7
+            DialogueNode n6 = new DialogueNode(new List<Dialogue>(), false); // (Borro) How darest thou, insolent wretch! Thou art a cur, a scoundrel, a knave through and through! Have at thee! >n12
+            DialogueNode n7 = new DialogueNode(new List<Dialogue>(), true); // (Player) Options: 1) I am but a humble innkeeper, owner of this fine establishment. I think I might be cursed. >n8 2) I am emperor of all the world, and you are my willing servant. I command thee to aid me with my ailment, some fell curse. >n9 3) I'm a mass murder. I revel in slaughter and the blood of innocents. >n10 4) I'm no one of consequence. What about you, what's your story? >n11
+            DialogueNode n8 = new DialogueNode(new List<Dialogue>(), false); // (Borro) A curse, eh? Fascinating. Who cursed you? Why would anyone do such a thing to such a fine fellow? What kind of curse is it? Whoever it was must hate you. It could be anyone in this very inn, could be someone watching you right here, right now... well, once you expose this evil sorcerer, tell me and we shall vanquish their dark magic forever, together! >n13
+            DialogueNode n9 = new DialogueNode(new List<Dialogue>(), false); // (Borro)
+            DialogueNode n10 = new DialogueNode(new List<Dialogue>(), false); // (Borro)
+            DialogueNode n11 = new DialogueNode(new List<Dialogue>(), false); // (Borro)
+            DialogueNode n12 = new DialogueNode(new List<Dialogue>(), false); // (Borro) *** Sir Borro throws his food at you. Gain Beef Stew *** >end
+            DialogueNode n13 = new DialogueNode(new List<Dialogue>(), true); // (Player) Options: 1) Thank you, good knight. I thank you for your service, and look forward to fighting that evil together when the hour comes. >n14 2) If it could be anyone in this inn, how do I know it wasn't you?? >n15
+            DialogueNode n14 = new DialogueNode(new List<Dialogue>(), false); // (Borro)
+            DialogueNode n15 = new DialogueNode(new List<Dialogue>(), false); // (Borro)
             DialogueNode end = new DialogueNode(new List<Dialogue>(), false); // empty node, end node to end dialogue 
         }
     }
@@ -311,6 +322,7 @@ public class DialogueHandler
         //uimanager shenanigans...?
         if(!currNode.IsCurrentlyEmpty())
         {
+            currNode.UpdateAvailability();
             if(currNode.IsPlayerNode())
             {
                 // if(GameObject.Find("SaveData") != null)
@@ -338,6 +350,7 @@ public class DialogueHandler
         //chosen must be in range of Dialogue options, or else returns and turns off dialouge and resets currNode
         if(!currNode.IsCurrentlyEmpty() && currNode.GetNumOptions() >= chosen)
         {
+            currNode.GetNextDialogue(chosen).SelectedResults();
             currNode = currNode.GetNextDialogue(chosen).GetNextNode();
             DisplayOptions();
         }
@@ -372,6 +385,7 @@ public class DialogueNode
     public List<Dialogue> dialogueList = new List<Dialogue>();
     // public Dialogue nextDefault;
     public bool isPlayerDialogue;
+    
 
     public DialogueNode(List<Dialogue> dList, bool isPlay)
     {
@@ -428,9 +442,20 @@ public class DialogueNode
         return numOptions;
     }
 
+    public void ResetAvailability()
+    {
+        foreach(Dialogue d in dialogueList)
+        {
+            d.SetAvailability(d.startAvailable, d.startAvailable);
+        }
+    }
+
     public void UpdateAvailability()
     {
-        
+        foreach(Dialogue d in dialogueList)
+        {
+            d.CheckAvailabilityUpdate();
+        }
     }
 
     public bool IsCurrentlyEmpty()
@@ -484,9 +509,12 @@ public class Dialogue
     public int maliceResult;
     public int honorResult;
     public int kindnessResult;
+    public string doSomething; // "Do nothing" by default, set to something else if selecting this dialogue does something important
+    public string availabilityState; // "Default" by default, set to something else if the availability of the Dialogue option depends on some condition (like malice honor kindness etc)
+    public NPCStats parentNPC; // null by default, only used for certain dialogue options
 
     // Constructors 
-    public Dialogue(DialogueNode dNode, string m, bool startA, int malice, int honor, int kindness)
+    public Dialogue(DialogueNode dNode, string m, bool startA, int malice, int honor, int kindness, string actionToDo, string availabilityCondition, NPCStats parent)
     {
         nextNode = dNode;
         message = m;
@@ -495,6 +523,9 @@ public class Dialogue
         maliceResult = malice;
         honorResult = honor;
         kindnessResult = kindness;
+        doSomething = actionToDo;
+        availabilityState = availabilityCondition;
+        parentNPC = parent;
     }
     
     public Dialogue(DialogueNode dNode, string m, bool startA)
@@ -506,18 +537,34 @@ public class Dialogue
         maliceResult = 0;
         honorResult = 0;
         kindnessResult = 0;
+        doSomething = "Do nothing";
+        availabilityState = "Default"; 
     }
 
     // Methods
-    public void UpdateAvailability(bool toggleStart, bool toggleCurr)
+    public void SetAvailability(bool setStart, bool setCurr)
     {
-        if(toggleStart)
+        // if(toggleStart)
+        // {
+        //     startAvailable = !startAvailable;
+        // }
+        // if(toggleCurr)
+        // {
+        //     currentlyAvailable = !currentlyAvailable;
+        // }
+        startAvailable = setStart;
+        currentlyAvailable = setCurr;
+    }
+
+    public void CheckAvailabilityUpdate()
+    {
+        if(availabilityState == "Default")
         {
-            startAvailable = !startAvailable;
+            Debug.Log("available by default :)");
         }
-        if(toggleCurr)
+        else if(availabilityState == "Slightly mean")
         {
-            currentlyAvailable = !currentlyAvailable;
+            SetAvailability(startAvailable, SaveData.saveData.GetMalice() >= 5);
         }
     }
 
@@ -534,6 +581,19 @@ public class Dialogue
     public void SelectedResults()
     {
         // idk smth with questManager that doesn't exist yet and malice honor kindness
+        if(doSomething == "Do nothing")
+        {
+            Debug.Log("Nothing to do");
+        }
+        else if(doSomething == "Turn this option off temporarily")
+        {
+            SetAvailability(startAvailable, false);
+        }
+        else if(doSomething == "Add Item")
+        {
+            parentNPC.inventoryManager.AddItemToInventory(parentNPC.associatedItem);
+            SaveData.saveData.AddItemToStarters(parentNPC.associatedItem);
+        }
     }
 
     public DialogueNode GetNextNode()

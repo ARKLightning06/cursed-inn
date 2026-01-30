@@ -1821,6 +1821,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NPCStats
   player: {fileID: 4028992}
   uiManager: {fileID: 1942713981}
+  inventoryManager: {fileID: 658819957}
   animator: {fileID: 0}
   character: 7
   npcName: Harry
@@ -1828,6 +1829,7 @@ MonoBehaviour:
   isFighter: 1
   damage: 21
   hasAnimation: 0
+  associatedItem: {fileID: 0}
   charVisualization: {fileID: 21300000, guid: 70fd1e917ccfb6a47a72a86e1d8fd671, type: 3}
   playerVisualization: {fileID: 21300000, guid: bfa20e2465a0c9b49aced9e67714a892, type: 3}
   playerName: You
@@ -1841,6 +1843,9 @@ MonoBehaviour:
     maliceResult: 0
     honorResult: 0
     kindnessResult: 0
+    doSomething: 
+    availabilityState: 
+    parentNPC: {fileID: 0}
   handler:
     originalNode:
       dialogueList: []
@@ -3281,6 +3286,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NPCStats
   player: {fileID: 4028992}
   uiManager: {fileID: 1942713981}
+  inventoryManager: {fileID: 658819957}
   animator: {fileID: 0}
   character: 5
   npcName: Mayor Thadworn
@@ -3288,6 +3294,7 @@ MonoBehaviour:
   isFighter: 1
   damage: 21
   hasAnimation: 0
+  associatedItem: {fileID: 0}
   charVisualization: {fileID: 43363405344867649, guid: 3040c7db03752df44b919b6a10f9e60e, type: 3}
   playerVisualization: {fileID: -4882394196810686248, guid: 47c4365a889144941879c4e90fef6890, type: 3}
   playerName: You
@@ -3301,6 +3308,9 @@ MonoBehaviour:
     maliceResult: 0
     honorResult: 0
     kindnessResult: 0
+    doSomething: 
+    availabilityState: 
+    parentNPC: {fileID: 0}
   handler:
     originalNode:
       dialogueList: []
@@ -10411,6 +10421,17 @@ PolygonCollider2D:
       - {x: 0.089999996, y: -0.12}
       - {x: 0.089999996, y: 0.16}
   m_UseDelaunayMesh: 1
+--- !u!114 &658819957 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3368784537960209690, guid: 68a3b03ed0382c54883feacb9c7c8e6e, type: 3}
+  m_PrefabInstance: {fileID: 1658831797}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f5064eb1a7ede24d8dceab7498dab24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
 --- !u!1 &669446002
 GameObject:
   m_ObjectHideFlags: 0
@@ -12936,6 +12957,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NPCStats
   player: {fileID: 4028992}
   uiManager: {fileID: 1942713981}
+  inventoryManager: {fileID: 658819957}
   animator: {fileID: 0}
   character: 6
   npcName: Wyl
@@ -12943,6 +12965,7 @@ MonoBehaviour:
   isFighter: 1
   damage: 21
   hasAnimation: 0
+  associatedItem: {fileID: 0}
   charVisualization: {fileID: 5188933713330905097, guid: b613285442c7f9745af41b58461821bc, type: 3}
   playerVisualization: {fileID: -4882394196810686248, guid: 47c4365a889144941879c4e90fef6890, type: 3}
   playerName: You
@@ -12956,6 +12979,9 @@ MonoBehaviour:
     maliceResult: 0
     honorResult: 0
     kindnessResult: 0
+    doSomething: 
+    availabilityState: 
+    parentNPC: {fileID: 0}
   handler:
     originalNode:
       dialogueList: []
@@ -24341,6 +24367,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NPCStats
   player: {fileID: 4028992}
   uiManager: {fileID: 1942713981}
+  inventoryManager: {fileID: 658819957}
   animator: {fileID: 0}
   character: 4
   npcName: Octavious the Fifth
@@ -24348,6 +24375,7 @@ MonoBehaviour:
   isFighter: 1
   damage: 21
   hasAnimation: 0
+  associatedItem: {fileID: 0}
   charVisualization: {fileID: -1635976628041419053, guid: 5a1bbc96d8c48ce4fa154fd0b0cb0c40, type: 3}
   playerVisualization: {fileID: -4882394196810686248, guid: 47c4365a889144941879c4e90fef6890, type: 3}
   playerName: You
@@ -24361,6 +24389,9 @@ MonoBehaviour:
     maliceResult: 0
     honorResult: 0
     kindnessResult: 0
+    doSomething: 
+    availabilityState: 
+    parentNPC: {fileID: 0}
   handler:
     originalNode:
       dialogueList: []
@@ -25286,8 +25317,24 @@ PrefabInstance:
       value: Alejandro
       objectReference: {fileID: 0}
     - target: {fileID: 2040414542283219902, guid: 6f3eb4de84b0a254184997dcd7829a25, type: 3}
+      propertyPath: allItems.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2040414542283219902, guid: 6f3eb4de84b0a254184997dcd7829a25, type: 3}
+      propertyPath: 'allItems.Array.data[0]'
+      value: 
+      objectReference: {fileID: 9212571545540567840, guid: e2d97bc9f7357644f80b32a0c3689cd7, type: 3}
+    - target: {fileID: 2040414542283219902, guid: 6f3eb4de84b0a254184997dcd7829a25, type: 3}
+      propertyPath: 'allItems.Array.data[1]'
+      value: 
+      objectReference: {fileID: 5222103514925548287, guid: 0dd1576df2197104f957cf77c2e0c073, type: 3}
+    - target: {fileID: 2040414542283219902, guid: 6f3eb4de84b0a254184997dcd7829a25, type: 3}
+      propertyPath: 'allItems.Array.data[2]'
+      value: 
+      objectReference: {fileID: 5564174218859289933, guid: 725e59f4fd13b9a44860ebbc27dec413, type: 3}
+    - target: {fileID: 2040414542283219902, guid: 6f3eb4de84b0a254184997dcd7829a25, type: 3}
       propertyPath: savedStarterItems.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2040414542283219902, guid: 6f3eb4de84b0a254184997dcd7829a25, type: 3}
       propertyPath: 'savedStarterItems.Array.data[0]'
@@ -26974,7 +27021,7 @@ PrefabInstance:
     - target: {fileID: 341013398419172021, guid: 68a3b03ed0382c54883feacb9c7c8e6e, type: 3}
       propertyPath: 'accessibleInventory.Array.data[5]'
       value: 
-      objectReference: {fileID: 1664253146}
+      objectReference: {fileID: 0}
     - target: {fileID: 672365227710056296, guid: 68a3b03ed0382c54883feacb9c7c8e6e, type: 3}
       propertyPath: m_Name
       value: ManagerManager
@@ -27115,6 +27162,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NPCStats
   player: {fileID: 4028992}
   uiManager: {fileID: 1942713981}
+  inventoryManager: {fileID: 658819957}
   animator: {fileID: 0}
   character: 3
   npcName: Gastou
@@ -27122,6 +27170,7 @@ MonoBehaviour:
   isFighter: 1
   damage: 21
   hasAnimation: 0
+  associatedItem: {fileID: 0}
   charVisualization: {fileID: 21300000, guid: 0008f19664034a240afaf58aad3988aa, type: 3}
   playerVisualization: {fileID: -4882394196810686248, guid: 47c4365a889144941879c4e90fef6890, type: 3}
   playerName: You
@@ -27135,6 +27184,9 @@ MonoBehaviour:
     maliceResult: 0
     honorResult: 0
     kindnessResult: 0
+    doSomething: 
+    availabilityState: 
+    parentNPC: {fileID: 0}
   handler:
     originalNode:
       dialogueList: []
@@ -27317,11 +27369,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!1 &1664253146 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3487754489582151374, guid: 68a3b03ed0382c54883feacb9c7c8e6e, type: 3}
-  m_PrefabInstance: {fileID: 1658831797}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1667030144
 GameObject:
   m_ObjectHideFlags: 0
@@ -30191,6 +30238,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NPCStats
   player: {fileID: 4028992}
   uiManager: {fileID: 1942713981}
+  inventoryManager: {fileID: 658819957}
   animator: {fileID: 0}
   character: 1
   npcName: Pohn Jork
@@ -30198,6 +30246,7 @@ MonoBehaviour:
   isFighter: 1
   damage: 21
   hasAnimation: 0
+  associatedItem: {fileID: 5564174218859289933, guid: 725e59f4fd13b9a44860ebbc27dec413, type: 3}
   charVisualization: {fileID: 6867901980214537083, guid: 77b077c165d0b0d43b9b668c4f125a6c, type: 3}
   playerVisualization: {fileID: -4882394196810686248, guid: 47c4365a889144941879c4e90fef6890, type: 3}
   playerName: You
@@ -30211,6 +30260,9 @@ MonoBehaviour:
     maliceResult: 0
     honorResult: 0
     kindnessResult: 0
+    doSomething: 
+    availabilityState: 
+    parentNPC: {fileID: 0}
   handler:
     originalNode:
       dialogueList: []
@@ -31586,6 +31638,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NPCStats
   player: {fileID: 4028992}
   uiManager: {fileID: 1942713981}
+  inventoryManager: {fileID: 658819957}
   animator: {fileID: 0}
   character: 8
   npcName: Lupal
@@ -31593,6 +31646,7 @@ MonoBehaviour:
   isFighter: 1
   damage: 21
   hasAnimation: 0
+  associatedItem: {fileID: 0}
   charVisualization: {fileID: -2275071983613723935, guid: c4cc68c2f193c1d4ab7d605998379559, type: 3}
   playerVisualization: {fileID: -4882394196810686248, guid: 47c4365a889144941879c4e90fef6890, type: 3}
   playerName: You
@@ -31606,6 +31660,9 @@ MonoBehaviour:
     maliceResult: 0
     honorResult: 0
     kindnessResult: 0
+    doSomething: 
+    availabilityState: 
+    parentNPC: {fileID: 0}
   handler:
     originalNode:
       dialogueList: []
@@ -32099,6 +32156,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NPCStats
   player: {fileID: 4028992}
   uiManager: {fileID: 1942713981}
+  inventoryManager: {fileID: 658819957}
   animator: {fileID: 1932486371}
   character: 2
   npcName: Sir Borro
@@ -32106,6 +32164,7 @@ MonoBehaviour:
   isFighter: 1
   damage: 21
   hasAnimation: 1
+  associatedItem: {fileID: 5222103514925548287, guid: 0dd1576df2197104f957cf77c2e0c073, type: 3}
   charVisualization: {fileID: -5711848221618334454, guid: 2247027fb2e352547b29a10e990221bd, type: 3}
   playerVisualization: {fileID: -4882394196810686248, guid: 47c4365a889144941879c4e90fef6890, type: 3}
   playerName: You
@@ -32119,6 +32178,9 @@ MonoBehaviour:
     maliceResult: 0
     honorResult: 0
     kindnessResult: 0
+    doSomething: 
+    availabilityState: 
+    parentNPC: {fileID: 0}
   handler:
     originalNode:
       dialogueList: []

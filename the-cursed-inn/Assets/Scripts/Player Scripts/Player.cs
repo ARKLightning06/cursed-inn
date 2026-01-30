@@ -101,8 +101,7 @@ public class Player : MonoBehaviour
 
     public void Attack()
     {
-        Debug.Log("Hi");
-        Debug.Log(inventoryManager.equippedItemStats.itemCat);
+        // Debug.Log(inventoryManager.equippedItemStats.itemCat);
         if (inventoryManager.equippedItem == null)
         {
             Debug.Log("Nothin Equipped");

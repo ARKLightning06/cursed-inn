@@ -274,6 +274,15 @@ public class InventoryManager : MonoBehaviour
 
     }
 
+    public void AddItemToInventory(GameObject addedItem)
+    {
+        if(!InventoryGrid.Contains(ObjectToItem(addedItem)))
+        {
+            InventoryGrid.Add(ObjectToItem(addedItem));
+            Debug.Log("Item added!");
+        }
+    }
+
     public void OnHoverEnter(BaseEventData data)
     {
         PointerEventData pointer = (PointerEventData)data;
