@@ -235,7 +235,8 @@ public class UIManager : MonoBehaviour
         }
         else
         {
-            nextButton.SetActive(true);
+            // can turn this back on if want the next button, but honestly it's kinda useless I think
+            //nextButton.SetActive(true);
             foreach(GameObject b in dialogueButtons)
             {
                 b.SetActive(false);

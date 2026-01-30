@@ -24,6 +24,7 @@ public class NPCStats : MonoBehaviour
     public int damage;
     public bool hasAnimation;
     public GameObject associatedItem;
+    public bool associatedItemGiven = false;
     // attack type or smth somehow needs to go here...
 
     [Header("Dialogue")]
@@ -44,7 +45,7 @@ public class NPCStats : MonoBehaviour
         // tempStarter.dialogueOptions.Add(defaultDialogue);
         // handler = new DialogueHandler(defaultDialogue, dialogueLists, uiManager, charVisualization, "Nobody");
         animator = this.gameObject.GetComponent<Animator>();
-        if(character != NPCName.TestNPC) // change back to == later!!!
+        if(character == NPCName.TestNPC) // change back to == later!!!
         {
             //outline: first node is NPC saying Hello There! second node is Player saying General Kenobi, third node is NPC saying what's 9 + 10, fourth node is Player saying 19 or 21, 21 goes to NPC node saying wrong you uncultured swine try again, then back to fourth node, 21 is NPC saying good job, bye, then ending
             DialogueNode n1 = new DialogueNode(new List<Dialogue>(), false); // (NPC) hello there
@@ -76,22 +77,220 @@ public class NPCStats : MonoBehaviour
         else if(character == NPCName.SirBorro)
         {
             DialogueNode n1 = new DialogueNode(new List<Dialogue>(), false); // (Borro) Good morrow! It is I, the Honorable Sir Borro, pleasure to make your acquintance fine sir, or lass. And who might I have the honor of speaking to? >n2
-            DialogueNode n2 = new DialogueNode(new List<Dialogue>(), true); // (Player) Options: 1) Your name, >n3 2) ur mom, >n4 3) Sir Borro the II >n5 4) *spit in his food and leave* >n6 ***starts unavailable***
+            DialogueNode n2 = new DialogueNode(new List<Dialogue>(), true); // (Player) Options: 1) Your name, >n3 2) ur mom, >n4 3) Sir Borro the II >n5 4) *spit in his food and leave* *malice +2* >n6 ***starts unavailable until malice is higher, five maybe?***
             DialogueNode n3 = new DialogueNode(new List<Dialogue>(), false); // (Borro) Ah, *your name*, well met! Pray thee, share thy tale. Tell me about yourself. >n7
             DialogueNode n4 = new DialogueNode(new List<Dialogue>(), false); // (Borro) You scurvy knave! You impudent rapscallion! You villanous wretch! Fie, fie to thee and thine kin, and may the Lord above have mercy on thine own mother who had the misfortune of siring you >end ***malice +2****
             DialogueNode n5 = new DialogueNode(new List<Dialogue>(), false); // (Borro) A noble name! Surely you must be a noble warrior, like myself. Prithee, speak thy tale. Who art thou? >n7
             DialogueNode n6 = new DialogueNode(new List<Dialogue>(), false); // (Borro) How darest thou, insolent wretch! Thou art a cur, a scoundrel, a knave through and through! Have at thee! >n12
             DialogueNode n7 = new DialogueNode(new List<Dialogue>(), true); // (Player) Options: 1) I am but a humble innkeeper, owner of this fine establishment. I think I might be cursed. >n8 2) Only a humble innkeeper. How are you liking your stay here? How's the food? >n9 3) I'm no one of consequence. What about you, what's your story? >n10 4) *Leave* >end
             DialogueNode n8 = new DialogueNode(new List<Dialogue>(), false); // (Borro) A curse, eh? Fascinating. Who cursed you? Why would anyone do such a thing to such a fine fellow? What kind of curse is it? Whoever it was must hate you. It could be anyone in this very inn, could be someone watching you right here, right now... well, once you expose this evil sorcerer, tell me and we shall vanquish their dark magic forever, together! >n13
-            DialogueNode n9 = new DialogueNode(new List<Dialogue>(), false); // (Borro)
-            DialogueNode n10 = new DialogueNode(new List<Dialogue>(), false); // (Borro)
-            DialogueNode n11 = new DialogueNode(new List<Dialogue>(), false); // (Borro)
+            DialogueNode n9 = new DialogueNode(new List<Dialogue>(), false); // (Borro) The victuals look fair enough, yet I still eye them closely, lest poison be hid therein, for mine enemies are ever watchful. >n16
+            DialogueNode n10 = new DialogueNode(new List<Dialogue>(), false); // (Borro) I thank thee for thy asking, good sir. I am called Sir Borro, knight-errant, servant of the light and foe to darkness. I roam the world seeking only to serve the good and to honor my lady love, the honorable Octavia the Fifth. >n11
+            DialogueNode n11 = new DialogueNode(new List<Dialogue>(), true); // (Player) Options: 1) What kinds of evil do you fight, and what brings you to this inn? >n20 2) Who is Lady Octavia the Fifth? >n21 3) leave >end
             DialogueNode n12 = new DialogueNode(new List<Dialogue>(), false); // (Borro) *** Sir Borro throws his food at you. Gain Beef Stew *** >end
-            DialogueNode n13 = new DialogueNode(new List<Dialogue>(), true); // (Player) Options: 1) Thank you, good knight. I thank you for your service, and look forward to fighting that evil together when the hour comes. ** +1 honor ** >n14 2) If it could be anyone in this inn, how do I know it wasn't you?? ** +1 malice ** (remember idea of adjusting dialogue malice value so it doesn't add after adding it once so you can't just farm) >n15
+            DialogueNode n13 = new DialogueNode(new List<Dialogue>(), true); // (Player) Options: 1) Thank you, good knight. I thank you for your service, and look forward to fighting that evil together when the hour comes. ** +1 honor ** >n14 2) If it could be anyone in this inn, how do I know it wasn't you?? ** +1 malice **  >n15 3) leave >end
             DialogueNode n14 = new DialogueNode(new List<Dialogue>(), false); // (Borro) As do I, good sir, as do I. No creature of darkness shall escape the judgment of light. Thou art an honorable servant of light. Tell me more of thy tale. >n7
             DialogueNode n15 = new DialogueNode(new List<Dialogue>(), false); // (Borro) Thou darest acuse a knight of allying with the forces of evil? Clearly you know nothing of such matters. I am sworn to defend all that is good and true, and destroy all the tricks and traps of darkness. Nothing shall hinder me in my quest, not even the doubts of one such as you. Now, tell me more of thy tale, knave. >n7
+            DialogueNode n16 = new DialogueNode(new List<Dialogue>(), true); // (Player) Options: 1) I'm sure the food is fine, who would want to poison you? You should enjoy good food while you have it! >n17 2) If you think there's risk of poison, give me the food and I'll inspect it personally. >n18 3) ***starts unavailable, only available after talking to Gastou about allergies, maybe saveData bool*** Aren't you allergic to meat? **+2 kindness** >n19 4) leave >end
+            DialogueNode n17 = new DialogueNode(new List<Dialogue>(), false); // (Borro) Who can say who might seek my poisoning? I have many enemies, and there is something amiss with this inn. But let us forget about such dark matters. Tell me more of thyself, good sir. >n7
+            DialogueNode n18 = new DialogueNode(new List<Dialogue>(), false); // (Borro) Mayhaps the morsels are sound, yet I dare not risk any ailments. Better to continue inspecting them, to be safe. Pray thee, let us speak no more of my victuals. Regale me more with thine own tale. >n7
+            DialogueNode n19 = new DialogueNode(new List<Dialogue>(), false); // (Borro) Ah-- meat is poison to me! I had near forgot it. I thank thee for the reminder. Take these victuals as payment for thy service. You have my gratitude, good sir! **gain meat stew**  >end
+            DialogueNode n20 = new DialogueNode(new List<Dialogue>(), false); // (Borro) ***depends on honor (maybe?) if honor less than three: I'm afraid I must reserve that information for trustworthy ears. You never know where your enemies lie... if honor >= 3: I hunt all manner of beasts born of the darkness. I have vanquished ghosts, ghouls, vampires, demons, and many other malicious spirits from beyond. Of late I have heard tell of a werewolf in these parts, and a sorcerer of great power besides. They have been terrorizing the good folk hereabouts with curses and bloodshed, and I am come to give them what is rightly owed. But hush, keep silent, beware of unwanted ears listening in... trust no one in this inn. No one. >n7
+            DialogueNode n21 = new DialogueNode(new List<Dialogue>(), false); // (Borro) Ah, me! My sweet lady! How could anyone live without basking in the radiance of her beauty? How can a soul so lowly as mine begin to describe the depths of her brilliance? Her smile outshines the morning sun yet doth not scorch the eyes, her laugh is as a gentle bell upon a spring morn, and her gaze alone hath undone more foes than ever I have by sword. If ever you have the honor of meeting her, you may consider your life fulfilled, whatever your past transgressions. >n22
+            DialogueNode n22 = new DialogueNode(new List<Dialogue>(), true); // (Player) Options: 1) She sounds lovely, and I hope to meet her soon! **+2 kindness** >n23 2) Ain't no way she's all that. **+4 malice** >n24 3) leave >end
+            DialogueNode n23 = new DialogueNode(new List<Dialogue>(), false); // (Borro) Truly, lovely beyond all belief, and beautiful beyond all comprehension. If ever you do lay eyes on her noble personage, send regards from her noble knight, Sir Borro, who waits on her always. But we could speak of the Lady Octavia for ages and ages and never capture the immensity of her nobility and grace. Let us return to matters closer at hand. Tell me more of thy tale, good sir. >n7
+            DialogueNode n24 = new DialogueNode(new List<Dialogue>(), false); // (Borro) Wretch! Varmint! Roach! Foul beast! How darest thou sully the good name of goodness herself! If not for the laws of hospitality, I would cut you down on spot! An inferno of rage roars within me. I will endeavor to forget this moment, and you better pray that I do or it will not end well for you... let us forget her ladyship, pinacle of all that is good. Back to your story, you wretched scum. >n7
             DialogueNode end = new DialogueNode(new List<Dialogue>(), false); // empty node, end node to end dialogue 
+
+            Dialogue dLeave = new Dialogue(end, "*Leave*", true);
+            Dialogue d1 = new Dialogue(n2, "Good morrow! It is I, the Honorable Sir Borro, pleasure to make your acquintance fine sir, or lass. And who might I have the honor of speaking to?", true); // stored in n1
+            Dialogue d2 = new Dialogue(n3, "I am " + SaveData.saveData.GetName() + ".", true); // stored in n2
+            Dialogue d3 = new Dialogue(n4, "ur mom", true); // stored in n2
+            Dialogue d4 = new Dialogue(n5, "Sir Borro II.", true); // stored in n2
+            Dialogue d5 = new Dialogue(n6, "*Spit in his food and leave*", false, 2, 0, 0, "Do malice/honor/kindness once", "Slightly mean", this); //stored in n2        //needs malice higher than 5
+            Dialogue d6 = new Dialogue(n7, "Ah, " + SaveData.saveData.GetName() + ", well met! Pray thee, share thy tale. Tell me about yourself.", true); // stored in n3
+            Dialogue d7 = new Dialogue(end, "You scurvy knave! You impudent rapscallion! You villanous wretch! Fie, fie to thee and thine kin, and may the Lord above have mercy on thine own mother who had the misfortune of siring you", true, 2, 0, 0, "Do malice/honor/kindness once", "Default", this); //stored in n4     // malice +2
+            Dialogue d8 = new Dialogue(n7, "A noble name! Surely you must be a noble warrior, like myself. Prithee, speak thy tale. Who art thou?", true); // stored in n5
+            Dialogue d9 = new Dialogue(n12, "How darest thou, insolent wretch! Thou art a cur, a scoundrel, a knave through and through! Have at thee!", true); // stored in n6
+            Dialogue d10 = new Dialogue(n8, "I am but a humble innkeeper, owner of this fine establishment. I think I might be cursed.", true); // stored in n7
+            Dialogue d11 = new Dialogue(n9, "How are you liking your stay here? How's the food?", true); // stored in n7
+            Dialogue d12 = new Dialogue(n10, "I'm no one of consequence. What about you, what's your story?", true); // stored in n7
+            // dLeave in n7
+            Dialogue d13 = new Dialogue(n13, "A curse, eh? Fascinating. Who cursed you? Why would anyone do such a thing to such a fine fellow? What kind of curse is it? Whoever it was must hate you. It could be anyone in this very inn, could be someone watching you right here, right now... well, once you expose this evil sorcerer, tell me and we shall vanquish their dark magic forever, together!", true); // stored in n8
+            Dialogue d14 = new Dialogue(n16, "The victuals look fair enough, yet I still eye them closely, lest poison be hid therein, for mine enemies are ever watchful.", true); //stored in n9
+            Dialogue d15 = new Dialogue(n11, "I thank thee for thy asking, good sir. I am called Sir Borro, knight-errant, servant of the light and foe to darkness. I roam the world seeking only to serve the good and to honor my lady love, the honorable Octavia the Fifth.", true); // stored in n10
+            Dialogue d16 = new Dialogue(n20, "What kinds of evil do you fight, and what brings you to this inn?", true); // stored in n11
+            Dialogue d17 = new Dialogue(n21, "Who is Lady Octavia the Fifth?", true); // stored in n11
+            // dLeave in n11
+            Dialogue d18 = new Dialogue(end, "*Sir Borro throws his food at you. Gain Beef Stew*", true, 0, 0, 0, "Add Item", "Default", this); // stored in n12
+            Dialogue d19 = new Dialogue(n14, "Thank you, good knight. Maybe we can fight that evil together, when the hours comes.", true, 0, 1, 0, "Do malice/honor/kindness once", "Default", this); // stored in n13
+            Dialogue d20 = new Dialogue(n15, "If it could be anyone in this inn, how do I know it wasn't you??", true, 1, 0, 0, "Do malice/honor/kindness once", "Default", this); //stored in n13
+            // dLeave in n13
+            Dialogue d21 = new Dialogue(n7, "As do I, good sir, as do I. No creature of darkness shall escape the judgment of light. Thou art an honorable servant of light. Tell me more of thy tale.", true); //stored in n14
+            Dialogue d22 = new Dialogue(n7, "Thou darest acuse a knight of allying with the forces of evil? Clearly you know nothing of such matters. I am sworn to defend all that is good and true, and destroy all the tricks and traps of darkness. Nothing shall hinder me in my quest, not even the doubts of one such as you. Now, tell me more of thy tale, knave.", true); // stored in n15
+            Dialogue d23 = new Dialogue(n17, "I'm sure the food is fine, who would want to poison you?", true); // stored in n16
+            Dialogue d24 = new Dialogue(n18, "If you think there's risk of poison, give me the food and I'll inspect it personally.", true); // stored in n16
+            Dialogue d25 = new Dialogue(n19, "Aren't you allergic to meat?", false, 0, 0, 2, "Do malice/honor/kindness once", "Check knows allergy", this); // stored in n16
+            // dLeave in n16
+            Dialogue d26 = new Dialogue(n7, "Who can say who might seek my poisoning? I have many enemies, and there is something amiss with this inn. But let us forget about such dark matters. Tell me more of thyself, good sir.", true); // stored in n17
+            Dialogue d27 = new Dialogue(n7, "Mayhaps the morsels are sound, yet I dare not risk any ailments. Better to continue inspecting them, to be safe. Pray thee, let us speak no more of my victuals. Regale me more with thine own tale.", true); // stored in n18
+            Dialogue d28 = new Dialogue(end, "Ah-- meat is poison to me! I had near forgot it. I thank thee for the reminder. Take these victuals as payment for thy service. You have my gratitude, good sir! \n**gain meat stew**", true, 0, 0, 0, "Add Item", "Default", this); // stored in n19
+            Dialogue d29 = new Dialogue(n7, "I'm afraid I must reserve that information for trustworthy ears. You never know where your enemies lie... ", true, 0, 0, 0, "Update message based on honor (Sir Borro)", "Default", this); // stored in n20
+            Dialogue d30 = new Dialogue(n22, "Ah, me! My sweet lady! How could anyone live without basking in the radiance of her beauty? How can a soul so lowly as mine begin to describe the depths of her brilliance? Her smile outshines the morning sun yet doth not scorch the eyes, her laugh is as a gentle bell upon a spring morn, and her gaze alone hath undone more foes than ever I have by sword. If ever you have the honor of meeting her, you may consider your life fulfilled, whatever your past transgressions.", true); // stored in n21
+            Dialogue d31 = new Dialogue(n23, "She sounds lovely, and I hope to meet her soon!", true, 0, 0, 2, "Do malice/honor/kindness once", "Default", this); // stored in n22
+            Dialogue d32 = new Dialogue(n24, "Ain't no way she's all that.", true, 4, 0, 0, "Do malice/honor/kindness once", "Default", this); // stored in n22
+            // dLeave in n22
+            Dialogue d33 = new Dialogue(n7, "Truly, lovely beyond all belief, and beautiful beyond all comprehension. If ever you do lay eyes on her noble personage, send regards from her noble knight, Sir Borro, who waits on her always. But we could speak of the Lady Octavia for ages and ages and never capture the immensity of her nobility and grace. Let us return to matters closer at hand. Tell me more of thy tale, good sir.", true); // in n23
+            Dialogue d34 = new Dialogue(n7, "Wretch! Varmint! Roach! Foul beast! How darest thou sully the good name of goodness herself! If not for the laws of hospitality, I would cut you down on spot! An inferno of rage roars within me. I will endeavor to forget this moment, and you better pray that I do or it will not end well for you... let us forget her ladyship, pinacle of all that is good. Back to your story, you wretched scum.", true); // in n24
+
+            n1.AppendDialogue(d1);
+            n2.AppendDialogue(d2);
+            n2.AppendDialogue(d3);
+            n2.AppendDialogue(d4);
+            n2.AppendDialogue(d5);
+            n3.AppendDialogue(d6);
+            n4.AppendDialogue(d7);
+            n5.AppendDialogue(d8);
+            n6.AppendDialogue(d9);
+            n7.AppendDialogue(d10);
+            n7.AppendDialogue(d11);
+            n7.AppendDialogue(d12);
+            n7.AppendDialogue(dLeave);
+            n8.AppendDialogue(d13);
+            n9.AppendDialogue(d14);
+            n10.AppendDialogue(d15);
+            n11.AppendDialogue(d16);
+            n11.AppendDialogue(d17);
+            n11.AppendDialogue(dLeave);
+            n12.AppendDialogue(d18);
+            n13.AppendDialogue(d19);
+            n13.AppendDialogue(d20);
+            n13.AppendDialogue(dLeave);
+            n14.AppendDialogue(d21);
+            n15.AppendDialogue(d22);
+            n16.AppendDialogue(d23);
+            n16.AppendDialogue(d24);
+            n16.AppendDialogue(d25);
+            n16.AppendDialogue(dLeave);
+            n17.AppendDialogue(d26);
+            n18.AppendDialogue(d27);
+            n19.AppendDialogue(d28);
+            n20.AppendDialogue(d29);
+            n21.AppendDialogue(d30);
+            n22.AppendDialogue(d31);
+            n22.AppendDialogue(d32);
+            n22.AppendDialogue(dLeave);
+            n23.AppendDialogue(d33);
+            n24.AppendDialogue(d34);
+
+            handler = new DialogueHandler(n1, uiManager, npcName, charVisualization, playerName, playerVisualization);
         }
+        else if(character == NPCName.Gastou)
+        {
+            DialogueNode n1 = new DialogueNode(new List<Dialogue>(), false); // (Gastou) Ah! Welcome, welcome mon ami! Sit with me, 'ave a drink, we chat. >n2
+            DialogueNode n2 = new DialogueNode(new List<Dialogue>(), true); // (Player) Options: 1) Who are you, what's your story? >n3 2) What brings you to this inn? >n4 3) How do you like the food? >n5 4) *leave*
+            DialogueNode n3 = new DialogueNode(new List<Dialogue>(), false); // (Gastou) I come from ze mountains. Cold air, sharp paths, forests zat run forever. I used to run through ze trees like an animal myself—no roads, no walls, only breath and bark and snow. At night, you hear ze wolves. Not close… but close enough zat you listen instead of sleep. Zey howl, and ze mountains answer. It is… honest sound. >n6
+            DialogueNode n4 = new DialogueNode(new List<Dialogue>(), false); // (Gastou) Zis inn is warm, and ze night winds are cold. But I will not stay for long. Zis inn... it watches you. You feel it, yes? >n10
+            DialogueNode n5 = new DialogueNode(new List<Dialogue>(), false); // (Gastou) Zis meal? It is solid. It stays where you put it, and it does not argue. Zat is good food. >n18
+            DialogueNode n6 = new DialogueNode(new List<Dialogue>(), true); // (Player) Options: 1) Cool. >n7 2) You're crazy >n8 *+2 malice* 3) That's awesome, I wish I had that sort of freedom. >n9 *+2 kindness* 4) *leave* >end
+            DialogueNode n7 = new DialogueNode(new List<Dialogue>(), false); // (Gastou) Yes. Ze wind was cool, cool to ze bone. >n2
+            DialogueNode n8 = new DialogueNode(new List<Dialogue>(), false); // (Gastou) Crazy? I was crazy once. You are rude. It is no matter. You are also small and weak and fat. And bald. Why no hair grow on your head? Where did it all go? >n2
+            DialogueNode n9 = new DialogueNode(new List<Dialogue>(), false); // (Gastou) Freedom. Yes, zat is a good word for it. Ze feel of ze wind on your face as you run and leap from peak to peak, one with nature and natural with oneself. It is good, I think. But zis inn is nice too, good rest, good food. >n2
+            DialogueNode n10 = new DialogueNode(new List<Dialogue>(), true); // (Player) Options: 1) Yes, I feel it. Like someone is always watching you. >n11 2) Hey this is my inn, don't talk bad about it! >n12 3) I feel it, and I promise to you I will make whatever is wrong right so travelers like you may rest easier *+2 honor* >n13 4) *leave* >end
+            DialogueNode n11 = new DialogueNode(new List<Dialogue>(), false); // (Gastou) Exactly. Too many eyes, too many pauses in conversation. People smile, but zey do not relax. Something is wrong ’ere. I do not know what—but I would not turn my back on zis room. >n14
+            DialogueNode n12 = new DialogueNode(new List<Dialogue>(), false); // (Gastou) Bah… I speak too sharp sometimes. Ze mountains teach you to be honest, not polite. Yet it is true, yes? Something is wrong here... >n2
+            DialogueNode n13 = new DialogueNode(new List<Dialogue>(), false); // (Gastou) A place of true rest. That would be nice. Bonne chance, mon ami. Good luck. >n2
+            DialogueNode n14 = new DialogueNode(new List<Dialogue>(), true); // (Player) Options: 1) What do you know about the knight sitting over there? >n15 2) What can you tell me about the butcher behind the bar? >n16 3) I hear noise from that door. Are there more people here than we see? >n17 4) leave >end
+            DialogueNode n15 = new DialogueNode(new List<Dialogue>(), false); // (Gastou) Ze knight? ’E has fancy armor, yes—but not much underneath. I spoke to ’im when I came in and ’e went on and on about some lady. All sighs and poetry. Not quite right in ze head, oui? So I tell ’im, eat up! ’Ave some meat, put a little flesh on ze bone. And zen—listen to zis—’e tells me ’e is allergic. Allergic… to meat. How does one even live like zat? >n14 **savedata SetAllergic bool
+            DialogueNode n16 = new DialogueNode(new List<Dialogue>(), false); // (Gastou) Ze Butcher? 'Is knife is sharp, and 'is hands are quick. Maybe quicker zen 'is wits. >n14
+            DialogueNode n17 = new DialogueNode(new List<Dialogue>(), false); // (Gastou) Ah, ze door. Oui, I think zer are more people, but ze door is locked. Ze butcher 'as ze key, I think. >n2
+            DialogueNode n18 = new DialogueNode(new List<Dialogue>(), true); // (Player) 1) I'm glad you like the food. And in fact, just for you, take it on the house. **+2 kindness** >n19 2) It's pretty good isn't it. Can I have it? Please? >n20 3) *Take his food and leave* **+3 malice** >n21 4) *leave* >end
+            DialogueNode n19 = new DialogueNode(new List<Dialogue>(), false); // (Gastou) Bah. I need no charity. But still, zat was generous. You 'ave my thanks. >n2
+            DialogueNode n20 = new DialogueNode(new List<Dialogue>(), false); // (Gastou) Non. Zis is mine. Get your own. >n2
+            DialogueNode n21 = new DialogueNode(new List<Dialogue>(), false); // (Gastou) *He holds his food tightly. He is much stronger than you, and as you walk away with no food, Gastou glares at you menacingly and grunts.* >end
+            DialogueNode end = new DialogueNode(new List<Dialogue>(), false); // empty node, end node to end dialogue 
+
+            Dialogue dLeave = new Dialogue(end, "*Leave*", true);
+            Dialogue d1 = new Dialogue(n2, "Ah! Welcome, welcome mon ami! Sit with me, 'ave a drink, we chat.", true); // stored in n1
+            Dialogue d2 = new Dialogue(n3, "Who are you, what's your story?", true); // stored in n2
+            Dialogue d3 = new Dialogue(n4,"What brings you to this inn?", true); // stored in n2
+            Dialogue d4 = new Dialogue(n5, "How do you like the food?", true); // stored in n2
+            // dLeave in n2
+            Dialogue d5 = new Dialogue(n6, "I come from ze mountains. Cold air, sharp paths, forests zat run forever. I used to run through ze trees like an animal myself—no roads, no walls, only breath and bark and snow. At night, you hear ze wolves. Not close… but close enough zat you listen instead of sleep. Zey howl, and ze mountains answer. It is… honest sound.", true); // stored in n3
+            Dialogue d6 = new Dialogue(n10, "Zis inn is warm, and ze night winds are cold. But I will not stay for long. Zis inn... it watches you. You feel it, yes?", true); // stored in n4
+            Dialogue d7 = new Dialogue(n18, "Zis meal? It is solid. It stays where you put it, and it does not argue. Zat is good food.", true); //stored in n5
+            Dialogue d8 = new Dialogue(n7, "Cool.", true); // stored in n6
+            Dialogue d9 = new Dialogue(n8, "You're crazy.", true, 2, 0, 0, "Do malice/honor/kindness once", "Default", this); // stored in n6
+            Dialogue d10 = new Dialogue(n9, "That's awesome, I wish I had that sort of freedom.", true, 0, 0, 2, "Do malice/honor/kindness once", "Default", this); // stored in n6
+            //dLeave in n6
+            Dialogue d11 = new Dialogue(n2, "Yes. Ze wind was cool, cool to ze bone.", true); // stored in n7
+            Dialogue d12 = new Dialogue(n2, "Crazy? I was crazy once. You are rude. It is no matter. You are also small and weak and fat. And bald. Why no hair grow on your head? Where did it all go?", true); // stored in n8
+            Dialogue d13 = new Dialogue(n2, "Freedom. Yes, zat is a good word for it. Ze feel of ze wind on your face as you run and leap from peak to peak, one with nature and natural with oneself. It is good, I think. But zis inn is nice too, good rest, good food.", true); // stored in n9
+            Dialogue d14 = new Dialogue(n11, "Yes, I feel it. Like someone is always watching you.", true); // stored in n10
+            Dialogue d15 = new Dialogue(n12, "Hey this is my inn, don't talk bad about it!", true); // stored in n10
+            Dialogue d16 = new Dialogue(n13, "I feel it, and I promise to you I will make whatever is wrong right so travelers like you may rest easier", true, 0, 2, 0, "Do malice/honor/kindness once", "Default", this); // stored in n10
+            //dleave in n10
+            Dialogue d17 = new Dialogue(n14, "Exactly. Too many eyes, too many pauses in conversation. People smile, but zey do not relax. Something is wrong ’ere. I do not know what—but I would not turn my back on zis room.", true); // stored in n11
+            Dialogue d18 = new Dialogue(n2, "Bah… I speak too sharp sometimes. Ze mountains teach you to be honest, not polite. Yet it is true, yes? Something is wrong here...", true); // stored in n12
+            Dialogue d19 = new Dialogue(n2, "A place of true rest. That would be nice. Bonne chance, mon ami. Good luck.", true); // stored in n13
+            Dialogue d20 = new Dialogue(n15, "What do you know about the knight sitting over there?", true); // stored in n14
+            Dialogue d21 = new Dialogue(n16, "What can you tell me about the butcher behind the bar? ", true); // stored in n14
+            Dialogue d22 = new Dialogue(n17, "I hear noise from that door. Are there more people here than we see?", true); // stored in n14
+            //dLeave in n14
+            Dialogue d23 = new Dialogue(n14, "Ze knight? ’E has fancy armor, yes—but not much underneath. I spoke to ’im when I came in and ’e went on and on about some lady. All sighs and poetry. Not quite right in ze head, oui? So I tell ’im, eat up! ’Ave some meat, put a little flesh on ze bone. And zen—listen to zis—’e tells me ’e is allergic. Allergic… to meat. How does one even live like zat?", true, 0, 0, 0, "Update allergy knowledge", "Default", this); // stored in n15, **updates allergy knowledge
+            Dialogue d24 = new Dialogue(n14, "Ze Butcher? 'Is knife is sharp, and 'is hands are quick. Maybe quicker zen 'is wits.", true); // stored in n16
+            Dialogue d25 = new Dialogue(n2, "Ah, ze door. Oui, I think zer are more people, but ze door is locked. Ze butcher 'as ze key, I think.", true); // stored in n17
+            Dialogue d26 = new Dialogue(n19, "I'm glad you like the food. And in fact, just for you, take it on the house.", true, 0, 0, 2, "Do malice/honor/kindness once", "Default", this); // stored in n18
+            Dialogue d27 = new Dialogue(n20, "It's pretty good isn't it. Can I have it? Please?", true); // stored in n18
+            Dialogue d28 = new Dialogue(n21, "*Take his food and leave*", true, 3, 0, 0, "Do malice/honor/kindness once", "Default", this); // stored in n18
+            //dLeave in n18
+            Dialogue d29 = new Dialogue(n2, "Bah. I need no charity. But still, zat was generous. You 'ave my thanks.", true); // stored in n19
+            Dialogue d30 = new Dialogue(n2, "Non. Zis is mine. Get your own.", true); // stored in n20
+            Dialogue d31 = new Dialogue(end, "*He holds his food tightly. He is much stronger than you, and as you walk away with no food, Gastou glares at you menacingly and grunts.*", true); // stored in n21
+
+            n1.AppendDialogue(d1);
+            n2.AppendDialogue(d2);
+            n2.AppendDialogue(d3);
+            n2.AppendDialogue(d4);
+            n2.AppendDialogue(dLeave);
+            n3.AppendDialogue(d5);
+            n4.AppendDialogue(d6);
+            n5.AppendDialogue(d7);
+            n6.AppendDialogue(d8);
+            n6.AppendDialogue(d9);
+            n6.AppendDialogue(d10);
+            n6.AppendDialogue(dLeave);
+            n7.AppendDialogue(d11);
+            n8.AppendDialogue(d12);
+            n9.AppendDialogue(d13);
+            n10.AppendDialogue(d14);
+            n10.AppendDialogue(d15);
+            n10.AppendDialogue(d16);
+            n10.AppendDialogue(dLeave);
+            n11.AppendDialogue(d17);
+            n12.AppendDialogue(d18);
+            n13.AppendDialogue(d19);
+            n14.AppendDialogue(d20);
+            n14.AppendDialogue(d21);
+            n14.AppendDialogue(d22);
+            n14.AppendDialogue(dLeave);
+            n15.AppendDialogue(d23);
+            n16.AppendDialogue(d24);
+            n17.AppendDialogue(d25);
+            n18.AppendDialogue(d26);
+            n18.AppendDialogue(d27);
+            n18.AppendDialogue(d28);
+            n18.AppendDialogue(dLeave);
+            n19.AppendDialogue(d29);
+            n20.AppendDialogue(d30);
+            n21.AppendDialogue(d31);
+
+            handler = new DialogueHandler(n1, uiManager, npcName, charVisualization, playerName, playerVisualization);
+
+
+        }
+
+        
     }
 
     // Update is called once per frame
@@ -121,6 +320,16 @@ public class NPCStats : MonoBehaviour
     {
         //option must be in range of Dialogue options, or else returns and turns off dialouge and resets currNode
         handler.GoToNextNode(option);
+    }
+
+    public bool GetAssociatedItemGiven()
+    {
+        return associatedItemGiven;
+    }
+
+    public void SetAssociatedItemGiven(bool isGiven)
+    {
+        associatedItemGiven = isGiven;
     }
 
     // Dialogue Option class to contain dialogue options
@@ -566,6 +775,14 @@ public class Dialogue
         {
             SetAvailability(startAvailable, SaveData.saveData.GetMalice() >= 5);
         }
+        else if(availabilityState == "Check knows allergy")
+        {
+            SetAvailability(startAvailable, SaveData.saveData.GetKnowsAllergy());
+        }
+        else if (availabilityState == "Slightly honorable")
+        {
+            SetAvailability(startAvailable, SaveData.saveData.GetHonor() >= 5);
+        }
     }
 
     public bool GetAvailability()
@@ -589,10 +806,38 @@ public class Dialogue
         {
             SetAvailability(startAvailable, false);
         }
+        else if(doSomething == "Do malice/honor/kindness once")
+        {
+            SaveData.saveData.AddMalice(maliceResult);
+            SaveData.saveData.AddHonor(honorResult);
+            SaveData.saveData.AddKindness(kindnessResult);
+            maliceResult = 0;
+            honorResult = 0;
+            kindnessResult = 0;
+        }
         else if(doSomething == "Add Item")
         {
-            parentNPC.inventoryManager.AddItemToInventory(parentNPC.associatedItem);
-            SaveData.saveData.AddItemToStarters(parentNPC.associatedItem);
+            if(!parentNPC.GetAssociatedItemGiven())
+            {
+                parentNPC.inventoryManager.AddItemToInventory(parentNPC.associatedItem);
+                SaveData.saveData.AddItemToStarters(parentNPC.associatedItem);
+                parentNPC.SetAssociatedItemGiven(true);
+            }
+        }
+        else if(doSomething == "Update message based on honor (Sir Borro)")
+        {
+            if(SaveData.saveData.GetHonor() >= 3)
+            {
+                message = "I'm afraid I must reserve that information for trustworthy ears. You never know where your enemies lie... ";
+            }
+            else
+            {
+                message = "I hunt all manner of beasts born of the darkness. I have vanquished ghosts, ghouls, vampires, demons, and many other malicious spirits from beyond. Of late I have heard tell of a werewolf in these parts, and a sorcerer of great power besides. They have been terrorizing the good folk hereabouts with curses and bloodshed, and I am come to give them what is rightly owed. But hush, keep silent, beware of unwanted ears listening in... trust no one in this inn. No one.";
+            }
+        }
+        else if(doSomething == "Update allergy knowledge")
+        {
+            SaveData.saveData.SetKnowsAllergy(true);
         }
     }
 

@@ -20,6 +20,8 @@ public class SaveData : MonoBehaviour
     public int maliceCount;
     public int honorCount;
     public int kindnessCount;
+    [Header("Publically accessible booleans because lazy")]
+    public bool knowsAllergy;
 
     void Awake()
     {
@@ -87,6 +89,16 @@ public class SaveData : MonoBehaviour
         {
             savedStarterItems.Add(addedItem);
         }
+    }
+
+    public bool GetKnowsAllergy()
+    {
+        return knowsAllergy;
+    }
+
+    public void SetKnowsAllergy(bool knows)
+    {
+        knowsAllergy = knows;
     }
 
     public void ResetTimeLoop()
