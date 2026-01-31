@@ -20,7 +20,8 @@ public class Player : MonoBehaviour
     private Vector2 moveInput;
     public bool isAttacking;
     public List<GameObject> accessibleInventory = new List<GameObject>();
-    public GameObject door;
+    public GameObject activeInteractable;
+    public GameObject journalPrefab;
     private bool doorOpened = false;
     public Animator animator;
 
@@ -125,11 +126,11 @@ public class Player : MonoBehaviour
         }
         else if (inventoryManager.equippedItemStats.itemCat == Category.Accessory)
         {
-            if (inventoryManager.equippedItemStats.itemName == "Simple Key")
-            {
-                doorOpened = !doorOpened;
-                ToggleDoor(doorOpened);
-            }
+            // if (inventoryManager.equippedItemStats.itemName == "Simple Key")
+            // {
+            //     doorOpened = !doorOpened;
+            //     ToggleDoor(doorOpened);
+            // }
         }
 
     }
@@ -313,6 +314,10 @@ public class Player : MonoBehaviour
         {
             AdjustNPCRange(other.GetComponent<NPCStats>(), true);
         }
+        else if (otherGO.layer == 8)
+        {
+            activeInteractable = other.gameObject;
+        }
     }
     private void OnTriggerExit2D(Collider2D other)
     {
@@ -320,6 +325,10 @@ public class Player : MonoBehaviour
         if (otherGO.layer == 6)
         {
             AdjustNPCRange(other.GetComponent<NPCStats>(), false);
+        }
+        else if(otherGO.layer == 8)
+        {
+            activeInteractable = null;
         }
     }
 
@@ -342,6 +351,23 @@ public class Player : MonoBehaviour
 
     public void InteractPressed()
     {
+        if(activeInteractable != null)
+        {
+            if(activeInteractable.name == "Journal")
+            {
+                inventoryManager.AddItemToInventory(journalPrefab);
+                SaveData.saveData.AddItemToStarters(journalPrefab);
+                activeInteractable.SetActive(false);
+                activeInteractable = null;
+            }
+            if(activeInteractable.name == "Doors1h" && inventoryManager.equippedItemStats.itemName == "Simple Key")
+            {
+                doorOpened = !doorOpened;
+                ToggleDoor(doorOpened);
+
+            }
+        }
+
         if (FindClosestNPCInRange() == null)
         {
             Debug.Log("No one to talk to");
@@ -392,13 +418,13 @@ public class Player : MonoBehaviour
     {
         if(isOpening)
         {
-            door.GetComponent<PolygonCollider2D>().enabled = false;
-            door.GetComponent<Animator>().SetTrigger("OpenDoor");
+            activeInteractable.GetComponent<PolygonCollider2D>().enabled = false;
+            activeInteractable.GetComponent<Animator>().SetTrigger("OpenDoor");
         }
         else
         {
-            door.GetComponent<PolygonCollider2D>().enabled = true;
-            door.GetComponent<Animator>().SetTrigger("CloseDoor");
+            activeInteractable.GetComponent<PolygonCollider2D>().enabled = true;
+            activeInteractable.GetComponent<Animator>().SetTrigger("CloseDoor");
         }
     }
 

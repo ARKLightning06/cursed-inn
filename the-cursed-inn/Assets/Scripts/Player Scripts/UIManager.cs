@@ -31,6 +31,8 @@ public class UIManager : MonoBehaviour
     public GameObject settingsUI;
     public GameObject hotbarUI;
     public GameObject dialogueUI;
+    public GameObject timerUI;
+    public TMP_Text timerText;
     public TMP_Text dialogueName;
     public TMP_Text dialogueText;
     public Image dialogueImage;
@@ -63,7 +65,16 @@ public class UIManager : MonoBehaviour
         parentUIs.Add(menuUI);
         parentUIs.Add(settingsUI);
         parentUIs.Add(hotbarUI);
+        parentUIs.Add(timerUI);
         TurnOnPlayingUI();
+    }
+
+    void Update()
+    {
+        if(SaveData.saveData.GetTimerRunning())
+        {
+            timerText.text = string.Format("{0:00}:{1:00}", SaveData.saveData.GetMinutes(), SaveData.saveData.GetSeconds());
+        }
     }
 
 
@@ -178,6 +189,7 @@ public class UIManager : MonoBehaviour
     public void TurnOnInventoryUI()
     {
         TurnEverythingOff();
+        timerUI.SetActive(true);
         inventoryUI.SetActive(true);
         hotbarUI.SetActive(true);
         inventoryManager.ToggleSlots(true);
@@ -186,6 +198,7 @@ public class UIManager : MonoBehaviour
     public void TurnOnPauseMenuUI()
     {
         TurnEverythingOff();
+        timerUI.SetActive(true);
         pauseUI.SetActive(true);
         //...
     }
@@ -194,6 +207,7 @@ public class UIManager : MonoBehaviour
     {
         TurnEverythingOff();
         hotbarUI.SetActive(true);
+        timerUI.SetActive(true);
         dialogueUI.SetActive(false);
         playUI.SetActive(true);
         SetHearts(3, 3); // change this to access player stats later
@@ -283,6 +297,7 @@ public class UIManager : MonoBehaviour
             yield return new WaitForSeconds(textSpeed/dialogueText.text.Length);
         }
     }
+
 
 
 // Button Functions

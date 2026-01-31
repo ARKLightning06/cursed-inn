@@ -435,6 +435,10 @@ public class NPCStats : MonoBehaviour
 
             handler = new DialogueHandler(n1, uiManager, npcName, charVisualization, playerName, playerVisualization);
         }
+        else if(character == NPCName.Wyl)
+        {
+            DialogueNode n1 = new DialogueNode(new List<Dialogue>(), false); // (Wyl) 
+        }
 
         
     }

@@ -12,6 +12,11 @@ public class SaveData : MonoBehaviour
     //Singleton
     public static SaveData saveData;
     public ManagerOfScenes sceneM;
+    public float timerLength;
+    public float timeRemaining;
+    private float minutes;
+    private float seconds;
+    public bool timeIsRunning;
     [Header("Attributes to keep between time loops")]
     public string playerName;
     public List<GameObject> savedStarterItems = new List<GameObject>();
@@ -36,6 +41,43 @@ public class SaveData : MonoBehaviour
 
         playerName = "You";
         DontDestroyOnLoad(gameObject);
+        timeRemaining = timerLength;
+    }
+
+    void Update()
+    {
+        if(timeIsRunning)
+        {
+            if(timeRemaining > 0)
+            {
+                timeRemaining -= Time.deltaTime;
+                minutes = Mathf.FloorToInt(timeRemaining / 60);
+                seconds = Mathf.FloorToInt(timeRemaining % 60);
+            }
+            else
+            {
+                timeRemaining = 0;
+                minutes = 0;
+                seconds = 0;
+                // timeIsRunning = false;
+                ResetTimeLoop();
+            }
+        }
+    }
+
+    public bool GetTimerRunning()
+    {
+        return timeIsRunning;
+    }
+
+    public float GetMinutes()
+    {
+        return minutes;
+    }
+    
+    public float GetSeconds()
+    {
+        return seconds;
     }
 
     public string GetName()
@@ -119,6 +161,7 @@ public class SaveData : MonoBehaviour
         maliceCount = 0;
         honorCount = 0;
         kindnessCount = 0;
+        timeRemaining = timerLength;
         sceneM.ReloadScene();
     }
 }

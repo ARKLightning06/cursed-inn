@@ -45,7 +45,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b79d5144381880846a33dd2ed3a24734, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  sceneM: {fileID: 5360640868937843001}
+  timerLength: 300
+  timeRemaining: 0
+  timeIsRunning: 1
   playerName: 
+  savedStarterItems: []
+  maliceCount: 0
+  honorCount: 0
+  kindnessCount: 0
+  knowsAllergy: 0
 --- !u!1 &5223227856566158884
 GameObject:
   m_ObjectHideFlags: 0
