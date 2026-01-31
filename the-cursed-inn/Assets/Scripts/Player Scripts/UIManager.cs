@@ -32,6 +32,7 @@ public class UIManager : MonoBehaviour
     public GameObject hotbarUI;
     public GameObject dialogueUI;
     public GameObject timerUI;
+    public GameObject journalUI;
     public TMP_Text timerText;
     public TMP_Text dialogueName;
     public TMP_Text dialogueText;
@@ -44,6 +45,13 @@ public class UIManager : MonoBehaviour
     public Image maliceBar;
     public Image honorBar;
     public Image kindnessBar;
+    public TMP_Text notesText;
+    public TMP_Text relationshipText;
+    public Slider maliceSlider;
+    public Slider honorSlider;
+    public Slider kindnessSlider;
+    public float maxRelationshipValue;
+    public string[] notesArray = {"- Cursed in infinite loop", "- Glass bottle: ???", "- ???: ???", "- ???: ???", "- ???: ???", "- ???: ???", "- ???: ???", "- ???: ???", "- ???: ???", "- ???: ???"};
     public float textSpeed;
     
     // and any others...
@@ -66,6 +74,7 @@ public class UIManager : MonoBehaviour
         parentUIs.Add(settingsUI);
         parentUIs.Add(hotbarUI);
         parentUIs.Add(timerUI);
+        parentUIs.Add(journalUI);
         TurnOnPlayingUI();
     }
 
@@ -225,6 +234,128 @@ public class UIManager : MonoBehaviour
         TurnEverythingOff();
         settingsUI.SetActive(true);
     }
+
+    public void TurnOnJournalUI()
+    {
+        TurnEverythingOff();
+        journalUI.SetActive(true);
+        relationshipText.text = "Malice: " + SaveData.saveData.GetMalice() + "\n Honor: " + SaveData.saveData.GetHonor() + "\nKindness: " + SaveData.saveData.GetKindness();
+        // Update the bars!!
+        maliceSlider.value = SaveData.saveData.GetMalice() / maxRelationshipValue;
+        honorSlider.value = SaveData.saveData.GetHonor() / maxRelationshipValue;
+        kindnessSlider.value = SaveData.saveData.GetKindness() / maxRelationshipValue;
+        UpdateNotesText();
+        string notes = "";
+        foreach(string s in notesArray)
+        {
+            notes += s;
+            notes += "\n";
+        }
+        notesText.text = notes;
+    }
+
+    public void UpdateNotesText()
+    {
+        for(int i = 0; i < 8; i++)
+        {
+            int index = 2 + i;
+            if(SaveData.saveData.GetHasMet(i) && SaveData.saveData.GetKnowsNPCSecret(i))
+            {
+                // knows everything
+                if(i == 0)
+                {
+                    // Borro
+                    notesArray[index] = "- Sir Borro: Brave knight allergic to meat";
+                }
+                else if(i == 1)
+                {
+                    // Gastou
+                    notesArray[index] = "- Gastou: runs with wolves in mountains";
+                }
+                else if(i == 2)
+                {
+                    // Pohn
+                    notesArray[index] = "- Pohn Jork: insane butcher obsessed with meat";
+                }
+                else if(i == 3)
+                {
+                    // Wyl
+                    notesArray[index] = "- Wyl: crazy old blacksmith";
+                }
+                else if(i == 4)
+                {
+                    // Octavia
+                    notesArray[index] = "- Octavia V: manipulative shopkeeper";
+                }
+                else if(i == 5)
+                {
+                    // Lupal
+                    notesArray[index] = "- Lupal: herbalist who roams the woods at night";
+                }
+                else if(i == 6)
+                {
+                    // Thadworn
+                    notesArray[index] = "- Thadworn: poor mayor";
+                }
+                else if (i == 7)
+                {
+                    // Harry
+                    notesArray[index] = "- Harry the barber: ashamed of his baldness";
+                }
+            }
+            else if(SaveData.saveData.GetHasMet(i))
+            {
+                // knows name
+                if(i == 0)
+                {
+                    // Borro
+                    notesArray[index] = "- Sir Borro: ???";
+                }
+                else if(i == 1)
+                {
+                    // Gastou
+                    notesArray[index] = "- Gastou: ???";
+                }
+                else if(i == 2)
+                {
+                    // Pohn
+                    notesArray[index] = "- Pohn Jork: ???";
+                }
+                else if(i == 3)
+                {
+                    // Wyl
+                    notesArray[index] = "- Wyl: ???";
+                }
+                else if(i == 4)
+                {
+                    // Octavia
+                    notesArray[index] = "- Octavia V: ???";
+                }
+                else if(i == 5)
+                {
+                    // Lupal
+                    notesArray[index] = "- Lupal: ???";
+                }
+                else if(i == 6)
+                {
+                    // Thadworn
+                    notesArray[index] = "- Thadworn: ???";
+                }
+                else if (i == 7)
+                {
+                    // Harry
+                    notesArray[index] = "- Harry the barber: ???";
+                }
+            }
+            else
+            {
+                notesArray[index] = "- ???: ???";
+            }
+
+
+        }
+    }
+
     public void UpdateDialogue(Sprite sprite, string name, string dialogue, int numOptions, bool isPlayerDialogue)
     {
         TurnOnDialogue();

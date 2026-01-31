@@ -51,10 +51,13 @@ MonoBehaviour:
   timeIsRunning: 1
   playerName: 
   savedStarterItems: []
+  bottle: {fileID: 9212571545540567840, guid: e2d97bc9f7357644f80b32a0c3689cd7, type: 3}
   maliceCount: 0
   honorCount: 0
   kindnessCount: 0
   knowsAllergy: 0
+  metPeople: 0000000000000000
+  knowsPeoplesSecrets: 0000000000000000
 --- !u!1 &5223227856566158884
 GameObject:
   m_ObjectHideFlags: 0

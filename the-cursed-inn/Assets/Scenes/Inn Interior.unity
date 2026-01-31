@@ -1873,6 +1873,7 @@ MonoBehaviour:
   hasAnimation: 0
   associatedItem: {fileID: 0}
   associatedItemGiven: 0
+  id: 7
   charVisualization: {fileID: -5949252508166830822, guid: 0bb2d47c09bdf2a479ec05240ba70d18, type: 3}
   playerVisualization: {fileID: -4882394196810686248, guid: 47c4365a889144941879c4e90fef6890, type: 3}
   playerName: You
@@ -3400,6 +3401,7 @@ MonoBehaviour:
   hasAnimation: 0
   associatedItem: {fileID: 0}
   associatedItemGiven: 0
+  id: 6
   charVisualization: {fileID: 43363405344867649, guid: 3040c7db03752df44b919b6a10f9e60e, type: 3}
   playerVisualization: {fileID: -4882394196810686248, guid: 47c4365a889144941879c4e90fef6890, type: 3}
   playerName: You
@@ -13397,6 +13399,7 @@ MonoBehaviour:
   hasAnimation: 0
   associatedItem: {fileID: 0}
   associatedItemGiven: 0
+  id: 3
   charVisualization: {fileID: 5188933713330905097, guid: b613285442c7f9745af41b58461821bc, type: 3}
   playerVisualization: {fileID: -4882394196810686248, guid: 47c4365a889144941879c4e90fef6890, type: 3}
   playerName: You
@@ -25194,6 +25197,7 @@ MonoBehaviour:
   hasAnimation: 0
   associatedItem: {fileID: 0}
   associatedItemGiven: 0
+  id: 4
   charVisualization: {fileID: -1635976628041419053, guid: 5a1bbc96d8c48ce4fa154fd0b0cb0c40, type: 3}
   playerVisualization: {fileID: -4882394196810686248, guid: 47c4365a889144941879c4e90fef6890, type: 3}
   playerName: You
@@ -28000,6 +28004,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: ManagerManager
       objectReference: {fileID: 0}
+    - target: {fileID: 1786264086947645608, guid: 68a3b03ed0382c54883feacb9c7c8e6e, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1786264086947645608, guid: 68a3b03ed0382c54883feacb9c7c8e6e, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 4.3
+      objectReference: {fileID: 0}
     - target: {fileID: 1810593223133612030, guid: 68a3b03ed0382c54883feacb9c7c8e6e, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -249
@@ -28120,6 +28132,10 @@ PrefabInstance:
       propertyPath: m_Colors.m_SelectedColor.a
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5837697081630804143, guid: 68a3b03ed0382c54883feacb9c7c8e6e, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6209729340819835179, guid: 68a3b03ed0382c54883feacb9c7c8e6e, type: 3}
       propertyPath: m_text
       value: 'LIne 1
@@ -28153,6 +28169,18 @@ PrefabInstance:
     - target: {fileID: 6791611117433368352, guid: 68a3b03ed0382c54883feacb9c7c8e6e, type: 3}
       propertyPath: m_Colors.m_SelectedColor.a
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7322494612284428720, guid: 68a3b03ed0382c54883feacb9c7c8e6e, type: 3}
+      propertyPath: 'notesArray.Array.data[4]'
+      value: '- ???: ???'
+      objectReference: {fileID: 0}
+    - target: {fileID: 7888973584977846366, guid: 68a3b03ed0382c54883feacb9c7c8e6e, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7888973584977846366, guid: 68a3b03ed0382c54883feacb9c7c8e6e, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8077206192694729846, guid: 68a3b03ed0382c54883feacb9c7c8e6e, type: 3}
       propertyPath: m_Colors.m_SelectedColor.a
@@ -28212,6 +28240,7 @@ MonoBehaviour:
   hasAnimation: 0
   associatedItem: {fileID: 0}
   associatedItemGiven: 0
+  id: 1
   charVisualization: {fileID: 5263301567749204644, guid: 1bfa6ebf897f547498c3f48e8a941a99, type: 3}
   playerVisualization: {fileID: -4882394196810686248, guid: 47c4365a889144941879c4e90fef6890, type: 3}
   playerName: You
@@ -31442,6 +31471,7 @@ MonoBehaviour:
   hasAnimation: 0
   associatedItem: {fileID: 5564174218859289933, guid: 725e59f4fd13b9a44860ebbc27dec413, type: 3}
   associatedItemGiven: 0
+  id: 2
   charVisualization: {fileID: 6867901980214537083, guid: 77b077c165d0b0d43b9b668c4f125a6c, type: 3}
   playerVisualization: {fileID: -4882394196810686248, guid: 47c4365a889144941879c4e90fef6890, type: 3}
   playerName: You
@@ -32843,6 +32873,7 @@ MonoBehaviour:
   hasAnimation: 0
   associatedItem: {fileID: 0}
   associatedItemGiven: 0
+  id: 5
   charVisualization: {fileID: -2275071983613723935, guid: c4cc68c2f193c1d4ab7d605998379559, type: 3}
   playerVisualization: {fileID: -4882394196810686248, guid: 47c4365a889144941879c4e90fef6890, type: 3}
   playerName: You
@@ -33271,6 +33302,7 @@ MonoBehaviour:
   hasAnimation: 1
   associatedItem: {fileID: 5222103514925548287, guid: 0dd1576df2197104f957cf77c2e0c073, type: 3}
   associatedItemGiven: 0
+  id: 0
   charVisualization: {fileID: -5711848221618334454, guid: 2247027fb2e352547b29a10e990221bd, type: 3}
   playerVisualization: {fileID: -4882394196810686248, guid: 47c4365a889144941879c4e90fef6890, type: 3}
   playerName: You
@@ -43981,13 +44013,13 @@ SceneRoots:
   - {fileID: 1756466829}
   - {fileID: 896033510}
   - {fileID: 1932486369}
-  - {fileID: 1848657384}
   - {fileID: 1662614897}
+  - {fileID: 1848657384}
   - {fileID: 914974627}
+  - {fileID: 1453121601}
   - {fileID: 1901499667}
   - {fileID: 204474765}
   - {fileID: 137671035}
-  - {fileID: 1453121601}
   - {fileID: 1540239724}
   - {fileID: 597146721}
   - {fileID: 731379750}

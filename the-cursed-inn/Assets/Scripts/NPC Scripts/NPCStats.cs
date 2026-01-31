@@ -25,6 +25,7 @@ public class NPCStats : MonoBehaviour
     public bool hasAnimation;
     public GameObject associatedItem;
     public bool associatedItemGiven = false;
+    public int id;
     // attack type or smth somehow needs to go here...
 
     [Header("Dialogue")]
@@ -45,7 +46,7 @@ public class NPCStats : MonoBehaviour
         // tempStarter.dialogueOptions.Add(defaultDialogue);
         // handler = new DialogueHandler(defaultDialogue, dialogueLists, uiManager, charVisualization, "Nobody");
         animator = this.gameObject.GetComponent<Animator>();
-        if(character == NPCName.TestNPC) // change back to == later!!!
+        if(character == NPCName.TestNPC) 
         {
             //outline: first node is NPC saying Hello There! second node is Player saying General Kenobi, third node is NPC saying what's 9 + 10, fourth node is Player saying 19 or 21, 21 goes to NPC node saying wrong you uncultured swine try again, then back to fourth node, 21 is NPC saying good job, bye, then ending
             DialogueNode n1 = new DialogueNode(new List<Dialogue>(), false); // (NPC) hello there
@@ -435,9 +436,25 @@ public class NPCStats : MonoBehaviour
 
             handler = new DialogueHandler(n1, uiManager, npcName, charVisualization, playerName, playerVisualization);
         }
-        else if(character == NPCName.Wyl)
+        // else if(character == NPCName.Wyl)
+        // {
+        //     DialogueNode n1 = new DialogueNode(new List<Dialogue>(), false); // (Wyl) 
+        // }
+        else
         {
-            DialogueNode n1 = new DialogueNode(new List<Dialogue>(), false); // (Wyl) 
+            DialogueNode n1 = new DialogueNode(new List<Dialogue>(), true); // (Player) Are you the werewolf? >n2
+            DialogueNode n2 = new DialogueNode(new List<Dialogue>(), false); // (Them) No... >n3
+            DialogueNode n3 = new DialogueNode(new List<Dialogue>(), true); // (Player) Options: 1) Ok I believe you. 2) Liar! You are the werewolf! 3) leave >end
+            DialogueNode end = new DialogueNode(new List<Dialogue>(), false); // empty node
+
+            Dialogue dLeave = new Dialogue(end, "*Leave*", true);
+            Dialogue d1 = new Dialogue(n2, "Are you the werewolf??", true); // stored in n1
+            Dialogue d2 = new Dialogue(n3, "No...", true); // stored in n2
+
+            n1.AppendDialogue(d1);
+            n2.AppendDialogue(d2);
+
+            handler = new DialogueHandler(n1, uiManager, npcName, charVisualization, playerName, playerVisualization);
         }
 
         
@@ -481,6 +498,12 @@ public class NPCStats : MonoBehaviour
     {
         associatedItemGiven = isGiven;
     }
+
+    public void UpdateHasMet()
+    {
+        SaveData.saveData.UpdateHasMetNPC(id);
+    }
+
 
     // Dialogue Option class to contain dialogue options
 

@@ -20,10 +20,11 @@ public class Player : MonoBehaviour
     private Vector2 moveInput;
     public bool isAttacking;
     public List<GameObject> accessibleInventory = new List<GameObject>();
-    public GameObject activeInteractable;
+    public GameObject activeInteractable = null;
     public GameObject journalPrefab;
-    private bool doorOpened = false;
     public Animator animator;
+    private bool doorOpened = false;
+    private bool journalOpened = false;
 
 
 
@@ -372,11 +373,25 @@ public class Player : MonoBehaviour
         {
             Debug.Log("No one to talk to");
             currentNPC = null;
+            if(inventoryManager.equippedItemStats.itemName == "Journal")
+            {
+                if(!journalOpened)
+                {
+                    journalOpened = true;
+                    uiManager.TurnOnJournalUI();
+                }
+                else
+                {
+                    journalOpened = false;
+                    uiManager.TurnOnPlayingUI();
+                }
+            }
         }
         else
         {
             Debug.Log("Closest NPC is " + FindClosestNPCInRange().npcName);
             currentNPC = FindClosestNPCInRange();
+            currentNPC.UpdateHasMet();
             CallDisplayDialogue();
         }
     }

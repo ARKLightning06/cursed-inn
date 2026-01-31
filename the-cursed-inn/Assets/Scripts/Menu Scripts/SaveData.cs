@@ -20,6 +20,7 @@ public class SaveData : MonoBehaviour
     [Header("Attributes to keep between time loops")]
     public string playerName;
     public List<GameObject> savedStarterItems = new List<GameObject>();
+    public GameObject bottle;
     // This should be in it's own Questmanager script or smth but not enough time to do all that, just using singleton is easier sorry for bad structure can fix later maybe (lol)
     [Header("Publically accessible counts because lazy")]
     public int maliceCount;
@@ -27,6 +28,9 @@ public class SaveData : MonoBehaviour
     public int kindnessCount;
     [Header("Publically accessible booleans because lazy")]
     public bool knowsAllergy;
+    // Borro = 0, Gastou = 1, Pohn = 2, Wyl = 3, Octavia = 4, Lupal = 5, Thadworn = 6 Harry = 7
+    public bool[] metPeople = {false, false, false, false, false, false, false, false};
+    public bool[] knowsPeoplesSecrets = {false, false, false, false, false, false, false, false};
 
     void Awake()
     {
@@ -42,6 +46,7 @@ public class SaveData : MonoBehaviour
         playerName = "You";
         DontDestroyOnLoad(gameObject);
         timeRemaining = timerLength;
+        
     }
 
     void Update()
@@ -155,6 +160,27 @@ public class SaveData : MonoBehaviour
         return false;
     }
 
+    public void UpdateHasMetNPC(int id)
+    {
+        // Borro = 0, Gastou = 1, Pohn = 2, Wyl = 3, Octavia = 4, Lupal = 5, Thadworn = 6 Harry = 7
+        metPeople[id] = true;
+    }
+
+    public bool GetHasMet(int id)
+    {
+        return metPeople[id];
+    }
+
+    public void UpdateKnowsNPCSecret(int id)
+    {
+        knowsPeoplesSecrets[id] = true;
+    }
+
+    public bool GetKnowsNPCSecret(int id)
+    {
+        return knowsPeoplesSecrets[id];
+    }
+
 
     public void ResetTimeLoop()
     {
@@ -163,5 +189,21 @@ public class SaveData : MonoBehaviour
         kindnessCount = 0;
         timeRemaining = timerLength;
         sceneM.ReloadScene();
+    }
+
+    public void ResetAll()
+    {
+        for(int i = 0; i < 8; i++)
+        {
+            metPeople[i] = false;
+            knowsPeoplesSecrets[i] = false;
+            maliceCount = 0; 
+            honorCount = 0;
+            kindnessCount = 0;
+            timeRemaining = timerLength;
+            savedStarterItems.Clear();
+            savedStarterItems.Add(bottle);
+            knowsAllergy = false;
+        }
     }
 }
