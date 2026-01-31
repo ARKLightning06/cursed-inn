@@ -21,6 +21,7 @@ public class Player : MonoBehaviour
     public bool isAttacking;
     public List<GameObject> accessibleInventory = new List<GameObject>();
     public GameObject door;
+    private bool doorOpened = false;
     public Animator animator;
 
 
@@ -116,12 +117,19 @@ public class Player : MonoBehaviour
             isAttacking = true;
             SwingSword();
         }
-
         else if (inventoryManager.equippedItemStats.itemCat == Category.Projectile)
         {
             Debug.Log("Ranged!");
             isAttacking = true;
             DrawBow();
+        }
+        else if (inventoryManager.equippedItemStats.itemCat == Category.Accessory)
+        {
+            if (inventoryManager.equippedItemStats.itemName == "Simple Key")
+            {
+                doorOpened = !doorOpened;
+                ToggleDoor(doorOpened);
+            }
         }
 
     }

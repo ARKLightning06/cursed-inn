@@ -237,7 +237,7 @@ public class NPCStats : MonoBehaviour
             Dialogue d21 = new Dialogue(n16, "What can you tell me about the butcher behind the bar? ", true); // stored in n14
             Dialogue d22 = new Dialogue(n17, "I hear noise from that door. Are there more people here than we see?", true); // stored in n14
             //dLeave in n14
-            Dialogue d23 = new Dialogue(n14, "Ze knight? ’E has fancy armor, yes—but not much underneath. I spoke to ’im when I came in and ’e went on and on about some lady. All sighs and poetry. Not quite right in ze head, oui? So I tell ’im, eat up! ’Ave some meat, put a little flesh on ze bone. And zen—listen to zis—’e tells me ’e is allergic. Allergic… to meat. How does one even live like zat?", true, 0, 0, 0, "Update allergy knowledge", "Default", this); // stored in n15, **updates allergy knowledge
+            Dialogue d23 = new Dialogue(n14, "Ze knight? 'E has fancy armor, yes—but not much underneath. I spoke to 'im when I came in and 'e went on and on about some lady. All sighs and poetry. Not quite right in ze head, oui? So I tell ’im, eat up! ’Ave some meat, put a little flesh on ze bone. And zen—listen to zis—’e tells me ’e is allergic. Allergic… to meat. How does one even live like zat?", true, 0, 0, 0, "Update allergy knowledge", "Default", this); // stored in n15, **updates allergy knowledge
             Dialogue d24 = new Dialogue(n14, "Ze Butcher? 'Is knife is sharp, and 'is hands are quick. Maybe quicker zen 'is wits.", true); // stored in n16
             Dialogue d25 = new Dialogue(n2, "Ah, ze door. Oui, I think zer are more people, but ze door is locked. Ze butcher 'as ze key, I think.", true); // stored in n17
             Dialogue d26 = new Dialogue(n19, "I'm glad you like the food. And in fact, just for you, take it on the house.", true, 0, 0, 2, "Do malice/honor/kindness once", "Default", this); // stored in n18
@@ -288,6 +288,152 @@ public class NPCStats : MonoBehaviour
             handler = new DialogueHandler(n1, uiManager, npcName, charVisualization, playerName, playerVisualization);
 
 
+        }
+        else if (character == NPCName.PohnJork)
+        {
+            DialogueNode n1 = new DialogueNode(new List<Dialogue>(), false); // (Pohn) 'Sup. >n2
+            DialogueNode n2 = new DialogueNode(new List<Dialogue>(), true); // (Player) Options: 1) Yo. >n3 2) Hello there! Who are you, what's your story? >n4 3) Give me the key. >n5 4) *leave* >end
+            DialogueNode n3 = new DialogueNode(new List<Dialogue>(), false); // (Pohn) Chilling. Cya 'round > end
+            DialogueNode n4 = new DialogueNode(new List<Dialogue>(), false); // (Pohn) I'm just some dude who works here. I'm a butcher, I chop a lot with meat. Actually I need more meat. Do you have any meat? >n6
+            DialogueNode n5 = new DialogueNode(new List<Dialogue>(), false); // (Pohn) What key? I don't have any key. None for you, certainly, at least not for free... >n29
+            DialogueNode n6 = new DialogueNode(new List<Dialogue>(), true); // (Player) 1) Why would I give you my meat? >n7 2) Not at the moment, but I swear to you I shall search out some meat and bring it back to you with all haste *+2 honor* >n8 3) **starts unavailable** yeah I have your meat right here >n9 4) *leave* >end
+            DialogueNode n7 = new DialogueNode(new List<Dialogue>(), false); // (Pohn) Pause. Nah I'm playing. I don't know, it would be a nice thing to do. I also have a key to the other room you might want, though I locked the door for a reason. There are some certified crazies over there, and that coming from me. >n10
+            DialogueNode n8 = new DialogueNode(new List<Dialogue>(), false); // (Pohn) Whoa, bro, chill out. No need to be so dramatic. But I'll take you up on that offer, and maybe even give you a little something in return. >n2
+            
+            // Starter node when holding meat in your hand
+            DialogueNode n9 = new DialogueNode(new List<Dialogue>(), false); //(Pohn) You have meat for me? >n11
+
+            DialogueNode n10 = new DialogueNode(new List<Dialogue>(), true); // (Player) Options: 1) What kind of crazies? >n18 2) Oh don't say that, you're not crazy! *+2 kindness* >n19 3) leave >end
+            DialogueNode n11 = new DialogueNode(new List<Dialogue>(), true); // (Player) Options: 1) Give Meat Stew **get rid of meat stew item** >n12 2) I have meat. Not for you. You want to smell it? It smells so good, so fresh and scrumptious. Mmmm. **+2 malice** >n13 3) leave >end
+            DialogueNode n12 = new DialogueNode(new List<Dialogue>(), false); //(Pohn) Yooo, thanks my man, I've been needing this meat for so long. Now I can cut it up over and over into small pieces with my cleaver. It's fun, the way it chops through flesh. Like cutting butter, only it's meat. Going chop chop chop! Chop chop chop! >n14
+            DialogueNode n13 = new DialogueNode(new List<Dialogue>(), false); // (Pohn) Whatever bro. >n2
+            DialogueNode n14 = new DialogueNode(new List<Dialogue>(), true); // (Player) Options: 1) ... >n15
+            DialogueNode n15 = new DialogueNode(new List<Dialogue>(), false); // (Pohn) Hey, maybe I could chop up a pork chop for you! Chop chop chop! >n16
+            DialogueNode n16 = new DialogueNode(new List<Dialogue>(), true); // (Player) Options: 1) ... >n17
+            DialogueNode n17 = new DialogueNode(new List<Dialogue>(), false); // (Pohn) Oh right, here's the key to the over room. Thanks for the meat! This'll keep me occupied for a while. Chop chop chop, chop chop chop... *gain simple key* >end
+            DialogueNode n18 = new DialogueNode(new List<Dialogue>(), false); // (Pohn) Well, there's our Mayor, our shopkeeper, our barber, and our crazy old man and woman. Who do you want to hear about? >n20
+            DialogueNode n19 = new DialogueNode(new List<Dialogue>(), false); // (Pohn) Uh huh. Well that's nice of you to say. And thank you to the little piggies flying over your shoulder, they look nice too. I bet they'd be fun to chop up and roast over an open fire... >n2
+            DialogueNode n20 = new DialogueNode(new List<Dialogue>(), true); // (Player) Options: 1) Tell me about the Mayor. >n21 2) Tell me about the shopkeeper. >n22 3) Tell me about the barber. >n23 4) Tell me about the Elderly couple >n24
+            DialogueNode n21 = new DialogueNode(new List<Dialogue>(), false); // (Pohn) Mayor Mary Thadworn is the poorest person in this inn. She's always begging for scraps from my meat, as if that stuff just grows on trees. She's probably out begging, right now. We voted her mayor out of pity in hopes she won't be so annoying if she's busy, but it only inflated her ego even more. I think she's close with Lupal. That's about all I know. >n10
+            DialogueNode n22 = new DialogueNode(new List<Dialogue>(), false); // (Pohn) Octavia? She's an arse. Led me on for a whole month saying she'd sell me some meat, not just any meat but a prime cut of pork rib. Do you know how valuable that is? How satisfying it would be to cleave in half with this here knife? But also she's a scumbag to everyone in the village, pretends to be nice then stabs them in the back. I think that knight guy is falling into her trap, not that I'm gonna warn him. Might be fun to watch. >n10
+            DialogueNode n23 = new DialogueNode(new List<Dialogue>(), false); // (Pohn) Harry the barber is as bald as an egg and super self conscious about it. He's a great hairdresser, don't get me wrong, but I think all these years of touching others' hair without ever tending to his own may have rubbed off on him. And never, under any circumstances, tell him he's bald to his face. It will not end well. >n10
+            DialogueNode n24 = new DialogueNode(new List<Dialogue>(), false); // (Pohn) Ah, good old Lupal and Wyl. They're married, not that they'll ever let you know it. They're the main reason I locked the door to be honest. Wyl's our blacksmith, and a solid one at that, but all that clanging and hot fires have gotten to his head. Sometimes he just spins in a circle, giggling to himself. Gives me the creeps. Then Lupal's even worse. She's always creeping around the forest at night, picking out herbs and other substances for her concoctions. >n25
+            DialogueNode n25 = new DialogueNode(new List<Dialogue>(), true); // (Player) Options: 1) Why do they fight? >n26 2) Does Wyl still smith if he's insane? >n27 3) What kind of concoctions does Lupal make? >n28 4) leave >end
+            DialogueNode n26 = new DialogueNode(new List<Dialogue>(), false); // (Pohn) Who knows. Some say Wyl saw Lupal doing some black magic and she cursed him to forget it with one of her potions. Others say Wyl cares more for his swords and axes then his wife. Personally I think they're both so old they've forgotten they're married and just ignore each other, but no one really knows. >n10
+            DialogueNode n27 = new DialogueNode(new List<Dialogue>(), false); // (Pohn) Oh yeah. I'm surprised he's here now, actually. He's almost always holed up in his forge, banging away at his newest project. He probably has some weapons on sale now, for the right price. >n10
+            DialogueNode n28 = new DialogueNode(new List<Dialogue>(), false); // (Pohn) I don't know and I don't want to find out. She mixes things together in these little bottles Wyl makes for her, and if you drink it strange things will happen. One time I swear I saw smoke coming out of Wyl's ears after he drank one of them, and I know for a fact that Harry tried one and could only speak in French for a whole month. It was terrible, for everyone except Gastou, who loved it. >n10
+            DialogueNode n29 = new DialogueNode(new List<Dialogue>(), true); // (Player) Options: 1) And what would that price be? >n30 2) *push him over and take the key* >n31 3) leave >end
+            DialogueNode n30 = new DialogueNode(new List<Dialogue>(), false); // (Pohn) Meat. Red, juicy, delicious meat. Meat in a bowl, meat off the bone, meat fresh, meat old, I don't care I just want meat. You have any? >n6
+            DialogueNode n31 = new DialogueNode(new List<Dialogue>(), false); // (Pohn) *You push Pohn Jork. Pohn Jork is falling. Before you can take the key, he jumps to his feet and grabs his cleaver, which he brandishes menacingly* **+3 malice** >n32
+            DialogueNode n32 = new DialogueNode(new List<Dialogue>(), false); // (Pohn) That was not very nice of you. Not very nice at all. You know, you have meat on your bones. Meat that would be quite satisfying to cleave, to cut, to chop, chop, chop into little pieces. So satisfying... but no, last time they got very angry at Pohn for chopping that kind of meat. Promised never to do it again. Not gonna break that promise over some fat bald guy. Pohn Jork is fine. Pohn Jork is chilling. >n2
+            DialogueNode end = new DialogueNode(new List<Dialogue>(), false); // empty node
+
+            Dialogue dLeave = new Dialogue(end, "*Leave*", true);
+
+            Dialogue d1 = new Dialogue(n2, "'Sup.", true); // stored in n1
+            Dialogue d2 = new Dialogue(n3, "Yo.", true); // stored in n2
+            Dialogue d3 = new Dialogue(n4, "Hello there! Who are you, what's your story?", true); // stored in n2
+            Dialogue d4 = new Dialogue(n5, "Give me the key.", true); // stored in n2
+            //dleave in n2
+            Dialogue d5 = new Dialogue(end, "Chilling. Cya 'round", true); // stored in n3
+            Dialogue d6 = new Dialogue(n6, "I'm just some dude who works here. I'm a butcher, I chop a lot with meat. Actually I need more meat. Do you have any meat?", true); // stored in n4
+            Dialogue d7 = new Dialogue(n29, "What key? I don't have any key. None for you, certainly, at least not for free...", true); // stored in n5
+            Dialogue d8 = new Dialogue(n7, "Why would I give you my meat?", true); // stored in n6
+            Dialogue d9 = new Dialogue(n8, "Not at the moment, but I swear to you I shall search out some meat and bring it back to you with all haste.", true, 0, 2, 0, "Do malice/honor/kindness once", "Default", this); // stored in n6
+            Dialogue d10 = new Dialogue(n9, "Yeah I have your meat right here", false, 0, 0, 0, "Do nothing", "Check has meat", this); // stored in n6
+            //dLeave in n6
+            Dialogue d11 = new Dialogue(n10, "Pause. Nah I'm playing. I don't know, it would be a nice thing to do. I also have a key to the other room you might want, though I locked the door for a reason. There are some certified crazies over there, and that coming from me.", true); // stored in n7
+            Dialogue d12 = new Dialogue(n2, "Whoa, bro, chill out. No need to be so dramatic. But I'll take you up on that offer, and maybe even give you a little something in return.", true); // stored in n8
+            Dialogue d13 = new Dialogue(n11, "You have meat for me?", true); // stored in n9
+            Dialogue d14 = new Dialogue(n18, "What kind of crazies?", true); // stored in n10
+            Dialogue d15 = new Dialogue(n19, "Oh don't say that, you're not crazy!", true); // stored in n10
+            //dLeave in n10
+            Dialogue d16 = new Dialogue(n12, "*Give Beef Stew*", true); // stored in n11                // THIS SHOULD GO TO A FUNCTION TO ACTUALLY GET RID OF THE STEW... NO TIME THO FOR NOW
+            Dialogue d17 = new Dialogue(n13, "I have meat. Not for you. You want to smell it? It smells so good, so fresh and scrumptious. Mmmm.", true, 2, 0, 0, "Do malice/honor/kindness once", "Default", this); // stored in n11
+            //dLeave in n11
+            Dialogue d18 = new Dialogue(n14, "Yooo, thanks my man, I've been needing this meat for so long. Now I can cut it up over and over into small pieces with my cleaver. It's fun, the way it chops through flesh. Like cutting butter, only it's meat. Going chop chop chop! Chop chop chop!", true); // stored in n12
+            Dialogue d19 = new Dialogue(n2, "Whatever bro.", true); // stored in n13
+            Dialogue d20 = new Dialogue(n15, "...", true); // stored in n14
+            Dialogue d21 = new Dialogue(n16, "Hey, maybe I could chop up a pork chop for you! Chop chop chop!", true); // stored in n15
+            Dialogue d22 = new Dialogue(n17, "...", true); // stored in n16
+            Dialogue d23 = new Dialogue(end, "Oh right, here's the key to the over room. Thanks for the meat! This'll keep me occupied for a while. Chop chop chop, chop chop chop... \n*gain simple key*", true, 0, 0, 0, "Add Item", "Default", this); // stored in n17
+            Dialogue d24 = new Dialogue(n20, "Well, there's our Mayor, our shopkeeper, our barber, and our crazy old man and woman. Who do you want to hear about?", true); // stored in n18
+            Dialogue d25 = new Dialogue(n2, "Uh huh. Well that's nice of you to say. And thank you to the little piggies flying over your shoulder, they look nice too. I bet they'd be fun to chop up and roast over an open fire...", true); // stored in n19
+            Dialogue d26 = new Dialogue(n21, "Tell me about the Mayor.", true); // stored in n20
+            Dialogue d27 = new Dialogue(n22, "Tell me about the shopkeeper.", true); // stored in n20
+            Dialogue d28 = new Dialogue(n23, "Tell me about the barber.", true); // stored in n20
+            Dialogue d29 = new Dialogue(n24, "Tell me about the Elderly couple", true); // stored in n20
+            Dialogue d30 = new Dialogue(n10, "Mayor Mary Thadworn is the poorest person in this inn. She's always begging for scraps from my meat, as if that stuff just grows on trees. She's probably out begging, right now. We voted her mayor out of pity in hopes she won't be so annoying if she's busy, but it only inflated her ego even more. I think she's close with Lupal. That's about all I know.", true); // stored in n21
+            Dialogue d31 = new Dialogue(n10, "Octavia? She's an arse. Led me on for a whole month saying she'd sell me some meat, not just any meat but a prime cut of pork rib. Do you know how valuable that is? How satisfying it would be to cleave in half with this here knife? But also she's a scumbag to everyone in the village, pretends to be nice then stabs them in the back. I think that knight guy is falling into her trap, not that I'm gonna warn him. Might be fun to watch.", true); // stored in n22
+            Dialogue d32 = new Dialogue(n10, "Harry the barber is as bald as an egg and super self conscious about it. He's a great hairdresser, don't get me wrong, but I think all these years of touching others' hair without ever tending to his own may have rubbed off on him. And never, under any circumstances, tell him he's bald to his face. It will not end well.", true); // stored in n23
+            Dialogue d33 = new Dialogue(n25, "Ah, good old Lupal and Wyl. They're married, not that they'll ever let you know it. They're the main reason I locked the door to be honest. Wyl's our blacksmith, and a solid one at that, but all that clanging and hot fires have gotten to his head. Sometimes he just spins in a circle, giggling to himself. Gives me the creeps. Then Lupal's even worse. She's always creeping around the forest at night, picking out herbs and other substances for her concoctions.", true); // stored in n24
+            Dialogue d34 = new Dialogue(n26, "Why do they fight?", true); // stored in n25
+            Dialogue d35 = new Dialogue(n27, "Does Wyl still smith if he's insane?", true); // stored in n25
+            Dialogue d36 = new Dialogue(n28, "What kind of concoctions does Lupal make?", true); // stored in n25
+            //dLeave in n25
+            Dialogue d37 = new Dialogue(n10, "Who knows. Some say Wyl saw Lupal doing some black magic and she cursed him to forget it with one of her potions. Others say Wyl cares more for his swords and axes then his wife. Personally I think they're both so old they've forgotten they're married and just ignore each other, but no one really knows.", true); // stored in n26
+            Dialogue d38 = new Dialogue(n10, "Oh yeah. I'm surprised he's here now, actually. He's almost always holed up in his forge, banging away at his newest project. He probably has some weapons on sale now, for the right price.", true); // stored in n27
+            Dialogue d39 = new Dialogue(n10, "I don't know and I don't want to find out. She mixes things together in these little bottles Wyl makes for her, and if you drink it strange things will happen. One time I swear I saw smoke coming out of Wyl's ears after he drank one of them, and I know for a fact that Harry tried one and could only speak in French for a whole month. It was terrible, for everyone except Gastou, who loved it.", true); // stored in n28
+            Dialogue d40 = new Dialogue(n30, "And what would that price be?", true); // stored in n29
+            Dialogue d41 = new Dialogue(n31, "*push him over and take the key*", true); // stored in n29
+            //dLeave in n29
+            Dialogue d42 = new Dialogue(n6, "Meat. Red, juicy, delicious meat. Meat in a bowl, meat off the bone, meat fresh, meat old, I don't care I just want meat. You have any?", true); // stored in n30
+            Dialogue d43 = new Dialogue(n32, "*You push Pohn Jork. Pohn Jork is falling. Before you can take the key, he jumps to his feet and grabs his cleaver, which he brandishes menacingly*", true, 3, 0, 0, "Do malice/honor/kindness once", "Default", this); // stored in n31
+            Dialogue d44 = new Dialogue(n2, "That was not very nice of you. Not very nice at all. You know, you have meat on your bones. Meat that would be quite satisfying to cleave, to cut, to chop, chop, chop into little pieces. So satisfying... but no, last time they got very angry at Pohn for chopping that kind of meat. Promised never to do it again. Not gonna break that promise over some fat bald guy. Pohn Jork is fine. Pohn Jork is chilling.", true); // stored in n32
+
+            n1.AppendDialogue(d1);
+            n2.AppendDialogue(d2);
+            n2.AppendDialogue(d3);
+            n2.AppendDialogue(d4);
+            n2.AppendDialogue(dLeave);
+            n3.AppendDialogue(d5);
+            n4.AppendDialogue(d6);
+            n5.AppendDialogue(d7);
+            n6.AppendDialogue(d8);
+            n6.AppendDialogue(d9);
+            n6.AppendDialogue(d10);
+            n6.AppendDialogue(dLeave);
+            n7.AppendDialogue(d11);
+            n8.AppendDialogue(d12);
+            n9.AppendDialogue(d13);
+            n10.AppendDialogue(d14);
+            n10.AppendDialogue(d15);
+            n10.AppendDialogue(dLeave);
+            n11.AppendDialogue(d16);
+            n11.AppendDialogue(d17);
+            n11.AppendDialogue(dLeave);
+            n12.AppendDialogue(d18);
+            n13.AppendDialogue(d19);
+            n14.AppendDialogue(d20);
+            n15.AppendDialogue(d21);
+            n16.AppendDialogue(d22);
+            n17.AppendDialogue(d23);
+            n18.AppendDialogue(d24);
+            n19.AppendDialogue(d25);
+            n20.AppendDialogue(d26);
+            n20.AppendDialogue(d27);
+            n20.AppendDialogue(d28);
+            n20.AppendDialogue(d29);
+            n21.AppendDialogue(d30);
+            n22.AppendDialogue(d31);
+            n23.AppendDialogue(d32);
+            n24.AppendDialogue(d33);
+            n25.AppendDialogue(d34);
+            n25.AppendDialogue(d35);
+            n25.AppendDialogue(d36);
+            n25.AppendDialogue(dLeave);
+            n26.AppendDialogue(d37);
+            n27.AppendDialogue(d38);
+            n28.AppendDialogue(d39);
+            n29.AppendDialogue(d40);
+            n29.AppendDialogue(d41);
+            n29.AppendDialogue(dLeave);
+            n30.AppendDialogue(d42);
+            n31.AppendDialogue(d43);
+            n32.AppendDialogue(d44);
+
+
+            handler = new DialogueHandler(n1, uiManager, npcName, charVisualization, playerName, playerVisualization);
         }
 
         
@@ -782,6 +928,10 @@ public class Dialogue
         else if (availabilityState == "Slightly honorable")
         {
             SetAvailability(startAvailable, SaveData.saveData.GetHonor() >= 5);
+        }
+        else if(availabilityState == "Check has meat")
+        {
+            SetAvailability(startAvailable, SaveData.saveData.GetHasMeat());
         }
     }
 

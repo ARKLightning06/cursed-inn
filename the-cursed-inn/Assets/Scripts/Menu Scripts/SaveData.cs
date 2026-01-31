@@ -101,6 +101,19 @@ public class SaveData : MonoBehaviour
         knowsAllergy = knows;
     }
 
+    public bool GetHasMeat()
+    {
+        foreach(GameObject item in savedStarterItems)
+        {
+            if(item.GetComponent<ItemStats>().itemName == "Beef Stew") // check what the actual name is!
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
     public void ResetTimeLoop()
     {
         maliceCount = 0;
