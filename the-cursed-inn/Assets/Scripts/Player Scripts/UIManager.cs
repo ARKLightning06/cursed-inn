@@ -403,6 +403,7 @@ public class UIManager : MonoBehaviour
         // Google a tutorial on it probably easiest, smth to do with making an array of all the characters I think idk
         // use dialogueName.text to edit the header text and dialogueText.text to edit the body text
         dialogueName.text = header;
+        StopAllCoroutines();
         dialogueText.text = "";
         StartCoroutine(TypeLine(bodyText));
     }
