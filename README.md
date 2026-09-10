@@ -5,7 +5,7 @@ Welcome! This is a repo for 2025-2026 Winter Game Jam at UofT, with the theme of
 You can [play The Cursed Inn](https://arklightning06.itch.io/the-cursed-inn) on itch.io!
 
 ## About
-This game was created on a team of 5, 4 programmers and 1 artist, working together for the 2025-2026 Winter Game Jam with University of Toronto's GDDC (Game Design and Development Club). Thanks to artist Phoebe Lewis and programmers Andrew Li, Ali Khan, and Yeonji Lee! 
+This game was created on a team of 5, 4 programmers and 1 artist, working together for the 2025-2026 Winter Game Jam with University of Toronto's GDDC (Game Design and Development Club). Thanks to artist Phoebe Lewis and programmers Andrew Koes, Andrew Li, Ali Khan, and Yeonji Lee! 
 
 The theme for the game jam was recursion. We integrated recursion in two main ways: first was with the theming, as the gameplay mirrors recursion by trapping the innkeeper in an timeloop they must escape from. The aim of the game is to discover how they were trapped in this loop, and to escape it by deducing who the werewolf/sorcerer/sorceress who cursed them is. The second way is through humor (or maybe lack of humor). After finishing the game, the player will receive the message:
 
